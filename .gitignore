@@ -1,0 +1,20 @@
+# Only the formalization and the final revised paper are published.
+# Everything at the top level is ignored unless listed here.
+/*
+!/.gitignore
+!/stage */
+!/formalization/
+!/paper/
+!/lakefile.toml
+!/lean-toolchain
+!/lake-manifest.json
+!/README.md
+!/LICENSE
+
+.lake/
+.scratch/
+build/
+__pycache__/
+*.olean
+*.ilean
+.DS_Store
