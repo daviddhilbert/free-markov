@@ -331,6 +331,29 @@ within this plan:
 Done when: the layer decomposition is proved and Theorem 2.3 is available as a
 hypothesis with its two derived principles.
 
+**Record (2026-11-20): done.** `python3 scripts/verify.py` passes: build exit
+code 0 with no warnings, no `sorry`, 529 Stage 1 declarations using only
+`propext`, `Classical.choice`, `Quot.sound`; `FreeMarkov.JoyalStreet` occurs in 43
+theorems (`JoyalStreet.lean`, `Value.lean`), not in the layer files or Remark 2.4.
+Status in `stage 1/STATUS.md`, hand-over in `stage 1/HANDOFF.md`. Decided in
+Stage 1, within this plan:
+
+- Graphs as in D1, with an outer node represented by `none` as the source or
+  target of its edge; orderings as duplicate-free lists (`Enumeration`).
+- Gluing is defined along any bijection `cod(Γ) → dom(Ω)` (for the surgeries);
+  composition is the position-by-position case. Classes through `Fin`
+  representatives (D3) in `Type (max w v)`; `DHom G a b` is a subtype of classes.
+- `JoyalStreet G` has exactly the fields of D4. Theorem 2.3 is
+  `JoyalStreet.isFreeSymmetric : IsFreeSymmetric J.Fs G J.ι` (target universes
+  free); generation is `JoyalStreet.induction`; values are `CDiagram.value`, with
+  preservation by strict functors `CDiagram.map_value` (proved via naturality of
+  C1 under relabelling).
+- Remark 2.4 holds for every choice of orderings of the cuts, in both
+  bracketings, as an equation of classes, without C1 (`Diagram.remark_2_4`,
+  `remark_2_4'`).
+- The author's review of the statement of `JoyalStreet` (risk 5) is recorded as
+  an open item in `stage 1/STATUS.md`; Stage 1 went ahead under ground rule 9.
+
 ### Stage 2 — Section 3: surgeries (L, the heaviest combinatorics)
 
 - Definition 3.1 (normal subgraph), `Γ'^♭`, the two observations after it.

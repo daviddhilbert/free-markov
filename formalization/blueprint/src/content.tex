@@ -189,11 +189,39 @@ Interpret terms; related terms have equal values; uniqueness by induction on ter
 
 \section{Joyal--Street diagrams (Stage 1)}
 
-\begin{definition}[Definition 2.1: graphs, valuations, diagrams]
+\begin{definition}[Section 2: polarized progressive graphs, anchoring (D1)]
+\label{def:2.graphs}
+\lean{FreeMarkov.PGraph, FreeMarkov.AGraph, FreeMarkov.Enumeration, FreeMarkov.PGraph.IsPinned, FreeMarkov.PGraph.IsHalfLoose, FreeMarkov.PGraph.IsLoose, FreeMarkov.PGraph.IsInitial, FreeMarkov.PGraph.IsTerminal, FreeMarkov.PGraph.IsDom, FreeMarkov.PGraph.IsCod, FreeMarkov.PGraph.Iso, FreeMarkov.AGraph.Iso}
+\leanok
+Graphs as incidence data: nodes, edges, source and target of each edge (an inner
+node or an outer node), ordered inputs and outputs of each node, no directed
+circuit; anchored graphs carry orderings of the domain and the codomain. Pinned,
+half-loose, loose edges; initial and terminal nodes; isomorphisms. The
+topological definitions of the paper are cited background (D1).
+\end{definition}
+
+\begin{definition}[Definition 2.1: valuations, diagrams, isomorphisms]
 \label{def:2.1}
-\uses{intro:free-graph-monoid, intro:strict-smc}
-Graphs (combinatorial, D1), valuations in a strict symmetric monoidal category
-or a free graph monoid, diagrams, isomorphisms, domain and codomain.
+\lean{FreeMarkov.Valuation, FreeMarkov.Diagram, FreeMarkov.Diagram.domWord, FreeMarkov.Diagram.codWord, FreeMarkov.Diagram.Iso, FreeMarkov.CValuation, FreeMarkov.CDiagram, FreeMarkov.CDiagram.domObj, FreeMarkov.CDiagram.codObj, FreeMarkov.graphOf, FreeMarkov.CDiagram.toFree, FreeMarkov.DClass, FreeMarkov.DClass.mk, FreeMarkov.DClass.mk_eq_mk_iff, FreeMarkov.DHom}
+\leanok
+\uses{def:2.graphs, intro:free-graph-monoid, intro:strict-smc}
+Valuations of a graph in a free graph monoid and in a symmetric strict monoidal
+category $\mathcal C$, anchored diagrams, isomorphisms of diagrams, domain and
+codomain; a diagram in $\mathcal C$ is a diagram in $G_{\mathcal C}$.
+Isomorphism classes are taken through representatives on $\mathrm{Fin}\,n$,
+$\mathrm{Fin}\,m$ (D3).
+\end{definition}
+
+\begin{definition}[Section 2: gluing, disjoint union, node-free and one-node diagrams]
+\label{def:2.ops}
+\lean{FreeMarkov.PGraph.glue, FreeMarkov.AGraph.glue, FreeMarkov.Diagram.glue, FreeMarkov.Diagram.tensor, FreeMarkov.Diagram.nodeFree, FreeMarkov.Diagram.idD, FreeMarkov.Diagram.permD, FreeMarkov.Diagram.braidD, FreeMarkov.Diagram.oneNode, FreeMarkov.Diagram.Iso.glue, FreeMarkov.Diagram.Iso.tensor, FreeMarkov.DClass.comp, FreeMarkov.DClass.tensor, FreeMarkov.DHom.comp, FreeMarkov.DHom.tensor, FreeMarkov.DHom.id, FreeMarkov.DHom.braid, FreeMarkov.DHom.gen}
+\leanok
+\uses{def:2.1}
+Gluing along a bijection $\mathrm{cod}(\Gamma) \to \mathrm{dom}(\Omega)$
+(position by position for anchored graphs), disjoint union with concatenated
+orderings, node-free diagrams of a permutation (identities, symmetries),
+one-node diagrams (generators). Gluing and disjoint union respect
+isomorphism, so they are defined on classes.
 \end{definition}
 
 \begin{remark}[Remark 2.2]
@@ -202,35 +230,101 @@ or a free graph monoid, diagrams, isomorphisms, domain and codomain.
 Isomorphisms of graphs versus isotopy in $\mathbb R^4$. Not formalized.
 \end{remark}
 
-\begin{theorem}[Theorem 2.3, Joyal--Street; cited result C1]
+\begin{definition}[Cited result C1: Joyal--Street, Theorem 2.3, in comparison form]
+\label{cited:C1}
+\lean{FreeMarkov.JoyalStreet}
+\leanok
+\uses{def:2.ops, syn:universal}
+A hypothesis, not an axiom (D4): for all words $a, b$ a bijection between
+$\mathrm{Syn}_s(G)(a,b)$ and the classes of anchored diagrams from $a$ to $b$,
+sending generators to one-node diagrams, composition to gluing, monoidal
+product to disjoint union, identities and symmetries to node-free diagrams.
+\end{definition}
+
+\begin{theorem}[Theorem 2.3, Joyal--Street]
 \label{thm:2.3}
-\uses{def:2.1, syn:universal}
+\lean{FreeMarkov.JoyalStreet.Fs, FreeMarkov.JoyalStreet.category, FreeMarkov.JoyalStreet.strictSMC, FreeMarkov.JoyalStreet.ι, FreeMarkov.IsFreeSymmetric, FreeMarkov.JoyalStreet.isFreeSymmetric, FreeMarkov.JoyalStreet.induction}
+\leanok
+\uses{cited:C1, def:2.1, syn:universal, syn:generation}
 Isomorphism classes of anchored diagrams in $G$ form the free symmetric strict
-monoidal category $\mathcal F_s(G)$. Assumed in comparison form (D4): a bijection
-between $\mathrm{Syn}_s(G)(a,b)$ and classes of diagrams from $a$ to $b$
-respecting the operations.
+monoidal category $\mathcal F_s(G)$: under C1, the operations of
+\ref{def:2.ops} satisfy the laws, and every graph monoid homomorphism from $G$ to a
+symmetric strict monoidal category factors through $G \to \mathcal F_s(G)$ by
+exactly one strict symmetric monoidal functor. Generation principle.
 \end{theorem}
+\begin{proof}
+\leanok
+The laws are transported from $\mathrm{Syn}_s(G)$ along the bijection of C1;
+$\mathcal F_s(G)$ and $\mathrm{Syn}_s(G)$ are isomorphic by strict functors that
+are the identity on generators, so freeness and generation transfer.
+\end{proof}
 
 \begin{definition}[Value of a diagram]
 \label{def:2.value}
+\lean{FreeMarkov.evalHom, FreeMarkov.valueFree, FreeMarkov.CDiagram.value, FreeMarkov.Diagram.relabel, FreeMarkov.DClass.relabel}
+\leanok
 \uses{thm:2.3, intro:underlying}
 The value of a diagram in a strict symmetric monoidal category $\mathcal C$:
 its image under $\mathcal F_s(G_{\mathcal C}) \to \mathcal C$.
 \end{definition}
 
+\begin{theorem}[Values are preserved by strict functors]
+\label{thm:2.value}
+\lean{FreeMarkov.JoyalStreet.val_synMap, FreeMarkov.StrictFunctor.map_valueFree, FreeMarkov.CDiagram.map_value, FreeMarkov.valueFree_oneNode}
+\leanok
+\uses{def:2.value}
+The bijections of C1 commute with relabelling; a strict symmetric monoidal
+functor $F$ satisfies $F[\Gamma] = [F_*\Gamma]$; the value of a one-node diagram
+is its label.
+\end{theorem}
+\begin{proof}
+\leanok
+Naturality by the generation principle; then uniqueness in the universal
+property of $\mathrm{Syn}_s$.
+\end{proof}
+
 \begin{definition}[Paths, levels, cuts, layers]
 \label{def:2.layers}
+\lean{FreeMarkov.PGraph.IsPath, FreeMarkov.PGraph.Lt, FreeMarkov.PGraph.Le, FreeMarkov.PGraph.nodeOrder, FreeMarkov.PGraph.IsLevel, FreeMarkov.PGraph.Cut, FreeMarkov.PGraph.sub, FreeMarkov.PGraph.layer, FreeMarkov.Valuation.restrict, FreeMarkov.Diagram.layerD}
+\leanok
 \uses{def:2.1}
 Directed paths, the partial order on nodes, levels, $\mathrm{cut}(L)$, subgraphs,
-layers $\Gamma[L, M]$.
+layers $\Gamma[L, M]$ and their anchorings by chosen orderings of the cuts.
 \end{definition}
+
+\begin{lemma}[Facts about layers]
+\label{lem:2.layers}
+\lean{FreeMarkov.PGraph.lt_iff_exists_path, FreeMarkov.PGraph.isLevel_iff_isLowerSet, FreeMarkov.PGraph.cut_empty_iff, FreeMarkov.PGraph.cut_univ_iff, FreeMarkov.PGraph.cut_of_isLoose, FreeMarkov.PGraph.sub_isPinned_iff, FreeMarkov.PGraph.sub_isLoose_iff, FreeMarkov.PGraph.sub_ins_sublist, FreeMarkov.PGraph.mem_layerEdge_iff, FreeMarkov.PGraph.layer_isDom_iff, FreeMarkov.PGraph.layer_isCod_iff, FreeMarkov.PGraph.layer_isLoose_iff, FreeMarkov.PGraph.layer_empty_isDom_iff, FreeMarkov.PGraph.layer_univ_isCod_iff}
+\leanok
+\uses{def:2.layers}
+$x < y$ iff there is a directed path from $x$ to $y$; levels are lower sets;
+$\mathrm{cut}(\emptyset) = \mathrm{dom}(\Gamma)$, $\mathrm{cut}(\dot\Gamma) =
+\mathrm{cod}(\Gamma)$; loose edges are cut by every level; pinned and loose edges
+of a subgraph; $\mathrm{dom}\,\Gamma[L,M] = \mathrm{cut}(L)$,
+$\mathrm{cod}\,\Gamma[L,M] = \mathrm{cut}(M)$, loose edges
+$\mathrm{cut}(L) \cap \mathrm{cut}(M)$.
+\end{lemma}
+\begin{proof}
+\leanok
+Direct from the definitions.
+\end{proof}
 
 \begin{remark}[Remark 2.4]
 \label{rem:2.4}
-\uses{thm:2.3, def:2.layers}
-For levels $L \subseteq M$ and compatible orderings,
-$[\Gamma] = [\Gamma[M, \dot\Gamma]] \circ [\Gamma[L, M]] \circ [\Gamma[\emptyset, L]]$.
+\lean{FreeMarkov.Diagram.glueLayersIso, FreeMarkov.Diagram.mk_eq_comp_lower_upper, FreeMarkov.Diagram.remark_2_4, FreeMarkov.Diagram.remark_2_4'}
+\leanok
+\uses{def:2.ops, lem:2.layers}
+For levels $L \subseteq M$ and \emph{any} orderings of $\mathrm{cut}(L)$ and
+$\mathrm{cut}(M)$,
+$[\Gamma] = [\Gamma[M, \dot\Gamma]] \circ [\Gamma[L, M]] \circ [\Gamma[\emptyset, L]]$,
+in both bracketings, as classes of diagrams; no cited result is needed.
 \end{remark}
+\begin{proof}
+\leanok
+Gluing $\Gamma[L, M]$ and $\Gamma[M, K]$ along $\mathrm{cut}(M)$ gives
+$\Gamma[L, K]$ for levels $L \subseteq M \subseteq K$; and
+$\Gamma \cong \Gamma[\emptyset, \dot\Gamma]$.
+\end{proof}
 
 \section{Surgeries (Stage 2)}
 

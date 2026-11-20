@@ -72,3 +72,38 @@ of the plan: the form of the Joyal–Street hypothesis (PLAN.md, D4).
    developments. Credit any ported lemma to its source and license.
 4. Repeat a focused search before Stage 1 proofs (diagram categories) and
    before the optional Stage 7.
+
+## Focused search before Stage 1 proofs: diagram categories (2026-11-20)
+
+Repeated as PLAN.md ground rule 8 requires, for Lean 4 formalizations of string
+diagrams as graphs (anchored progressive graphs, open hypergraphs, cospans, port
+graphs, PROPs, DPO rewriting), Joyal–Street's Theorem 2.3, and free symmetric
+monoidal categories built from classes of diagrams. Evidence level: source read via
+the GitHub API for the files named; everything else is tree listings, file heads or
+descriptions.
+
+**Result.** Nothing reusable was found. No Lean development has graph-shaped
+diagrams with gluing, disjoint union and isomorphism classes forming a category,
+or levels and layers of a diagram. Stage 1 builds them from Mathlib primitives
+(lists, `Equiv`, `Relation.TransGen`, quotients).
+
+| Candidate | What it has | Decision |
+|---|---|---|
+| Tau Ceti `main` `911e17d6` (Apache-2.0, Lean 4.37.0-rc1) | Still no diagram category. New: `Monoidal/Diagram/RigidObject/{Basic,Substitution}.lean` (object syntax), `Monoidal/Free/TensorSignature/Braided.lean` (`FreeBraided`, `BraidedPresented`, no `sorry`); both syntactic | Nothing for graph carriers |
+| Tau Ceti roadmap `DiagrammaticCoherence/STATUS.md` (`7ca783d`, unchanged since 2026-11-09) | Layers 1–8 untouched; README §1.1 plans "finite directed incidence data with ordered coupon ports", disjoint union and boundary gluing, not started; symmetric coherence out of scope | Recheck before Stage 7 |
+| `apellis/string-diagrams-lean` `8ae261b1` | No commits since 2026-10-22; still planar layer lists | No change |
+| `emberian/obend` `c206d103` (AGPL-3.0, Lean 4.35.0, no Mathlib) | `Obend/Hardware/OpenHypergraph.lean`: `StrictOpenHypergraph` with Bool well-formedness and `tensor`; no sequential composition, no classes, no category | Not reusable (licence, encoding) |
+| `GrigoryEvko/FX` `e01b6e40` (Apache-2.0, Lean 4.29.1, no Mathlib) | DPO rewriting on hypergraphs, layer diagrams for one fixed PROP, proof nets (with `axiom`s) | Not reusable |
+| `leanprover/cslib` `7c95c37f` | Boolean circuits as straight-line programs | Cartesian, not relevant |
+| `dignissimus/Untangle` `3a4e7768` | String-diagram widget | Not relevant |
+| Mathlib master `3eae40f5`; PRs #29744, #43682 (hypergraphs, titles only) | No diagram, PROP or free symmetric files | Nothing at the pin |
+| TensorRocq (Rocq, arXiv:2604.17592, abstract only); Isabelle `isa-PortGraph` (description only) | Terms to hypergraphs with interfaces; port graphs | Outside Lean |
+
+Queries: about 43 `gh search repos`, 40 `gh search code` (language Lean; e.g.
+"Joyal" "Street", "progressive graph", FreeSymmetricMonoidal, "open hypergraph",
+"double pushout", "tensor scheme", "free PROP", "symmetric strict monoidal",
+decorated/structured cospan, "free Markov category"), 20 Mathlib and 8 Tau Ceti
+pull-request searches, 6 web searches. Coverage limits: GitHub code search sees
+indexed default branches only, at most 40 results per query were read; the
+Reservoir search URL ignored the query, so the registry was not searched this time;
+Zulip seen only through search summaries.
