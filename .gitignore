@@ -8,6 +8,7 @@
 !/lakefile.toml
 !/lean-toolchain
 !/lake-manifest.json
+!/scripts/
 !/README.md
 !/LICENSE
 
