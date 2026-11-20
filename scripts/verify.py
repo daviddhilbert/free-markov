@@ -13,7 +13,7 @@ Steps:
      every \uses resolves, acyclic dependency graph, every \lean name is a
      declaration of the built libraries.
 
-Usage:  python3 formalization/verify.py [--stage 0] [--report PATH]
+Usage:  python3 scripts/verify.py [--stage 0] [--report PATH]
 The toolchain is taken from $LAKE, else `lake` on PATH, else the elan toolchain
 named in `lean-toolchain` under ~/.elan.
 """

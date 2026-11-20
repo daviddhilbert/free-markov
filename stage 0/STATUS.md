@@ -8,7 +8,7 @@ trial is recorded (PLAN.md, D2 and D3).
 
 ## Verification
 
-`python3 formalization/verify.py` (2026-11-20): **PASS**.
+`python3 scripts/verify.py` (2026-11-20): **PASS**.
 
 - `lake build FreeMarkovStage0`: exit code 0, 747 jobs, no warnings.
 - `sorry` in sources: 0; `sorry` warnings in the build log: 0.
@@ -59,7 +59,8 @@ record) so that later stages keep them.
 
 ## Layout decisions taken in Stage 0 (within PLAN.md)
 
-- The verification script is `formalization/verify.py` (not `scripts/`),
-  because the root `.gitignore` publishes `formalization/` and not `scripts/`.
-- The blueprint is `formalization/blueprint/` for the same reason; it is a
+- The verification script is `scripts/verify.py`; the root `.gitignore`
+  admits `scripts/` (changed by the coordinating session).
+- The blueprint is `formalization/blueprint/`, since the root `.gitignore`
+  publishes `formalization/` and not a root `blueprint/`; it is a
   standard `leanblueprint` source tree.

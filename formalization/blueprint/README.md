@@ -7,7 +7,7 @@ Introduction and the syntactic category `Syn_s(G)` of design decision D4
 `\lean` the Lean declarations, `\leanok` what is formalized. The stage that
 formalizes a node is given in its section title.
 
-`python3 formalization/verify.py` checks the blueprint: unique labels, every
+`python3 scripts/verify.py` checks the blueprint: unique labels, every
 `\uses` resolves, the dependency graph is acyclic, and every `\lean` name is a
 declaration of the library.
 

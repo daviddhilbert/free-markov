@@ -246,11 +246,10 @@ libraries never claim each other's modules; declarations live in namespace
 `FreeMarkov` regardless of stage. Files use Lean's module system (`module`,
 `public import`, `@[expose] public section`) as Mathlib does; without it
 every file warns. Trial files that are not part of the library sit in
-`stage N/trial/`; scratch work in `.scratch/`. `python3 formalization/verify.py`
+`stage N/trial/`; scratch work in `.scratch/`. `python3 scripts/verify.py`
 builds, scans for `sorry`, reports the axioms of every declaration and the
 cited-result structures (`JoyalStreet`, `Strictification`) in the type of
-every theorem, and compiles the trial files. It sits in `formalization/`
-because the root `.gitignore` publishes that folder and not `scripts/`.
+every theorem, compiles the trial files and checks the blueprint.
 
 
 ### D6. Generality in Section 5 **(author, Stage 5)**
@@ -289,7 +288,7 @@ Sizes are my estimates of relative effort: S, M, L.
 Done when: the definitions compile, the bridge and the universal property of
 `Syn_s(G)` are proved, the trial is recorded.
 
-**Record (2026-11-20): done.** `python3 formalization/verify.py` passes:
+**Record (2026-11-20): done.** `python3 scripts/verify.py` passes:
 `lake build` exit code 0, no `sorry`, 341 declarations using only `propext`,
 `Classical.choice`, `Quot.sound`, no cited result used. Status in
 `stage 0/STATUS.md`, hand-over in `stage 0/HANDOFF.md`. Decided in Stage 0,
@@ -306,11 +305,12 @@ within this plan:
 - The bridge instances (`StrictSMC.monoidalCategory`, `symmetricCategory`,
   `StrictMarkov.markovCategory`) are global instances on any type carrying
   `StrictSMC`/`StrictMarkov`.
-- The verification script is `formalization/verify.py` and the blueprint is
+- The verification script is `scripts/verify.py` (the root `.gitignore`
+  admits `scripts/` since 2026-11-20). The blueprint is
   `formalization/blueprint/` (a `leanblueprint` source tree, one node per
   numbered statement plus the Introduction and `Syn_s(G)`: 50 nodes, 14
-  formalized), because the root `.gitignore` publishes `formalization/`. The
-  blueprint has not been rendered (`leanblueprint` is not installed).
+  formalized), because the root `.gitignore` publishes `formalization/` and
+  not a root `blueprint/`. The blueprint has not been rendered (`leanblueprint` is not installed).
 
 ### Stage 1 — Section 2: diagrams and `F_s(G)` (L)
 
