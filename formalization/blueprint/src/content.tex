@@ -1,0 +1,432 @@
+% Blueprint of the formalization of "A graphical construction of free Markov
+% categories" (source: Free Markov - revised.tex).  One node per numbered
+% statement of the paper, plus the definitions of the Introduction and the
+% syntactic category of design decision D4.  Statement numbers are those of the
+% revised text.  \lean{...} names the Lean declarations, \leanok marks what is
+% formalized; the stage that formalizes a node is given in its title.
+% Checked by formalization/verify.py (labels, \uses, \lean names, acyclicity).
+
+\section{Scope}
+
+The plan is \texttt{formalization/PLAN.md}. Cited results are not proved: they
+enter as explicit hypotheses (C1, Joyal--Street's Theorem~2.3, and C2,
+strictification), never as axioms. Nodes without \texttt{\textbackslash lean}
+belong to later stages.
+
+\section{Introduction (Stage 0)}
+
+\begin{definition}[Graph monoid, homomorphism]
+\label{intro:graph-monoid}
+\lean{FreeMarkov.GraphMonoid, FreeMarkov.GraphMonoid.Hom, FreeMarkov.GraphMonoid.Hom.comp}
+\leanok
+A graph monoid is a directed graph $(V, A, s, t)$ whose vertices form a monoid.
+A homomorphism is a graph homomorphism that is a monoid homomorphism on vertices.
+\end{definition}
+
+\begin{definition}[Free graph monoid]
+\label{intro:free-graph-monoid}
+\lean{FreeMarkov.GraphMonoid.IsFreeOn, FreeMarkov.FreeGraphMonoid, FreeMarkov.FreeGraphMonoid.isFreeOn, FreeMarkov.GraphMonoid.IsFreeOn.exists_iso}
+\leanok
+\uses{intro:graph-monoid}
+A triple $(G, S, g)$ with $g : S \to V(G)$ injective and $V(G)$ isomorphic to the
+free monoid $W(S)$ over $g$. Every such triple is isomorphic to one with
+$V(G) = W(S)$, which is the form used throughout.
+\end{definition}
+
+\begin{proof}
+\leanok
+The extension of $g$ to $W(S)$ is a monoid isomorphism; transport sources and
+targets along its inverse.
+\end{proof}
+
+\begin{definition}[Free $\mathrm{DD}$-graph monoid]
+\label{intro:dd-graph-monoid}
+\lean{FreeMarkov.FreeDDGraphMonoid}
+\leanok
+\uses{intro:free-graph-monoid}
+A free graph monoid with, for each letter $a$, distinguished arrows
+$a \to aa$ (duplicate) and $a \to \emptyset$ (discard).
+\end{definition}
+
+\begin{definition}[Symmetric strict monoidal category]
+\label{intro:strict-smc}
+\lean{FreeMarkov.StrictSMC, FreeMarkov.StrictSMC.hexagon_reverse}
+\leanok
+A category whose objects form a monoid under $\otimes$, with $\otimes$ on
+morphisms and a symmetry satisfying the axioms of a symmetric monoidal category
+with identity associators and unitors. The second hexagon follows from the first.
+\end{definition}
+
+\begin{proof}
+\leanok
+The second hexagon is the inverse of the first one for the transposed pair.
+\end{proof}
+
+\begin{definition}[Strict Markov category]
+\label{intro:strict-markov}
+\lean{FreeMarkov.StrictMarkov}
+\leanok
+\uses{intro:strict-smc}
+A strict symmetric monoidal category with duplicates $\delta_A$ and discards
+$\epsilon_A$ forming cocommutative comonoids (1.1), compatible with $\otimes$
+(1.2), with natural discards (1.3).
+\end{definition}
+
+\begin{lemma}[$\epsilon_\moi = 1$, $\delta_\moi = 1$; Fritz, Remark 2.3]
+\label{intro:unit}
+\lean{FreeMarkov.StrictMarkov.discard_one, FreeMarkov.StrictMarkov.copy_one, FreeMarkov.StrictMarkov.eq_discard}
+\leanok
+\uses{intro:strict-markov}
+In a strict Markov category $\epsilon_\moi = 1_\moi$, $\delta_\moi = 1_\moi$, and
+every morphism $A \to \moi$ is $\epsilon_A$.
+\end{lemma}
+
+\begin{proof}
+\leanok
+$1_\moi = (\epsilon_\moi \otimes 1_\moi)\delta_\moi = \epsilon_{\moi\moi}\delta_\moi
+= \epsilon_\moi$ by counitality and naturality; then counitality gives
+$\delta_\moi = 1_\moi$. Proved, not assumed.
+\end{proof}
+
+\begin{theorem}[Bridge to Mathlib]
+\label{intro:bridge}
+\lean{FreeMarkov.StrictSMC.monoidalCategory, FreeMarkov.StrictSMC.symmetricCategory, FreeMarkov.StrictMarkov.comonObj, FreeMarkov.StrictMarkov.markovCategory}
+\leanok
+\uses{intro:strict-markov, intro:unit}
+A symmetric strict monoidal category is a Mathlib symmetric monoidal category
+with associators and unitors identities, and a strict Markov category is a
+Mathlib Markov category with copy $\delta$ and discard $\epsilon$.
+\end{theorem}
+
+\begin{proof}
+\leanok
+Each Mathlib axiom becomes, after stripping identity casts, an axiom of the
+strict structure or Lemma~\ref{intro:unit}.
+\end{proof}
+
+\begin{definition}[Underlying graph monoid]
+\label{intro:underlying}
+\lean{FreeMarkov.graphMonoid, FreeMarkov.StrictFunctor.toGraphMonoidHom}
+\leanok
+\uses{intro:graph-monoid, intro:strict-smc}
+For a strict monoidal category $\mathcal D$: vertices the objects, arrows all
+morphisms.
+\end{definition}
+
+\begin{definition}[Strict functors]
+\label{intro:strict-functor}
+\lean{FreeMarkov.StrictFunctor, FreeMarkov.StrictMarkovFunctor, FreeMarkov.StrictFunctor.ext, FreeMarkov.StrictMarkovFunctor.ofMapCopy}
+\leanok
+\uses{intro:strict-markov, intro:unit, intro:underlying}
+Strong symmetric monoidal functors whose structure isomorphisms are identities;
+strict Markov functors also match duplicates and discards. Matching discards is
+automatic.
+\end{definition}
+
+\begin{definition}[Matching duplicates and discards]
+\label{intro:matches}
+\lean{FreeMarkov.FreeDDGraphMonoid.MatchesDupDisc}
+\leanok
+\uses{intro:dd-graph-monoid, intro:underlying, intro:strict-markov}
+A homomorphism $f : G \to \mathcal D$ sends the duplicate and discard on each
+letter $a$ to $\delta_{f(a)}$ and $\epsilon_{f(a)}$.
+\end{definition}
+
+\begin{definition}[Free strict Markov category]
+\label{intro:free-markov}
+\lean{FreeMarkov.IsFreeMarkov}
+\leanok
+\uses{intro:matches, intro:strict-functor}
+$\mathcal C$ is free over $G$ via $i$ if $i$ matches duplicates and discards
+and every such $f : G \to \mathcal D$ factors as $F \circ i$ for exactly one
+strict Markov functor $F$.
+\end{definition}
+
+\begin{remark}[Remark 1.1]
+\label{rem:1.1}
+Comparison with other approaches. Not formalized.
+\end{remark}
+
+\section{The syntactic free symmetric strict monoidal category (Stage 0, D4)}
+
+\begin{definition}[$\mathrm{Syn}_s(G)$]
+\label{syn:def}
+\lean{FreeMarkov.FreeGraphMonoid.Term, FreeMarkov.FreeGraphMonoid.Rel, FreeMarkov.FreeGraphMonoid.Syn, FreeMarkov.FreeGraphMonoid.Syn.strictSMC, FreeMarkov.FreeGraphMonoid.Syn.ι}
+\leanok
+\uses{intro:free-graph-monoid, intro:strict-smc, intro:underlying}
+Objects the words; morphisms the composites and products of generators,
+identities and symmetries modulo the axioms of a symmetric strict monoidal
+category.
+\end{definition}
+
+\begin{theorem}[Generation]
+\label{syn:generation}
+\lean{FreeMarkov.FreeGraphMonoid.Syn.induction}
+\leanok
+\uses{syn:def}
+Every morphism of $\mathrm{Syn}_s(G)$ is built from generators, identities and
+symmetries by $\circ$ and $\otimes$.
+\end{theorem}
+
+\begin{proof}
+\leanok
+Induction on terms.
+\end{proof}
+
+\begin{theorem}[Universal property of $\mathrm{Syn}_s(G)$]
+\label{syn:universal}
+\lean{FreeMarkov.FreeGraphMonoid.Syn.existsUnique_lift, FreeMarkov.FreeGraphMonoid.Syn.lift, FreeMarkov.FreeGraphMonoid.Syn.interp_sound, FreeMarkov.FreeGraphMonoid.Syn.strictFunctor_ext}
+\leanok
+\uses{syn:def, syn:generation, intro:strict-functor}
+Every homomorphism from $G$ to a symmetric strict monoidal category factors
+through $G \to \mathrm{Syn}_s(G)$ by exactly one strict symmetric monoidal functor.
+\end{theorem}
+
+\begin{proof}
+\leanok
+Interpret terms; related terms have equal values; uniqueness by induction on terms.
+\end{proof}
+
+\section{Joyal--Street diagrams (Stage 1)}
+
+\begin{definition}[Definition 2.1: graphs, valuations, diagrams]
+\label{def:2.1}
+\uses{intro:free-graph-monoid, intro:strict-smc}
+Graphs (combinatorial, D1), valuations in a strict symmetric monoidal category
+or a free graph monoid, diagrams, isomorphisms, domain and codomain.
+\end{definition}
+
+\begin{remark}[Remark 2.2]
+\label{rem:2.2}
+\uses{def:2.1}
+Isomorphisms of graphs versus isotopy in $\mathbb R^4$. Not formalized.
+\end{remark}
+
+\begin{theorem}[Theorem 2.3, Joyal--Street; cited result C1]
+\label{thm:2.3}
+\uses{def:2.1, syn:universal}
+Isomorphism classes of anchored diagrams in $G$ form the free symmetric strict
+monoidal category $\mathcal F_s(G)$. Assumed in comparison form (D4): a bijection
+between $\mathrm{Syn}_s(G)(a,b)$ and classes of diagrams from $a$ to $b$
+respecting the operations.
+\end{theorem}
+
+\begin{definition}[Value of a diagram]
+\label{def:2.value}
+\uses{thm:2.3, intro:underlying}
+The value of a diagram in a strict symmetric monoidal category $\mathcal C$:
+its image under $\mathcal F_s(G_{\mathcal C}) \to \mathcal C$.
+\end{definition}
+
+\begin{definition}[Paths, levels, cuts, layers]
+\label{def:2.layers}
+\uses{def:2.1}
+Directed paths, the partial order on nodes, levels, $\mathrm{cut}(L)$, subgraphs,
+layers $\Gamma[L, M]$.
+\end{definition}
+
+\begin{remark}[Remark 2.4]
+\label{rem:2.4}
+\uses{thm:2.3, def:2.layers}
+For levels $L \subseteq M$ and compatible orderings,
+$[\Gamma] = [\Gamma[M, \dot\Gamma]] \circ [\Gamma[L, M]] \circ [\Gamma[\emptyset, L]]$.
+\end{remark}
+
+\section{Surgeries (Stage 2)}
+
+\begin{definition}[Definition 3.1: normal subgraphs]
+\label{def:3.1}
+\uses{def:2.layers}
+Normal subgraphs and $\Gamma'^\flat$.
+\end{definition}
+
+\begin{lemma}[Lemma 3.2]
+\label{lem:3.2}
+\uses{def:3.1}
+A subgraph is normal iff it lies in a layer $\Gamma[L,M]$ with
+$\Gamma[L,M]^\flat = \Gamma'^\flat$.
+\end{lemma}
+
+\begin{definition}[Templates and surgery]
+\label{def:3.surgery}
+\uses{lem:3.2, thm:2.3}
+The surgery $\Gamma^\Omega_\Lambda(\phi, \alpha, \beta)$ by three-piece gluing.
+\end{definition}
+
+\begin{lemma}[Lemma 3.3]
+\label{lem:3.3}
+\uses{def:3.surgery, rem:2.4}
+Characterization of the results of a surgery by a decomposition of $[\Gamma]$.
+\end{lemma}
+
+\begin{definition}[Definition 3.4: $T$-surgery, $T$-equivalence]
+\label{def:3.4}
+\uses{def:3.surgery}
+For a symmetric set of templates $T$: $T$-surgeries, $T$-equivalence, the
+congruences $\mathbf S_T$ and $\mathbf E_T$.
+\end{definition}
+
+\begin{corollary}[Corollary 3.5]
+\label{cor:3.5}
+\uses{def:3.4, lem:3.3, thm:2.3}
+$\mathbf S_T = \mathbf E_T$.
+\end{corollary}
+
+\section{Free Markov categories (Stages 3 and 4)}
+
+\begin{definition}[Markov templates (4.1)--(4.4)]
+\label{def:4.templates}
+\uses{def:3.4}
+Coassociativity, counitality, cocommutativity and naturality of discard as
+templates; the congruence $\mathbf S_M$.
+\end{definition}
+
+\begin{theorem}[Theorem 4.1]
+\label{thm:4.1}
+\uses{cor:3.5, lem:3.2, def:4.templates, intro:free-markov, intro:bridge, thm:2.3}
+$\mathcal F_s(G)/\mathbf S_M$ is the free Markov category over $G$.
+Advertised result.
+\end{theorem}
+
+\begin{remark}[Remark 4.2]
+\label{rem:4.2}
+\uses{thm:4.1, syn:universal}
+An equation of terms follows from the Markov axioms iff the diagrams are related
+by Markov surgeries. To be proved (Stage 3).
+\end{remark}
+
+\begin{definition}[Skeletons]
+\label{def:4.skeleton}
+\uses{def:2.layers}
+Quasi-terminal nodes, $\Delta_\Gamma$, splitter paths, origins, live nodes,
+consumers, same skeleton.
+\end{definition}
+
+\begin{lemma}[Lemma 4.3]
+\label{lem:4.3}
+\uses{def:4.templates, def:3.surgery, def:4.skeleton}
+Diagrams in the same $\mathbf S_M$-class have the same skeleton, with the three
+consequences. Cited by the application.
+\end{lemma}
+
+\begin{definition}[Markov minimal, Markov congruent]
+\label{def:4.minimal}
+\uses{def:4.skeleton}
+Markov minimal diagrams and Markov congruence.
+\end{definition}
+
+\begin{lemma}[Lemma 4.4]
+\label{lem:4.4}
+\uses{lem:4.3, def:4.minimal}
+Every class contains a Markov minimal diagram; minimal diagrams with the same
+skeleton are Markov congruent; the skeleton is a complete invariant. Cited by
+the application.
+\end{lemma}
+
+\begin{lemma}[Lemma 4.5]
+\label{lem:4.5}
+\uses{lem:4.3, lem:4.4}
+Dead inputs: the three items. Cited by the application.
+\end{lemma}
+
+\section{Effects (Stage 5)}
+
+\begin{definition}[Definition 5.1: multipliers]
+\label{def:5.1}
+\uses{intro:strict-markov}
+Morphisms generated from duplicates, discards, symmetries and identities on the
+$w_i$.
+\end{definition}
+
+\begin{remark}[Remark 5.2]
+\label{rem:5.2}
+\uses{def:5.1, thm:4.1, lem:4.4}
+Uniqueness of the multiplier on $(w, w^m)$ in a straight category; the
+$m$-fold copy. Cited by the application.
+\end{remark}
+
+\begin{remark}[Remark 5.3]
+\label{rem:5.3}
+\uses{def:5.1, thm:4.1, lem:4.4}
+Uniqueness of multipliers on distinct letters when the objects form a free
+monoid. Cited by the application.
+\end{remark}
+
+\begin{definition}[Definition 5.4: effects]
+\label{def:5.4}
+\uses{def:5.1, rem:5.2}
+The effect $[w_T \| w_S]_{(W,K)}$ and its independence of the assignment.
+\end{definition}
+
+\begin{lemma}[Lemma 5.5]
+\label{lem:5.5}
+\uses{def:5.4, rem:2.4}
+Splitting an effect at $T_i$.
+\end{lemma}
+
+\begin{proposition}[Proposition 5.6]
+\label{prop:5.6}
+\uses{def:5.4, lem:5.5}
+Strict Markov functors preserve effects.
+\end{proposition}
+
+\begin{definition}[Strictification; cited result C2]
+\label{cite:C2}
+\uses{intro:strict-markov, intro:bridge}
+For a Markov category $\mathcal M$, the strict Markov category
+$\mathrm{str}(\mathcal M)$ and $\mathrm{eval} : \mathrm{str}(\mathcal M) \to \mathcal M$.
+Assumed.
+\end{definition}
+
+\begin{remark}[Remark 5.7]
+\label{rem:5.7}
+\uses{def:5.4, lem:5.5, prop:5.6, cite:C2}
+The construction without straightness, and in arbitrary Markov categories.
+Primary form of Section 5 (D6).
+\end{remark}
+
+\section{Refinement (Stage 6)}
+
+\begin{definition}[Terminology 6.1]
+\label{ter:6.1}
+\uses{intro:free-graph-monoid}
+Variables, atomic and singular variables; $\mathbf{FinODAG}$.
+\end{definition}
+
+\begin{definition}[Definition 6.2: $W(G)$, $\mathrm{Cau}(G)$]
+\label{def:6.2}
+\uses{ter:6.1, intro:dd-graph-monoid, thm:4.1}
+The free $\mathrm{DD}$-graph monoid $W(G)$ with causal mechanisms, and
+$\mathrm{Cau}(G)$.
+\end{definition}
+
+\begin{definition}[Definition 6.3: causal effects]
+\label{def:6.3}
+\uses{def:6.2, def:5.4}
+Causal effects of singular variables and twists.
+\end{definition}
+
+\begin{definition}[Definition 6.4: refinement]
+\label{def:6.4}
+\uses{def:6.2, thm:4.1}
+The $\phi$-refinement $\phi^* : \mathrm{Cau}(G) \to \mathrm{Cau}(H)$.
+\end{definition}
+
+\begin{remark}[Example 6.5]
+\label{ex:6.5}
+\uses{def:6.4}
+Interventions $i_v^*$ and equation (6.2).
+\end{remark}
+
+\begin{proposition}[Proposition 6.6]
+\label{prop:6.6}
+\uses{def:6.4, def:6.3, lem:4.4, def:5.4, def:2.value}
+$\phi^*([w \| v]) = [\phi^*(w) \| \phi^*(v)]$.
+\end{proposition}
+
+\begin{theorem}[Theorem 6.7]
+\label{thm:6.7}
+\uses{prop:6.6, thm:4.1}
+Refinement is a contravariant functor $\mathbf{FinODAG} \to \mathbf{MarCat}$
+(target fixed by D7). Advertised result.
+\end{theorem}
