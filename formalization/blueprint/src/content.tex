@@ -552,37 +552,74 @@ congruence read on classes satisfies the criterion of Lemma~\ref{lem:4.criterion
 
 \begin{definition}[Skeletons]
 \label{def:4.skeleton}
+\lean{FreeMarkov.PGraph.ReachCod, FreeMarkov.PGraph.QuasiTerminal, FreeMarkov.PGraph.IsOrigin, FreeMarkov.PGraph.Live, FreeMarkov.PGraph.Consumer, FreeMarkov.PGraph.isOrigin_unique, FreeMarkov.PGraph.exists_isOrigin, FreeMarkov.PGraph.exists_isPath_iff, FreeMarkov.Diagram.OriginAt, FreeMarkov.Diagram.OriginsMatch, FreeMarkov.Diagram.SkeletonIso, FreeMarkov.Diagram.SameSkeleton, FreeMarkov.AGraph.HasPath, FreeMarkov.AGraph.HasSplitter}
+\leanok
 \uses{def:2.layers}
 Quasi-terminal nodes, $\Delta_\Gamma$, splitter paths, origins, live nodes,
-consumers, same skeleton.
+consumers, same skeleton. ``Every maximal directed path from $x$ ends at a terminal
+node'' is read as ``no directed path from $x$ ends in $\mathrm{cod}(\Gamma)$''; directed
+paths are chains of consecutive edges, equivalent to Stage 1's lists.
 \end{definition}
 
 \begin{lemma}[Lemma 4.3]
 \label{lem:4.3}
-\uses{def:4.templates, def:3.surgery, def:4.skeleton}
+\lean{FreeMarkov.Diagram.lemma_4_3, FreeMarkov.Diagram.lemma_4_3_sameSkeleton, FreeMarkov.Diagram.skeletonIso_items, FreeMarkov.Diagram.TStep.sameSkeleton, FreeMarkov.FreeDDGraphMonoid.markovTemplates_stepCond, FreeMarkov.Diagram.exists_tilde_of_skeletonIso, FreeMarkov.Diagram.hasPath_iff_of_skeletonIso, FreeMarkov.Diagram.hasSplitter_iff_of_skeletonIso}
+\leanok
+\uses{def:4.templates, def:3.surgery, lem:3.3, def:4.skeleton}
 Diagrams in the same $\mathbf S_M$-class have the same skeleton, with the three
-consequences. Cited by the application.
+consequences. Cited by the application. No cited result is used.
 \end{lemma}
+\begin{proof}
+\leanok
+One surgery at a time, through the canonical description of its result: the live nodes
+lie outside $\Omega$ and stay live, origins of consumers are carried along; the bijection
+is onto by the reverse surgery. The items: counting the consumers at each origin (item 1),
+directed and splitter paths as chains of consumers (items 2, 3).
+\end{proof}
 
 \begin{definition}[Markov minimal, Markov congruent]
 \label{def:4.minimal}
-\uses{def:4.skeleton}
-Markov minimal diagrams and Markov congruence.
+\lean{FreeMarkov.Diagram.MarkovMinimal, FreeMarkov.Diagram.MarkovCongruent, FreeMarkov.FreeDDGraphMonoid.congTemplates}
+\leanok
+\uses{def:4.skeleton, def:4.templates}
+Markov minimal diagrams and Markov congruence (the congruence of surgeries with (4.1),
+(4.3) and their reverses).
 \end{definition}
 
 \begin{lemma}[Lemma 4.4]
 \label{lem:4.4}
-\uses{lem:4.3, def:4.minimal}
+\lean{FreeMarkov.Diagram.lemma_4_4, FreeMarkov.Diagram.lemma_4_4_exists_minimal, FreeMarkov.Diagram.lemma_4_4_congruent, FreeMarkov.Diagram.lemma_4_4_iff, FreeMarkov.Diagram.lemma_4_4_minimal_congruent, FreeMarkov.JoyalStreet.projM_map_eq_iff}
+\leanok
+\uses{lem:4.3, def:4.minimal, def:3.surgery, lem:3.3}
 Every class contains a Markov minimal diagram; minimal diagrams with the same
 skeleton are Markov congruent; the skeleton is a complete invariant. Cited by
-the application.
+the application. Only \texttt{projM\_map\_eq\_iff} (the form in
+$\mathcal F_s(G)/\mathbf S_M$) uses C1.
 \end{lemma}
+\begin{proof}
+\leanok
+Existence: surgeries with (4.2), (4.4) at embedded templates lower the number of nodes
+that are not discards. Congruence: swaps (4.3) and rotations (4.1) on the same nodes and
+edges normalise the trees of duplicates to combs sorted by a rank; two sorted minimal
+combs with the same skeleton are isomorphic (coding of nodes and edges by live nodes,
+ports and consumers).
+\end{proof}
 
 \begin{lemma}[Lemma 4.5]
 \label{lem:4.5}
-\uses{lem:4.3, lem:4.4}
-Dead inputs: the three items. Cited by the application.
+\lean{FreeMarkov.JoyalStreet.lemma_4_5, FreeMarkov.Diagram.Dead, FreeMarkov.Diagram.lemma_4_5_path, FreeMarkov.Diagram.lemma_4_5_dead, FreeMarkov.JoyalStreet.tauM, FreeMarkov.JoyalStreet.IsFactor, FreeMarkov.JoyalStreet.lemma_4_5_unique, FreeMarkov.JoyalStreet.lemma_4_5_minimal, FreeMarkov.liveW, FreeMarkov.deadW, FreeMarkov.tauPos}
+\leanok
+\uses{lem:4.3, lem:4.4, rem:2.4, def:4.words}
+Dead inputs: the three items. Cited by the application. The first two items use no cited result.
 \end{lemma}
+\begin{proof}
+\leanok
+Items 1, 2 from the origins of consumers and Lemma 4.3. Item 3 for a Markov minimal
+diagram: the dead inputs end at discards, which form a level; the lower layer has the
+skeleton of $(1_{a''} \otimes \varepsilon_{a'}) \circ \tau$ and $g$ is the class of the
+upper layer. Uniqueness: $(\Upsilon \otimes \varepsilon_{a'}) \circ \tau$ determines the
+skeleton of $\Upsilon$.
+\end{proof}
 
 \section{Effects (Stage 5)}
 

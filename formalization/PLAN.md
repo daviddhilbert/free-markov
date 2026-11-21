@@ -93,7 +93,14 @@ A graph without circles is determined up to isomorphism by this data.
 
 Default: formalize the incidence data and treat the topological wording of
 Section 2 as part of the cited background (it is recorded in the blueprint, not
-in Lean). Sketch, not compiled:
+in Lean).
+
+Author's decision, 2026-11-20: the passage between topological graphs and
+incidence data (same isomorphism classes for finite graphs without circles) is
+not to be formalized, also not in Stage 7; a reference is enough. The reference
+is still to be chosen and recorded here.
+
+Sketch, not compiled:
 
 ```lean
 structure PGraph where
@@ -449,6 +456,32 @@ hand-over in `stage 3/HANDOFF.md`. Decided in Stage 3, within this plan:
 
 Done when: the three lemmas are proved in the form used by the application.
 
+**Record (2026-11-20): done.** `python3 scripts/verify.py` passes: build exit code 0
+with no warnings, no `sorry`, 880 Stage 4 declarations using only `propext`,
+`Classical.choice`, `Quot.sound`; `FreeMarkov.JoyalStreet` occurs in 11 theorems, all
+about `F_s(G)/S_M` (`JoyalStreet.projM_map_eq_iff` and the third item of Lemma 4.5).
+Lemma 4.3 is `Diagram.lemma_4_3`, Lemma 4.4 `Diagram.lemma_4_4` (with `lemma_4_4_iff`),
+Lemma 4.5 `JoyalStreet.lemma_4_5` (items 1, 2 also as `Diagram.lemma_4_5_path`,
+`lemma_4_5_dead`, without `J`). Status in `stage 4/STATUS.md`, hand-over in
+`stage 4/HANDOFF.md`. Decided in Stage 4, within this plan:
+
+- Quasi-terminal is read as "no directed path from the node ends in `cod(Γ)`"; directed
+  paths are chains of consecutive edges, equivalent to Stage 1's lists; the origin is a
+  relation with existence and uniqueness; "same skeleton" includes equal domain and
+  codomain words.
+- Markov congruent is `S_T` for `T` = (4.1), (4.3), their reverses and the empty template.
+- Lemma 4.5: `J` as positions (`Diagram.Dead`); `τ` is the class of the node-free diagram
+  of the permutation "positions outside `J`, then those in `J`"; the equation is
+  `projM f = τ ≫ (g ⊗ ε_{a'}) ≫ eqToHom (mul_one _)`; "every diagram that represents `g`"
+  is every `Υ` with `J.cls h = [Υ]`, `projM h = g`.
+- Proof methods: Lemma 4.3 by one surgery at a time through the canonical description,
+  the bijection of live nodes onto by the reverse surgery; Lemma 4.4's congruence by
+  normalising the trees of duplicates to sorted combs (swaps, rotations on the same
+  nodes and edges) and an isomorphism of sorted minimal combs by coding; Lemma 4.5's
+  existence through the layer decomposition at the discards of the dead inputs.
+- No paper feedback; no Stage 0–3 source changed. Stage 3's open item 2 (the diagram of
+  `δ_a`) was not needed and stays open.
+
 ### Stage 5 — Section 5: effects (L)
 
 - Straight categories; Definition 5.1 (multipliers, as an inductive
@@ -482,6 +515,10 @@ Done when: Lemma 5.5 and Proposition 5.6 are proved in the generality fixed by D
 Done when: Theorem 6.7 is proved in the form fixed by D7.
 
 ### Stage 7 — optional, after the paper is covered
+
+Author's decisions, 2026-11-20: `Strictification M` (C2) stays assumed and is
+not to be discharged. Whether to construct an inhabitant of `JoyalStreet G`
+(C1) is decided after Stage 6; if it is done, the combinatorial model only.
 
 - Construct an inhabitant of `JoyalStreet G` for the combinatorial model, and of
   `Strictification M`, removing the cited hypotheses. No formalization of
