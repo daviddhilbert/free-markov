@@ -108,6 +108,26 @@ effect formed from the `F(κ_i)`, up to the comparison isomorphisms. This is the
 in the general form, C2 only in `Combinatorial.prop_5_6_markov` (stated for `Cau(G)` and the causal
 effects `causalEffectSets` of Section 6).
 
+## Use in the application
+
+A separate manuscript on the do-calculus takes models to be strong Markov functors
+`Cau(G) → M` into arbitrary Markov categories. Such a model is a
+`MarkovFun (Combinatorial.js G).FsM M`. Given a strictification of `M`, (b)–(d) say that a model
+is determined, up to a unique monoidal natural isomorphism lifting the identity on the
+generators, by the objects `F(v)` and the morphisms `F(κ_v)`, and that every such choice occurs.
+
+Limits of what is proved here (final audit, 2026-11-21):
+
+- (e) expresses `F([v_T ‖ v_S])` through the effect in `M` of Section 5, which is itself defined
+  as `eval` of an effect in `str(M)`. It is a structural identity; no explicit formula in `M` in
+  terms of copies, products and composites of the `F(κ_v)` is proved for non-strict `M`, and the
+  right-hand side depends on the chosen strictification. For strict `M` the explicit form is
+  Stage 5's `MData.effect_strict` and `EffData.prop_5_6`.
+- No concrete Markov category (for example finite stochastic matrices) and no instance of
+  `Strictification` is constructed in this repository.
+- A category in which discarding is not natural (relations, for example) is not a Markov category
+  in Mathlib's sense, so it is not covered.
+
 ## Relation to Fritz–Liang, Theorem 6.6, and to the Introduction of the paper
 
 - **Fritz–Liang, Theorem 6.6** (as cited in the task: `gsCat(FreeMarkov_Σ, C) ≃ CatHyp(Σ, hyp(C))`):
@@ -119,6 +139,18 @@ effects `causalEffectSets` of Section 6).
   Fritz–Liang paper is not in the project folder and was not consulted, so the comparison is with
   the statement as cited, not with their definitions line by line. Their strict version,
   Corollary 6.7, corresponds to Theorem 4.1 (Stage 3) and to Stage 7's `fsM_unique_iso`.
+- **The Introduction's remark** (Introduction of the paper: "the strictness of `F` cannot simply be
+  replaced by uniqueness up to a unique monoidal natural isomorphism"; the example with `S = {a}`
+  and the transposition of a two-element set): consistent with (c). The uniqueness in (c) is
+  uniqueness *of the lift of a given morphism of interpretations*, not uniqueness of an
+  isomorphism between two extensions: in the paper's example the transposition `τ` of `f(a)`
+  commutes with duplicating and discarding, so `(τ)` is an automorphism of the interpretation, and
+  (c) lifts it to the monoidal natural automorphism `(τ^{⊗n})` of the extension — exactly the
+  non-identity automorphism of the remark. What is unique is the lift of each automorphism of the
+  interpretation; the extension is unique up to isomorphism, and the isomorphism is unique only
+  once its restriction to the generators is fixed. This is the 2-categorical form the paper
+  attributes to Fritz–Liang; the strict form (Theorem 4.1) is what the paper proves. The example
+  itself is not formalized.
 - **The Introduction's other sentence** ("the restriction to strict Markov categories is harmless,
   since every Markov category is comonoid equivalent to a strict one", Fritz, Theorem 10.17): C2 is
   the form of this used here; only clauses 1–5 of C2 (no essential surjectivity, no quasi-inverse,
@@ -182,3 +214,4 @@ interpretations are given directly by objects of `M` and lifted along one-letter
 - `formalization/PLAN.md`: Stage 8 record.
 - No Stage 0–7 source was changed; no defect found; no paper feedback; nothing installed or
   imported beyond the pinned Mathlib already on disk (`Mathlib.CategoryTheory.Monoidal.NaturalTransformation`).
+

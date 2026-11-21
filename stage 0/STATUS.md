@@ -22,6 +22,9 @@ trial is recorded (PLAN.md, D2 and D3).
   name exists. Its PDF wrapper compiles with the cached tectonic (title font
   aside); the web version was not rendered (`leanblueprint` is not installed).
 
+Toolchain: `lake` of Lean `v4.35.0` (see `lean-toolchain`)
+(Lean 4.35.0), Mathlib `56a005855ea17e0b0958f73ec801ae140b0a1679`. Nothing was
+installed.
 
 ## Files (`stage 0/FreeMarkov/Stage0/`)
 
@@ -64,3 +67,4 @@ record) so that later stages keep them.
 - The blueprint is `formalization/blueprint/`, since the root `.gitignore`
   publishes `formalization/` and not a root `blueprint/`; it is a
   standard `leanblueprint` source tree.
+

@@ -11,7 +11,7 @@ For `J : G.JS` (so `J.FsM = Cau(G)`):
 * `causalEffect J v w = [w ‖ v] = τ_* ∘ [v_T ‖ v_S] ∘ ρ_*⁻¹ : v → w` for singular `v`, `w`;
   `prior J w = [w]`, the case `v = ∅`.
 * `causalEffect_finWord`: for `v = v_S`, `w = v_T` the twist is `[v_T ‖ v_S]` itself.
-* `twist_isMultiplier`, `twist_unique`: "since the atomic variables are pairwise distinct letters,
+* `twist_isMultiplier`, `multiplier_unique`: "since the atomic variables are pairwise distinct letters,
   `τ_*` and `ρ_*` are the multipliers `ι_{v_T → w}` and `ι_{v_S → v}` of Remark 5.3": the symmetry
   `τ_*` is a multiplier on the letters of its domain, and it is the only one with its domain and
   codomain.

@@ -10,7 +10,7 @@ claim of Remark 5.7 (the `m`-fold copy is the image of the unique morphism `a â†
   morphism.
 * `remark_5_2`: in a straight Markov category the `m`-fold copy is the only multiplier on
   `(w, w^m)`.
-* `isMult_select`: in every strict Markov category, if `v` is a monoidal product of members of `W`
+* `exists_multiplier`: in every strict Markov category, if `v` is a monoidal product of members of `W`
   then there is a multiplier on `(W, v)`.
 * `remark_5_3`, `remark_5_3_none`: if the objects form a free monoid, the `w_i` are pairwise
   distinct letters and `v` is a word in them, there is exactly one multiplier on `(W, v)`; if

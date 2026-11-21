@@ -5,7 +5,7 @@ origin of an edge, quasi-terminal nodes, live nodes, consumers.
 
 They are defined for a polarized graph together with a predicate `D` on its nodes ("the
 value of the node is a duplicate"); for a diagram in a free DD-graph monoid `D` is
-`Valuation.IsDup` (`Diagram.lean` of this stage).
+`Valuation.IsDup` (`Skeleton.lean`).
 
 Readings fixed here (recorded in `stage 4/STATUS.md`):
 
@@ -151,7 +151,7 @@ input of a live node." -/
 def Consumer (e : E) : Prop := Γ.tgt e = none ∨ ∃ x, Γ.tgt e = some x ∧ Γ.Live D x
 
 /-- Nodes whose value is a duplicate have exactly one input (true for diagrams,
-`Valuation.dupCond`). -/
+`PDiagram.dupCond`, `Diagram.dupCond` in `Skeleton.lean`). -/
 def DupCond : Prop := ∀ x, D x → ∃ e, Γ.ins x = [e]
 
 variable {Γ D}

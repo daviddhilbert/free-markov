@@ -1,7 +1,7 @@
 # Stage 1 status
 
 Updated 2026-11-20. Plan: `formalization/PLAN.md`, Stage 1, with D1, D3, D4 and
-ground rules 1–9. Source: Section 2 of `Free Markov - revised.tex`.
+ground rules 1–9. Source: Section 2 of `paper/free-markov.tex`.
 
 **State: complete.** The "Done when" line of PLAN.md holds: the layer
 decomposition (Remark 2.4) is proved, and Theorem 2.3 is available under the
@@ -136,7 +136,7 @@ ours are combinatorial.
 
 Original record:
 
-PLAN.md risk 5 and the Stage 0 hand-over ask that the author review the statement of
+PLAN.md risk 5 asks that the author review the statement of
 `JoyalStreet` before proofs build on it. Following ground rule 9 the stage went
 ahead; the statement is item 5 above and the structure at the top of
 `JoyalStreet.lean`. If the author changes it, only `JoyalStreet.lean` and

@@ -6,8 +6,8 @@ category `Syn_s(G)` on a free graph monoid `G` (design decision D4 of
 Objects are the words `FreeMonoid S`; morphisms `a ⟶ b` are formal composites and
 monoidal products of generators, identities and symmetries, modulo the axioms of
 a symmetric strict monoidal category.  Joyal–Street's Theorem 2.3 (the cited
-result C1) is later assumed as a bijection between these morphisms and classes
-of anchored diagrams (Stage 1); freeness of `Syn_s(G)` and the generation
+result C1) is stated in Stage 1 as a bijection between these morphisms and classes
+of anchored diagrams, and proved for the combinatorial diagrams in Stage 7; freeness of `Syn_s(G)` and the generation
 principle are *proved* here.
 
 The pattern (terms modulo the axioms, `lift`, induction on terms) follows

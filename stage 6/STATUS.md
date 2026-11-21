@@ -1,7 +1,7 @@
 # Stage 6 status
 
 Updated 2026-11-20. Plan: `formalization/PLAN.md`, Stage 6 (D7, ground rules 1–9, the row for
-Proposition 6.6 in Section 6, risk 4). Source: Section 6 of `Free Markov - revised.tex`
+Proposition 6.6 in Section 6, risk 4). Source: Section 6 of `paper/free-markov.tex`
 (functoriality over ordered directed acyclic graphs).
 
 **State: complete.** The "Done when" line of PLAN.md holds: Theorem 6.7 is proved in the form fixed by
@@ -63,7 +63,7 @@ Section 6 has a Lean declaration (table below). The strictification hypothesis C
 | **Definition 6.4**: `φ^*`, the unique strict Markov functor agreeing with `f_φ` | `refine φ JH JG`, `refine_spec`, `eq_refine` |
 | **Example 6.5**: `G_{\bar v}`, `i_v`, fibers singletons, `i_v^*`, (6.2), the case `u ∉ v`, duplicates and discards fixed | `cut`, `incl`, `fiber_incl`, `intervention`, `equation_6_2`, `intervention_mech_of_not_mem`, `intervention_copy`, `intervention_discard` (reading 6) |
 | Example 6.5, enlarged signature endofunctor | not formalized (optional in the plan) |
-| **Proposition 6.6** `φ^*([w ‖ v]) = [φ^*(w) ‖ φ^*(v)]`, in the unabbreviated form (6.2) of the display | `prop_6_6` (general singular `v`, `w`), `prop_6_6_sets` (`v_S`, `v_T`) (reading 5) |
+| **Proposition 6.6** `φ^*([w ‖ v]) = [φ^*(w) ‖ φ^*(v)]`, in the unabbreviated form (6.3) of the display | `prop_6_6` (general singular `v`, `w`), `prop_6_6_sets` (`v_S`, `v_T`) (reading 5) |
 | **Theorem 6.7** | `refinementStrict`, `refinement`, `theorem_6_7`, `theorem_6_7_strict`; identities `refine_id`, composition `refine_comp` |
 | `MarCat` (D7) | `MarCat`, `MarkovFunctor`, `StrictMarkovCat`, `StrictMarkovCat.toMarCat` (reading 7) |
 
@@ -132,7 +132,7 @@ Universes: the objects of `Cau(G)` and its hom-sets are in `Type`, so the functo
    image of a morphism of `F_s(W(G))` without causal mechanisms, then label coherence).
 5. **Proposition 6.6** is an equation in `Arrow Cau(H)` between `φ^*([w ‖ v]) : φ^*(v) → φ^*(w)` and
    `[φ⁻¹(w) ‖ φ⁻¹(v)]`, whose objects agree by `refine_obj` (`φ^*(v) = φ⁻¹(v)`); `φ⁻¹(v)` is singular by
-   `singular_preimW`. The unabbreviated form (6.2) of the paper is the same statement: the left-hand
+   `singular_preimW`. The unabbreviated form (6.3) of the paper is the same statement: the left-hand
    effect there is `φ^*([w ‖ v]_{(V_G, K_G)})` by Proposition 5.6, and the right-hand side is
    `[φ^*(w) ‖ φ^*(v)]_{(V_H, K_H)}`.
 6. **Example 6.5.** The singular variable `v` enters through its set of atomic variables `V`
@@ -170,10 +170,16 @@ Universes: the objects of `Cau(G)` and its hom-sets are in `Type`, so the functo
 Steps the paper leaves to the reader that are proved here (PLAN.md, Section 6): Proposition 6.6,
 "substitution of the blocks `B_y`" (`subst`, `card_subst`, `refine_projM`).
 
+## Use in the application
+
+A separate manuscript on the do-calculus uses `Cau(G)` (`J.FsM` for `J : G.JS`, with `pa(v)` in
+the order of the vertices) and the causal effects of sub-variables (`causalEffectSets`). It does
+not use `FinODAG`, `f_φ`, refinements, interventions `i_v^*`, Proposition 6.6 or Theorem 6.7.
+
 ## Items from earlier stages
 
 - Stage 3, open item 2 (the diagram of `δ_a` as one glued diagram): not needed by Stage 6 (the
-  duplicates on words enter through `ProdSig.projM_copyW`, a (1.2)-composite); stays open as decided.
+  duplicates on words enter through `ProdSig.projM_copyW`, a (1.2)-composite); it was left open. (Closed in the Stage 7 follow-up: `Combinatorial.copy_diagram`.)
 - Stage 3, open item 1: not touched.
 
 ## Paper feedback

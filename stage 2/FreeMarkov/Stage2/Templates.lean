@@ -36,7 +36,7 @@ def PDiagram.empty (G : FreeGraphMonoid.{w, v} S) : PDiagram G PEmpty.{u + 1} PE
   acyclic x := x.elim
   val := ⟨fun e => e.elim, fun x => x.elim, fun x => x.elim, fun x => x.elim⟩
 
-/-- **Definition 3.4 (templates).** A template `((Ω, u) / (Λ, w), α, β)`: two diagrams
+/-- **Templates** (Section 3, the text before Lemma 3.3; used in Definition 3.4). A template `((Ω, u) / (Λ, w), α, β)`: two diagrams
 `(Ω, u)`, `(Λ, w)` that are not anchored, with bijections `α : dom(Λ) → dom(Ω)` and
 `β : cod(Λ) → cod(Ω)` along which the labels agree ("`u`, `w` are compatible with
 respect to `α` and `β`"). -/

@@ -1,7 +1,7 @@
 # Stage 5 status
 
 Updated 2026-11-20. Plan: `formalization/PLAN.md`, Stage 5 (D6, C2, ground rules 1–9). Source:
-Section 5 of `Free Markov - revised.tex` (effects in a Markov category).
+Section 5 of `paper/free-markov.tex` (effects in a Markov category).
 
 **State: complete.** The "Done when" line of PLAN.md holds: Lemma 5.5 (`EffData.lemma_5_5`) and
 Proposition 5.6 (`EffData.prop_5_6`) are proved in the generality fixed by D6 — every strict Markov
@@ -165,6 +165,15 @@ definition of effects in `M` uses clauses 1–2, 4 (fullness, to lift `κ_i`) an
     `M` (with `EvalStrict`) it equals, as an arrow, the effect formed in `M` from the `a_i` and the
     `κ_i` read through `eval(w_{S_i}) = a_{S_i}` (`MData.effect_strict`).
 
+## Use in the application
+
+A separate manuscript on the do-calculus uses: the uniqueness of multipliers on distinct letters
+(`remark_5_3`, `remark_5_3_none`); Definition 5.4 in `Cau(G)` (`EffSig.freeEffect`,
+`projM_eq_freeEffect`), together with the facts that every causal mechanism occurs exactly once in
+an effect diagram and is live (`IsEffectDiagram.card`, `effectDiagram_live`); and
+Proposition 5.6 (`EffData.prop_5_6`), which allows repeated objects and the unit and needs no
+straightness. Lemma 5.5, the twists, `FinDAG` and the strictification are not used there.
+
 ## Proof methods differing from the paper (statements unchanged)
 
 1. **Uniqueness (Remarks 5.2, 5.3, Definition 5.4, Lemma 5.5)** all go through one lemma, label
@@ -195,7 +204,7 @@ Steps the paper leaves to the reader that are proved here (PLAN.md, Section 6): 
 ## Items from earlier stages
 
 - Stage 3, open item 2 (the diagram of `δ_a` as one glued diagram): not needed by Stage 5, not proved;
-  stays open as decided.
+  it was left open. (Closed in the Stage 7 follow-up: `Combinatorial.copy_diagram`.)
 - Stage 3, open item 1: not touched.
 
 ## Paper feedback

@@ -54,7 +54,7 @@ namespace PGraph
 variable {N : Type u₁} {E : Type u₂} (Γ : PGraph N E)
 
 /-- The edge `e` is loose in a subgraph with node set `P` (both ends outside `P`); for
-`e` in the subgraph this is `(Γ.sub P Q).IsLoose e` (`sub_isLoose_iff`). -/
+`e` in the subgraph this is `(Γ.sub P Q).IsLoose e` (`sub_isLoose_iff_looseIn`). -/
 def LooseIn (P : N → Prop) (e : E) : Prop :=
   (∀ x, Γ.src e = some x → ¬ P x) ∧ (∀ y, Γ.tgt e = some y → ¬ P y)
 

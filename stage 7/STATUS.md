@@ -128,17 +128,23 @@ combinatorial model without hypotheses.
 - `formalization/blueprint/src/content.tex`: section "C1 for the combinatorial diagrams
   (Stage 7)", nodes `s7:laws`, `s7:perm`, `s7:value`, `s7:bij`, `s7:C1`, `s7:uncond`; the Scope
   paragraph mentions Stage 7.
-- `formalization/PLAN.md`: the Stage 7 record (appended after the coordinator's uncommitted
-  paragraphs of the Stage 7 entry, which were left as they were).
+- `formalization/PLAN.md`: the Stage 7 record.
 - No Stage 0–6 source was changed; `structure JoyalStreet` is untouched. No defect was found in
   an earlier stage's definitions: every law holds for the operations of Stage 1 as defined.
 - No paper feedback (`PAPER-FEEDBACK.md` unchanged): the paper cites Joyal–Street, and nothing in
   its use of Theorem 2.3 is contradicted.
 
+# Final audit (2026-11-21)
+
+`Sections35.lean` adds the results of Sections 3–5 that Stages 2–5 state for an arbitrary
+instance of C1, with the proved instance substituted: `Combinatorial.cor_3_5`,
+`Combinatorial.remark_4_2`, `remark_4_2_surjective`, `Combinatorial.remark_5_2`, `remark_5_3`,
+`Combinatorial.effect`, `lemma_5_5`, `prop_5_6`.
+
 # Follow-up (2026-11-20): the diagram of `δ_a`, and uniqueness of the free Markov category
 
-Task: the two items recorded in the Stage 7 entry of `formalization/PLAN.md` (coordinator's
-decision on Stage 3's open item 2; author's decision on the comparison of free Markov categories).
+Task: the two items recorded in the Stage 7 entry of `formalization/PLAN.md` (Stage 3's open
+item 2; the comparison of free Markov categories).
 
 **Done.** `python3 scripts/verify.py` ends with `RESULT: PASS` (all eight libraries; build exit
 code 0, no warnings). Stage 7 now has 383 declarations (303 theorems), no `sorry`, no `axiom`,
@@ -206,3 +212,4 @@ Form of the conclusion: `(∃! F, i' = F ∘ i) ∧ ∀ F, i' = F ∘ i → ∃ 
 F ∘ F' = 1`, which says that the compatible functor is unique and that it is an isomorphism (in
 the category of strict Markov categories and strict Markov functors), with equalities of functors
 (no natural isomorphisms are needed in the strict setting).
+

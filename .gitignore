@@ -19,3 +19,6 @@ __pycache__/
 *.olean
 *.ilean
 .DS_Store
+
+# Session hand-over notes stay local.
+HANDOFF.md

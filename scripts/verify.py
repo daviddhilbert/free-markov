@@ -15,7 +15,7 @@ Steps:
 
 Usage:  python3 scripts/verify.py [--stage 0] [--report PATH]
 The toolchain is taken from $LAKE, else `lake` on PATH, else the elan toolchain
-named in `lean-toolchain` under ~/.elan.
+named in `lean-toolchain` under $ELAN_HOME or ~/.elan.
 """
 from __future__ import annotations
 
@@ -55,11 +55,12 @@ def find_lake() -> str:
         return on_path
     tc = (ROOT / "lean-toolchain").read_text().strip()
     folder = tc.replace("/", "--").replace(":", "---")
-    for home in (Path.home() / ".elan",):
+    homes = [Path(os.environ["ELAN_HOME"])] if os.environ.get("ELAN_HOME") else []
+    for home in homes + [Path.home() / ".elan"]:
         cand = home / "toolchains" / folder / "bin" / "lake"
         if cand.exists():
             return str(cand)
-    sys.exit("verify: no lake found (set $LAKE)")
+    sys.exit("verify: no lake found (set $LAKE or $ELAN_HOME)")
 
 
 def run(cmd: list[str], **kw) -> subprocess.CompletedProcess:

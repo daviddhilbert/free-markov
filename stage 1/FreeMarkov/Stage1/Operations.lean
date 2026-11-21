@@ -1,9 +1,9 @@
 /-
 Free Markov categories, Stage 1: the operations on diagrams that assemble them into
-`F_s(G)` (Section 2): gluing (composition), disjoint union (monoidal product),
-node-free diagrams of a permutation (identities and symmetries), one-node diagrams
-(generators); their invariance under isomorphism, and the induced operations on
-isomorphism classes.
+`F_s(G)` (Section 2): gluing (composition) and disjoint union (monoidal product).
+Node-free diagrams (identities and symmetries), one-node diagrams (generators), the
+invariance under isomorphism and the induced operations on isomorphism classes are in
+`Classes.lean`.
 
 *Section 2.* "If `cod(Γ, v) = dom(Ω, w)` then `[Ω, w] ∘ [Γ, v]` is represented by the
 diagram obtained from the disjoint union of `Γ` and `Ω` by identifying the outer

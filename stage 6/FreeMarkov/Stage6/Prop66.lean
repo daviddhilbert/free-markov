@@ -218,7 +218,7 @@ theorem refine_map_eqToHom {a b : JG.FsM} (h : a = b) :
 
 /-- **Proposition 6.6.** For singular variables `v`, `w` of `Cau(G)`,
 `φ^*([w ‖ v]) = [φ^*(w) ‖ φ^*(v)]`, where `φ^*(v) = φ⁻¹(v)` (singular by `singular_preimW`); in the
-unabbreviated form (6.2) of the paper, `φ^*([w ‖ v]_{(V_G, K_G)}) = [φ^*(w) ‖ φ^*(v)]_{(V_H, K_H)}`. -/
+unabbreviated form (6.3) of the paper, `φ^*([w ‖ v]_{(V_G, K_G)}) = [φ^*(w) ‖ φ^*(v)]_{(V_H, K_H)}`. -/
 theorem prop_6_6 (v w : FreeMonoid (Fin G.n)) (hv : Singular v) (hw : Singular w) :
     Arrow.mk ((refine φ JH JG).map (causalEffect JG v w hv hw)) =
       Arrow.mk (causalEffect JH (preimW φ v) (preimW φ w) (singular_preimW φ hv)

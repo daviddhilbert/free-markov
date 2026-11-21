@@ -18,6 +18,8 @@ combinatorial diagrams of Stage 1, and the unconditional forms of the main theor
   `copyM a` and `discardM a`, for every order of the prongs (Stage 3's open item 2).
 * `Uniqueness` (follow-up): free strict Markov (and free symmetric strict monoidal) categories over
   `G` are isomorphic by a unique compatible strict functor; comparison with `F_s(G)/S_M`, `F_s(G)`.
+* `Sections35` (final audit): Corollary 3.5, Remarks 4.2, 5.2, 5.3, Lemma 5.5 and Proposition 5.6
+  without C1.
 -/
 module
 
@@ -37,3 +39,4 @@ public import FreeMarkov.Stage7.Generation
 public import FreeMarkov.Stage7.JoyalStreet
 public import FreeMarkov.Stage7.CopyDiagram
 public import FreeMarkov.Stage7.Uniqueness
+public import FreeMarkov.Stage7.Sections35

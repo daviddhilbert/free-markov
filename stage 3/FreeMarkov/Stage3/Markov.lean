@@ -258,9 +258,10 @@ noncomputable def dupPronged (x : S) (b : Bool) :
     J.wordM (FreeMonoid.of x) ⟶ J.wordM (FreeMonoid.of x) * J.wordM (FreeMonoid.of x) :=
   if b then J.projM.map (J.hom (G.cocommΩ x)) else J.dupM x
 
-/-- The diagram `Γ` that defines `δ_a` for `a = a_1 ⋯ a_n`: the duplicates on the letters,
-the two outputs of the `i`th one joined to the `i`th and `(n+i)`th edges of the codomain
-in the order chosen by `c i`, read as a morphism of `F_s(G) / S_M` through (1.2). -/
+/-- The morphism of `F_s(G) / S_M` built through (1.2) from the duplicates on the letters of
+`a = a_1 ⋯ a_n`, the `i`th one with its two prongs in the order chosen by `c i`. It is a
+composite in the quotient, not a diagram; the paper's single diagram `Γ` for `δ_a` is
+`Diagram.copyD` (Stage 7), with `JoyalStreet.projM_copyWordD`. -/
 noncomputable def prongCopy : (l : List S) → (Fin l.length → Bool) →
     ((J.wordM (FreeMonoid.ofList l) : J.FsM) ⟶ J.wordM (FreeMonoid.ofList l) *
       J.wordM (FreeMonoid.ofList l))

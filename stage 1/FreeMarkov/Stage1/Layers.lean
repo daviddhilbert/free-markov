@@ -445,7 +445,7 @@ namespace Valuation
 
 variable {S : Type w} {G : FreeGraphMonoid.{w, v} S} {N : Type u₁} {E : Type u₂}
 
-/-- *Section 3 (used with Remark 2.4).* The restriction of a valuation to a subgraph
+/-- *Section 2 (used in Remark 2.4 and in Section 3).* The restriction of a valuation to a subgraph
 that contains all the edges at each of its nodes. -/
 noncomputable def restrict {Γ : PGraph N E} (v : Valuation G Γ.ins Γ.outs) (P : N → Prop)
     (Q : E → Prop) (hins : ∀ x, P x → ∀ e ∈ Γ.ins x, Q e)

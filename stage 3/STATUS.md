@@ -1,7 +1,7 @@
 # Stage 3 status
 
 Updated 2026-11-20. Plan: `formalization/PLAN.md`, Stage 3 (Sections 4, 6, 7, ground
-rules 1–9). Source: Section 4 of `Free Markov - revised.tex`, up to and including
+rules 1–9). Source: Section 4 of `paper/free-markov.tex`, up to and including
 Remark 4.2.
 
 **State: complete.** The "Done when" line of PLAN.md holds: Theorem 4.1 is proved under
@@ -46,7 +46,7 @@ and Remark 4.2 as a theorem (`JoyalStreet.remark_4_2`, `remark_4_2_surjective`,
 | "The cases where the source or the target of `f` is the empty word are included" | `natT f` for every `f : G.A`; `discListD []` is the empty diagram |
 | `S_M`, `F_s(G)/S_M` | `SRel G.markovTemplates`, `JoyalStreet.FsM` |
 | `δ_a`, `ε_a` on words | `JoyalStreet.copyM`, `discardM` (the instance `strictMarkovM`) |
-| "all such `Γ` represent the same morphism" (order of the prongs) | `JoyalStreet.prongCopy_eq` |
+| "all such `Γ` represent the same morphism" (order of the prongs) | `JoyalStreet.projM_copyWordD`, `Combinatorial.copy_diagram` (Stage 7; the diagram `Γ` is `Diagram.copyD`). Stage 3's `prongCopy_eq` is the corresponding statement for composites built through (1.2) |
 | (1.2) "this is how `δ_a`, `ε_a` have been defined" | `copyW_tensor`, `discardW_tensor` |
 | (1.1) for all words | `copyW_assoc`, `discardW_copyW`, `copyW_discardW`, `copyW_comm` |
 | (1.3) `ε_c ∘ [Γ] = ε_b` for every `Γ` | `JoyalStreet.discardM_natural` |
@@ -63,8 +63,10 @@ and Remark 4.2 as a theorem (`JoyalStreet.remark_4_2`, `remark_4_2_surjective`,
 1. **Template diagrams.** Each Markov template is built from two anchored diagrams drawn
    with Stage 1's operations, and `α`, `β` match positions (`Template.ofDiagrams`); the
    letters `H, C, A`, `T` and the numerals of the drawings are exactly these position
-   matchings. (4.1): `Ω_a` = `δ_a` glued to `δ_a ⊗ 1_a`, `Λ_a` = `δ_a` glued to
-   `1_a ⊗ δ_a`. (4.2) as drawn discards the *second* prong: `Ω_a` = `δ_a` glued to
+   matchings. (4.1): `coassT a` has `Ω` = `δ_a` glued to `δ_a ⊗ 1_a` and `Λ` = `δ_a` glued to
+   `1_a ⊗ δ_a`; in the paper's picture the labels are the other way round, so the drawn
+   template is `(coassT a).symm` (found in the final audit, 2026-11-21; both are in
+   `markovTemplates`, so `S_M` is unaffected). (4.2) as drawn discards the *second* prong: `Ω_a` = `δ_a` glued to
    `1_a ⊗ ε_a`, `Λ_a` the single edge; "similarly for right counitality" is the template
    with `ε_a ⊗ 1_a`. (4.3): `Ω_a` = `δ_a` glued to the node-free symmetry `σ_{aa}` (the
    duplicate with its outputs in the other order), `Λ_a` = `δ_a`. (4.4): `Ω_f` = the node

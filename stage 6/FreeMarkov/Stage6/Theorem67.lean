@@ -10,8 +10,10 @@ therefore takes a family `J : ∀ G : FinODAG, G.JS` of instances of C1 (one for
 * `refine_id`: `1^* = 1` ("`f_φ(κ_v) = [v ‖ pa(v)] = κ_v` ... and hence `φ^*` is the identity
   functor, by the uniqueness in Definition 6.4").
 * `refine_comp`: `(φ ∘ ψ)^* = ψ^* ∘ φ^*` (Proposition 6.6 and the uniqueness in Definition 6.4).
-* `refinementStrict J : FinODAGᵒᵖ ⥤ StrictMarkovCat`, and **`theorem_6_7`**: the functor
-  `refinement J : FinODAGᵒᵖ ⥤ MarCat` with `obj G = Cau(G)`, `map φ = φ^*`.
+* `refinementStrict J : FinODAGᵒᵖ ⥤ StrictMarkovCat` and `refinement J : FinODAGᵒᵖ ⥤ MarCat`,
+  the functors with `obj G = Cau(G)`, `map φ = φ^*`. The mathematical content of Theorem 6.7 is
+  in their functor laws, i.e. in `refine_id` and `refine_comp`, restated in
+  **`theorem_6_7_strict`**; `theorem_6_7` only records the values of `refinement J`.
 
 The cited result C1 enters through `J`.
 -/

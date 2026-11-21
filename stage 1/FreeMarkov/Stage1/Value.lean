@@ -321,7 +321,7 @@ noncomputable def valueFree (J : JoyalStreet (graphOf C)) {N : Type u₁} {E : T
     evalWord Δ.domWord ⟶ evalWord Δ.codWord :=
   (Syn.lift (evalHom C)).map ((J.equiv _ _).symm (DHom.mk Δ))
 
-/-- *Definition 2.1 and PLAN.md, Section 2.* The **value** `[Γ, v] : dom(Γ, v) → cod(Γ, v)`
+/-- *Section 2 (the value of a diagram, Joyal–Street, Chapter 2, §1).* The **value** `[Γ, v] : dom(Γ, v) → cod(Γ, v)`
 of an anchored diagram in a symmetric strict monoidal category `C`. -/
 noncomputable def CDiagram.value (J : JoyalStreet (graphOf C)) {N : Type u₁} {E : Type u₂}
     (Γ : CDiagram C N E) [Finite N] [Finite E] : Γ.domObj ⟶ Γ.codObj :=

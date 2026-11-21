@@ -1,16 +1,19 @@
 # Formalization plan: A graphical construction of free Markov categories
 
-Drawn up 2026-11-20. Source text: `Free Markov - revised.tex` (24 pages, the clean
-version of the revised manuscript). Statement numbers below are those of that file.
+**Status, 2026-11-21: complete.** Stages 0–8 are done and verified; a final audit
+compared every Lean statement with the paper. `README.md` lists the results and
+what is assumed; each `stage N/STATUS.md` records the statements against the paper.
+This file is the plan as it was drawn up on 2026-11-20, with the record of each
+stage added as it finished. Passages written before a stage was done describe
+intentions; where a later record differs, the later record holds.
 
-This is a plan only. No Lean code exists yet. The work is to be done one section
-at a time, in separate sessions.
+Source text: `paper/free-markov.tex` (24 pages). Statement numbers below are those
+of that file.
 
 **Approved by the author on 2026-11-20:** the recommended defaults for D1
 (combinatorial diagrams), D6 (strict version of Section 5 as primary), D7
 (target of Theorem 6.7), the package pins of D5, and the advertised results.
-Each stage has its own folder in the project folder, `stage 0` to `stage 7`,
-and is carried out in the session named after it.
+Each stage has its own folder, `stage 0` to `stage 8`.
 
 ## 1. Ground rules
 
@@ -28,22 +31,24 @@ and is carried out in the session named after it.
    of the section, then a file of Lean definitions and theorem statements with
    docstrings quoting the paper number. Proofs follow; a statement that departs
    from the paper or this plan is put to the author as a decision first.
+5. **Gaps go back to the paper.** If a step cannot be formalized as written, the
+   finding is recorded in `formalization/PAPER-FEEDBACK.md` with the statement
+   number, and put to the author.
+6. **The application.** A separate manuscript on the do-calculus cites Lemmas
+   4.3, 4.4, 4.5, the uniqueness of multipliers (Remarks 5.2, 5.3) and the
+   effects of Section 5. These get stable public names and are stated in the
+   form the application uses.
+7. Conventions: pinned toolchain and Mathlib revision, scratch work in `.scratch/`, a
+   blueprint, a verification script reporting source, types and axioms, and a
+   small selection of advertised results rather than whole-paper registration.
 8. **Existing work.** `formalization/REUSE-SURVEY.md` records the search of
    Mathlib, its pull requests, Tau Ceti, Lean Pool, Reservoir, Palomar and
    GitHub made on 2026-11-20. Nothing covering the paper was found; what was
    found is used as stated in D2, D4 and D5 below. A focused search is repeated
    before Stage 1 proofs and before Stage 7.
 
-9. **Reporting.** A stage session does not put questions to the author and
-   does not stop at routine checkpoints; it records them in
-   `stage N/STATUS.md` and carries on. It ends its turn with a report only
-   when the author has to decide something (installing software, a choice that
-   changes a formal statement or departs from this plan, a gap in the paper, a
-   real blocker) and when the stage is complete. The report goes to the
-   coordinating session, which reviews it and resolves it itself when it can
-   (from the paper, this plan and the author's earlier decisions), and
-   escalates to the author only what it cannot resolve; the decisions are sent
-   back from there. (Author, 2026-11-20.)
+9. Decisions that change a formal statement, depart from this plan, or concern a
+   gap in the paper are the author's.
 
 ## 2. Cited results taken as given
 
@@ -253,6 +258,12 @@ follow from the bijection.
 
 ### D5. Package
 
+A Lean package `free_markov` with its root (`lakefile.toml`, `lean-toolchain`,
+manifest) in the project folder and one library per stage whose `srcDir` is
+that stage's folder (`stage 0`, …). Each stage folder also holds that stage's status
+notes. `formalization/` keeps the plan, the reuse survey and the
+paper feedback. Toolchain `leanprover/lean4:v4.35.0` and Mathlib revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679`.
 
 No external development is imported (REUSE-SURVEY.md): Tau Ceti is on Lean
 4.37.0-rc1 and is a very large dependency, `string-diagrams-lean` is on 4.34.1,
@@ -260,6 +271,8 @@ No external development is imported (REUSE-SURVEY.md): Tau Ceti is on Lean
 are Apache-2.0; a ported lemma keeps its notice. Mathlib's `MarkovCategory` is
 used as it is at the pin.
 
+`scripts/verify.py` uses `$LAKE`, or `lake` on `PATH`, or the elan toolchain named in
+`lean-toolchain`.
 
 **Layout as built (Stage 0, 2026-11-20).** Library `FreeMarkovStage0` with
 `srcDir = "stage 0"`, `roots = ["FreeMarkov.Stage0"]`,
@@ -274,6 +287,8 @@ builds, scans for `sorry`, reports the axioms of every declaration and the
 cited-result structures (`JoyalStreet`, `Strictification`) in the type of
 every theorem, compiles the trial files and checks the blueprint.
 
+GitHub repository: `daviddhilbert/free-markov` (public). It holds the formalization
+and the final revised paper (`paper/`).
 
 ### D6. Generality in Section 5 **(author, Stage 5)**
 
@@ -314,7 +329,7 @@ Done when: the definitions compile, the bridge and the universal property of
 **Record (2026-11-20): done.** `python3 scripts/verify.py` passes:
 `lake build` exit code 0, no `sorry`, 341 declarations using only `propext`,
 `Classical.choice`, `Quot.sound`, no cited result used. Status in
-`stage 0/STATUS.md`, hand-over in `stage 0/HANDOFF.md`. Decided in Stage 0,
+`stage 0/STATUS.md`. Decided in Stage 0,
 within this plan:
 
 - Readings of the Introduction: "isomorphic to `W(S)` over `g`" means the
@@ -358,7 +373,7 @@ hypothesis with its two derived principles.
 code 0 with no warnings, no `sorry`, 529 Stage 1 declarations using only
 `propext`, `Classical.choice`, `Quot.sound`; `FreeMarkov.JoyalStreet` occurs in 43
 theorems (`JoyalStreet.lean`, `Value.lean`), not in the layer files or Remark 2.4.
-Status in `stage 1/STATUS.md`, hand-over in `stage 1/HANDOFF.md`. Decided in
+Status in `stage 1/STATUS.md`. Decided in
 Stage 1, within this plan:
 
 - Graphs as in D1, with an outer node represented by `none` as the source or
@@ -396,7 +411,7 @@ Done when: Corollary 3.5 is proved and the quotient category is constructed.
 with no warnings, no `sorry`, 634 Stage 2 declarations using only `propext`,
 `Classical.choice`, `Quot.sound`; `FreeMarkov.JoyalStreet` occurs in 23 theorems, all
 about `S_T` as a congruence, the quotient and Corollary 3.5 (Lemma 3.3 needs no cited
-result). Status in `stage 2/STATUS.md`, hand-over in `stage 2/HANDOFF.md`. Decided in
+result). Status in `stage 2/STATUS.md`. Decided in
 Stage 2, within this plan:
 
 - Subgraphs are pairs of node and edge predicates; Definition 3.1 is stated with
@@ -440,7 +455,7 @@ for `S_M` and the soundness of the Markov congruence use no cited result). Theor
 `JoyalStreet.theorem_4_1 : IsFreeMarkov J.FsM G J.iM`, with the Mathlib instance
 `JoyalStreet.markovCategoryM`; Remark 4.2 is `JoyalStreet.remark_4_2` (with
 `remark_4_2_surjective`) and `remark_4_2_semantic`. Status in `stage 3/STATUS.md`,
-hand-over in `stage 3/HANDOFF.md`. Decided in Stage 3, within this plan:
+. Decided in Stage 3, within this plan:
 
 - The Markov templates are built from concrete Stage 1 diagrams (gluings of one-node
   diagrams, identities, the symmetry), `α`, `β` matching positions; (4.2) as drawn
@@ -478,8 +493,7 @@ with no warnings, no `sorry`, 880 Stage 4 declarations using only `propext`,
 about `F_s(G)/S_M` (`JoyalStreet.projM_map_eq_iff` and the third item of Lemma 4.5).
 Lemma 4.3 is `Diagram.lemma_4_3`, Lemma 4.4 `Diagram.lemma_4_4` (with `lemma_4_4_iff`),
 Lemma 4.5 `JoyalStreet.lemma_4_5` (items 1, 2 also as `Diagram.lemma_4_5_path`,
-`lemma_4_5_dead`, without `J`). Status in `stage 4/STATUS.md`, hand-over in
-`stage 4/HANDOFF.md`. Decided in Stage 4, within this plan:
+`lemma_4_5_dead`, without `J`). Status in `stage 4/STATUS.md`. Decided in Stage 4, within this plan:
 
 - Quasi-terminal is read as "no directed path from the node ends in `cod(Γ)`"; directed
   paths are chains of consecutive edges, equivalent to Stage 1's lists; the origin is a
@@ -496,7 +510,7 @@ Lemma 4.5 `JoyalStreet.lemma_4_5` (items 1, 2 also as `Diagram.lemma_4_5_path`,
   nodes and edges) and an isomorphism of sorted minimal combs by coding; Lemma 4.5's
   existence through the layer decomposition at the discards of the dead inputs.
 - No paper feedback; no Stage 0–3 source changed. Stage 3's open item 2 (the diagram of
-  `δ_a`) was not needed and stays open.
+  `δ_a`) was not needed and was left open (closed in the Stage 7 follow-up).
 
 ### Stage 5 — Section 5: effects (L)
 
@@ -524,8 +538,7 @@ free Markov categories and their functors), `FreeMarkov.Strictification` in 19 (
 `EffData.prop_5_6`, both in every strict Markov category (D6); Remark 5.2 `remark_5_2`,
 Remark 5.3 `remark_5_3`, `remark_5_3_none`; the effect `EffData.effect`, in `Cau`-like free
 categories `EffSig.freeEffect`. Status in `stage 5/STATUS.md` (including the statement of
-`Strictification` in mathematical language, clause by clause, for the author), hand-over in
-`stage 5/HANDOFF.md`. Decided in Stage 5, within this plan:
+`Strictification` in mathematical language, clause by clause, for the author). Decided in Stage 5, within this plan:
 
 - One lemma, label coherence (`ProdSig.sameSkeleton_of_labels`: in a free `DD`-graph monoid
   where each letter has at most one producer, origins and live nodes are determined by
@@ -535,13 +548,13 @@ categories `EffSig.freeEffect`. Status in `stage 5/STATUS.md` (including the sta
   proofs (`IsEffectDiagram`: domain `w_S`, codomain `w_T`, one node `κ_i` for each
   `i ∈ V(G_{S → T}) ∖ S`, no other producer node); the effect in `C` is the image under
   `F_{(W,K)}` (Theorem 4.1) of its class, and `EffData.effect_eq_value` shows it is the value
-  in `C` of the image of the diagram. Put to the coordinator as a reading (STATUS, point 1).
+  in `C` of the image of the diagram.
 - `G_{S → T}` through `R S T` (vertices outside `S` reaching `T` through vertices outside `S`).
 - C2 is `structure Strictification M Str` (str(M), eval strong symmetric monoidal matching
   duplicates and discards, full, faithful, values on words) plus `Strictification.EvalStrict`
   for "strict when `M` is strict"; effects in an arbitrary `M` are `MData.effect`, and
   `MData.effect_strict` is the agreement for strict `M`.
-- No paper feedback; no Stage 0–4 source changed. Stage 3's open item 2 stays open.
+- No paper feedback; no Stage 0–4 source changed. Stage 3's open item 2 was left open (closed in the Stage 7 follow-up).
 
 ### Stage 6 — Section 6: refinement (M–L)
 
@@ -566,8 +579,7 @@ StrictMarkovCat` followed by `StrictMarkovCat.toMarCat` (`FinODAG.refinement J`,
 `theorem_6_7`, `theorem_6_7_strict`), for a family `J : ∀ G, G.JS` of instances of C1;
 Proposition 6.6 is `FinODAG.prop_6_6` (general singular variables) with `prop_6_6_sets`;
 Definition 6.4 `FinODAG.refine`; Example 6.5 `equation_6_2`. Status in `stage 6/STATUS.md`
-(including the statement of Theorem 6.7 in mathematical language for the author), hand-over and
-a summary of the whole development in `stage 6/HANDOFF.md`. Decided in Stage 6, within this plan:
+(including the statement of Theorem 6.7 in mathematical language for the author). Decided in Stage 6, within this plan:
 
 - `FinODAG` as the default: vertices `Fin n`, arrows a finite type with `s a ≤ t a` and identity
   loops (parallel arrows allowed), morphisms weakly monotone graph homomorphisms.
@@ -584,7 +596,7 @@ a summary of the whole development in `stage 6/HANDOFF.md`. Decided in Stage 6, 
   `MarCat` and the inclusion defined here (Mathlib has no bundled category of monoidal
   categories).
 - The enlarged-signature endofunctor of Example 6.5 is not formalized (optional).
-- No paper feedback; no Stage 0–5 source changed. Stage 3's open item 2 stays open.
+- No paper feedback; no Stage 0–5 source changed. Stage 3's open item 2 was left open (closed in the Stage 7 follow-up).
 
 ### Stage 7 — optional, after the paper is covered
 
@@ -593,7 +605,7 @@ not to be discharged. Whether to construct an inhabitant of `JoyalStreet G`
 (C1) is decided after Stage 6; if it is done, the combinatorial model only.
 (Decided 2026-11-20: Stage 7 constructs it.)
 
-Coordinator's decision, 2026-11-20 (left to the coordinator by the author):
+Decision, 2026-11-20:
 Stage 3's open item 2 is to be closed after Stage 7 reports. To prove: for a
 word `a`, the class of the paper's single diagram for `δ_a` (one duplicate per
 letter, codomain ordered as `a a`), for any order of the prongs, is the
@@ -607,6 +619,23 @@ Markov isomorphism compatible with the homomorphisms from `G` (with
 Fritz–Liang, Corollary 6.7, cited and not formalized, this compares the two
 constructions). Not to be done: a formalization of Fritz–Liang's construction.
 
+Author's decision, 2026-11-20 (revising the same day's "skip"): the universal
+property for arbitrary Markov categories is to be proved, as Stage 8, after
+Stage 7. Reason: the application takes models to be strong Markov functors
+`F : Cau(G) → M` into arbitrary Markov categories, e.g. finite stochastic
+matrices, which is not strict. To prove,
+with `Strictification M` (C2) as a hypothesis, which stays assumed:
+(a) every interpretation of `G` in `M` matching duplicates and discards extends
+to a Markov functor `F_s(G)/S_M → M` (through `str(M)` and `eval`);
+(b) it is unique up to a unique monoidal natural isomorphism; in the form of
+Fritz–Liang, Theorem 6.6: restriction to generators is an equivalence between
+Markov functors with monoidal natural transformations and interpretations
+with their morphisms;
+(c) Proposition 5.6 for strong Markov functors into an arbitrary `M`:
+`F([T ‖ S])` is the effect in `M` (end of Section 5) formed from the `F(κ_i)`,
+the form in which the application reads the image of a causal effect under a
+model. (Final audit: what is proved is a structural identity through `eval`; see
+`stage 8/STATUS.md`, "Use in the application".)
 
 - Construct an inhabitant of `JoyalStreet G` for the combinatorial model, and of
   `Strictification M`, removing the cited hypotheses. No formalization of
@@ -615,6 +644,9 @@ constructions). Not to be done: a formalization of Fritz–Liang's construction.
   2026-11-09. Recheck it first.
 - The universal property for non-strict targets, by comparison with Tau Ceti's
   presented braided categories; comparison with Fritz–Liang.
+- A separate project for the application on top of this library. References
+  found: Mathlib's `Stoch`, the open Mathlib PR #35684 (Kleisli of `PMF`), and
+  `Johaan70/PearlDoCalculus` for the classical do-calculus.
 
 **Record (2026-11-20): first item done (C1 for the combinatorial model).** `python3
 scripts/verify.py` passes: build exit code 0 with no warnings, no `sorry`, 352 Stage 7 declarations
@@ -624,7 +656,7 @@ G : JoyalStreet G` inhabits Stage 1's structure, unchanged, for every free graph
 unconditional forms are in the namespace `Combinatorial`: `theorem_2_3` (`F_s(G)` = `FsC G` is free),
 `theorem_4_1`, `lemma_4_4` (in `F_s(G)/S_M`), `lemma_4_5`, `prop_6_6`, `prop_6_6_sets`,
 `theorem_6_7`, `theorem_6_7_strict`. C2 stays a hypothesis. Status in `stage 7/STATUS.md`
-(including the relation to Joyal–Street, Chapter 2), hand-over in `stage 7/HANDOFF.md`. Decided in
+(including the relation to Joyal–Street, Chapter 2). Decided in
 Stage 7, within this plan:
 
 - Route (b) of the task: the strict functor `Syn_s(G) → F_s(G)` from Stage 0's universal property is
@@ -643,8 +675,8 @@ Stage 7, within this plan:
 **Record (2026-11-20): follow-up done — both items closed.** `python3 scripts/verify.py` passes
 (build exit code 0, no warnings; Stage 7: 383 declarations, no `sorry`, only `propext`,
 `Classical.choice`, `Quot.sound`). New modules `stage 7/FreeMarkov/Stage7/CopyDiagram.lean` and
-`Uniqueness.lean`; no other source changed. Status and hand-over: follow-up sections of
-`stage 7/STATUS.md` and `stage 7/HANDOFF.md`; blueprint nodes `s7:copy-diagram`, `s7:unique`.
+`Uniqueness.lean`; no other source changed. Status: follow-up section of
+`stage 7/STATUS.md`; blueprint nodes `s7:copy-diagram`, `s7:unique`.
 
 - **Stage 3's open item 2: closed.** The paper's diagram `Γ` of `δ_a` is defined literally
   (`Diagram.copyD`, `copyWordD`; prong order a parameter), likewise one discard per letter
@@ -663,10 +695,14 @@ Stage 7, within this plan:
   `F_s(G)/S_M` by a unique such functor (docstring: with Fritz–Liang, Corollary 6.7, cited, not
   formalized, this compares the two constructions). Also for Theorem 2.3:
   `IsFreeSymmetric.unique_iso`, `Combinatorial.fsC_unique_iso`.
-- No paper feedback. Stage 8 not started.
+- No paper feedback.
 
 ### Stage 8 — the universal property for arbitrary Markov categories (beyond the paper)
 
+Decided by the author on 2026-11-20 (Stage 7 entry above): with `Strictification M Str` (C2) as a
+hypothesis, (a) interpretations and restriction, (b) existence, (c) uniqueness, (d) the equivalence
+in the form of Fritz–Liang, Theorem 6.6, (e) Proposition 5.6 for Markov functors into an arbitrary
+`M`.
 
 **Record (2026-11-21): done.** `python3 scripts/verify.py` passes (build exit code 0, no warnings;
 Stage 8: 250 declarations, 168 theorems, no `sorry`, only `propext`, `Classical.choice`,
@@ -674,7 +710,7 @@ Stage 8: 250 declarations, 168 theorems, no `sorry`, only `propext`, `Classical.
 `FreeMarkov.Combinatorial` have only C2 in their types (`exists_realize`, `restrict_isEquivalence`,
 `prop_5_6_markov`) or no cited hypothesis (`extension_existsUnique`, `iso_existsUnique`). Status in
 `stage 8/STATUS.md` (statements in mathematical language, use in the application, relation to
-Fritz–Liang 6.6 and to the paper's remark on strictness), hand-over in `stage 8/HANDOFF.md`;
+Fritz–Liang 6.6 and to the paper's remark on strictness);
 blueprint section "Stage 8". Decided in Stage 8, within this plan:
 
 - `MarkovFun C D`: Stage 6's `MarkovFunctor` for unbundled categories in arbitrary universes
@@ -693,7 +729,7 @@ blueprint section "Stage 8". Decided in Stage 8, within this plan:
 
 ## 5. Order and dependencies
 
-Stages run in the order 0 to 6; each uses all earlier ones. Inside the paper:
+Stages run in the order 0 to 8; each uses all earlier ones. Inside the paper:
 
 - Theorem 4.1 needs C1, Lemma 3.2, the surgery, Corollary 3.5.
 - Lemma 4.3 needs the surgery and the templates, not Theorem 4.1.

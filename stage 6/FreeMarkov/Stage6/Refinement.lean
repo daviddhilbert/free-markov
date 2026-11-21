@@ -56,8 +56,7 @@ theorem R_preimage_parents (y : Fin G.n) (k : Fin H.n) :
     rw [mem_preimS, hk] at h
     exact G.K.not_mem_pa y h |>.elim
 
-/-- *Section 6.* "But it may contain directed paths with more than one arrow; all the vertices of
-such a path are in `φ⁻¹(v)`, except possibly the first one": every vertex of
+/-- *Section 6* (the note after (6.1): the graph contains no other vertices): every vertex of
 `H_{φ⁻¹(pa(v)) → φ⁻¹(v)}` is in `φ⁻¹(pa(v))` or in `φ⁻¹(v)`. -/
 theorem inD_preimage_parents (y : Fin G.n) {k : Fin H.n}
     (h : H.K.InD (preimS φ (G.pa y)) (fiber φ y) k) : k ∈ preimS φ (G.pa y) ∨ k ∈ fiber φ y := by

@@ -8,6 +8,10 @@ monoidal category on a tensor scheme; Joyal–Street diagrams and Theorem 2.3;
 strict monoidal categories and strictification; free Markov categories;
 directed acyclic graphs; causal models and the do-calculus.
 
+**Evidence level.** Everything below is source inspection through the GitHub
+API or a web page: module headers and declaration lists were read, `sorry` was
+counted in the files named. Nothing was cloned, built or audited locally.
+"Not found" means not found in these searches.
 
 ## Result in one paragraph
 
@@ -25,6 +29,7 @@ of the plan: the form of the Joyal–Street hypothesis (PLAN.md, D4).
 |---|---|---|
 | **Mathlib**, pinned `56a005855ea17e0b0958f73ec801ae140b0a1679` (Apache-2.0), Lean 4.35.0. `CategoryTheory/CopyDiscardCategory/{Basic,Cartesian,Deterministic,Widesubcategory}.lean`, `CategoryTheory/MarkovCategory/{Basic,Positive}.lean` | `CopyDiscardCategory`, `MarkovCategory` (`discard_natural`, `eq_discard`, `isTerminalUnit`, `copy_unit`, `discard_unit`), deterministic morphisms | **Import directly.** The paper's "Markov category" is this class; the strict notion is bridged to it (PLAN.md, D2). Covers Fritz 2020, Remark 2.3 |
 | Mathlib `CategoryTheory/Monoidal/Free/{Basic,Coherence}.lean` | `FreeMonoidalCategory` on a type of objects, Mac Lane coherence; no morphism generators, no symmetry | Import for C2 work if strictification is ever discharged; pattern for the syntactic category |
+| Mathlib `Probability/Kernel/Category/{SFinKer,Stoch}.lean` | Markov kernels as a category; the file imports the Markov category modules (merged PR #36779 "Stoch is a Markov category") | Not needed for this paper; relevant to models in the `docalculus` project |
 | Mathlib `Combinatorics/Digraph/{Basic,Orientation}.lean` | `Digraph`; no acyclicity | Too thin; define the small `FinDAG`/`FinODAG` locally |
 | Mathlib `Tactic/Widget/StringDiagram.lean`, `Tactic/CategoryTheory/Monoidal/*` | Display of string diagrams, coherence normalization tactics | Proof aid only; no diagram objects |
 | Mathlib PRs: #40482 "define directed acyclic graphs" (closed 2026-06-29, unmerged); #29926 FinStoch (closed, unmerged); #35684 "Kleisli PMF is a Markov category" (open) | — | Not available at the pin. Upstream `master` `3eae40f5eb25c5934211edf662d3b24c5afbe47a` has the same files in these directories as the pin |
@@ -34,6 +39,8 @@ of the plan: the form of the Joyal–Street hypothesis (PLAN.md, D4).
 | **`robin-carlier/SymmMonCoherence`** `0cb94d5bcbddf2637423504af658a2f6e3319ef2` (Apache-2.0), Lean 4.29.0-rc6, Mathlib `891789085e407fba1a922860af840d00227aae69`; paper arXiv:2603.00896. `SymmMonCoherence/FreeSMC.lean` (643 lines, no `sorry`), `SList/*` | `FreeSymmetricMonoidalCategory` on a type of objects (terms modulo the axioms, `SymmetricCategory` instance, `Hom.inductionOn`), symmetric lists, coherence for symmetric monoidal categories | **Proof reference.** Object-generated only (no coupons), non-strict, old toolchain. The term-quotient pattern with a symmetry constructor is the one to follow; its coherence theorem is the input a later proof of C1 or C2 would want |
 | **`apellis/string-diagrams-lean`** `8ae261b120e748db9f79fa3179028fa5617c996f` (Apache-2.0), Lean 4.34.1 | Diagrams as well-typed lists of layers `id ⊗ g ⊗ id`, presentations, interpretations, a strict monoidal category as a Mathlib `MonoidalCategory` with `eqToIso` associators (`StringDiagrams.Monoidal`), retyping along equalities of objects (`StringDiagrams.Transport`, `castHom`), induction over layers. Planar and linear; no symmetry | **Proof reference for strictness (D2)**: how to state and use laws across equalities of objects, and how a strict presented category is made a Mathlib monoidal category. Its layer-list diagrams do not carry the graph notions (levels, normal subgraphs, origins) the paper uses |
 | `damast93/markovlib` `0788ceda609d76aaf03c79ee98e19bae052f806d` (no license), Lean 4.12.0-rc1 | Its own `MarkovCategory` class, deterministic morphisms, almost-sure equality | Unsuitable: superseded by Mathlib, unlicensed, old toolchain |
+| `Johaan70/PearlDoCalculus` `b9b1bb914287898df0a4bb1f74563d2d0e7cfdee` (Apache-2.0), Lean 4.30.0-rc2 | Pearl's do-calculus for finite discrete models: d-separation soundness and completeness, the three rules, back-door and front-door, ID algorithm (as described in its README) | Not about this paper. Reference for the later `docalculus` project; its models are PMF kernels on a DAG, not morphisms of a free Markov category |
+| `sridharmahadevan/IntuitionisticDoCalculusProofs` | Topos-based do-calculus | Unrelated setting |
 
 ## Catalogues
 

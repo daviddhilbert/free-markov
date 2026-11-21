@@ -55,9 +55,9 @@ theorem pow_add_mul_eq_of_pow_eq {w : C} {n d : ℕ} (h : w ^ n = w ^ (n + d)) {
     rw [show j + (k + 1) * d = (j + k * d) + d by rw [Nat.succ_mul]; omega,
       pow_add_eq_of_pow_eq h (le_trans hj (Nat.le_add_right _ _)), pow_add_mul_eq_of_pow_eq h hj k]
 
-/-- *Section 5.* "Note that the second condition holds if and only if `w^n ≠ w^m` for all
-`w ≠ 1` and all `n ≠ m`; here `w^n` is the monoidal product of `n` copies of `w`; this includes
-the empty product `w^0 = 1`." -/
+/-- *Section 5* (the reformulation of the second condition, with exponents `n ≠ m` ranging over
+all natural numbers, the empty product `w^0 = 1` included): `w^n ≠ w^m` for all `w ≠ 1` and all
+`n ≠ m`. -/
 theorem straight_iff : Straight C ↔ ∀ w : C, w ≠ 1 → ∀ n m : ℕ, n ≠ m → w ^ n ≠ w ^ m := by
   constructor
   · intro hS w hw n m hnm hpow

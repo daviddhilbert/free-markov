@@ -1,7 +1,7 @@
 # Blueprint
 
 One node per numbered statement of *A graphical construction of free Markov
-categories* (`Free Markov - revised.tex`), plus the definitions of the
+categories* (`paper/free-markov.tex`), plus the definitions of the
 Introduction and the syntactic category `Syn_s(G)` of design decision D4
 (`formalization/PLAN.md`). `\uses` records the mathematical dependencies,
 `\lean` the Lean declarations, `\leanok` what is formalized. The stage that

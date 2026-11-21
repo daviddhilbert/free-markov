@@ -1,7 +1,7 @@
 # Stage 4 status
 
 Updated 2026-11-20. Plan: `formalization/PLAN.md`, Stage 4 (Sections 4, 6, 7, ground
-rules 1–9). Source: Section 4 of `Free Markov - revised.tex`, from after Remark 4.2 to the
+rules 1–9). Source: Section 4 of `paper/free-markov.tex`, from after Remark 4.2 to the
 end of the section.
 
 **State: complete.** The "Done when" line of PLAN.md holds: Lemmas 4.3, 4.4 and 4.5 are
@@ -108,6 +108,14 @@ the quotient category.
    `h : a'' → b` of `F_s(G)`. Item 2 is stated as: `SRel G.markovTemplates [Γ] [Υ]` implies
    `Γ.Dead j ↔ Υ.Dead j` for every `j`.
 
+## Use in the application
+
+A separate manuscript on the do-calculus builds on this section. It uses Lemma 4.3 (the three
+items, for the existence of paths and splitter paths between given ends: `Diagram.lemma_4_3`),
+the coherence statement of Lemma 4.4 (two diagrams represent the same morphism iff they have the
+same skeleton: `lemma_4_4_iff`, `JoyalStreet.projM_map_eq_iff`) and the third item of Lemma 4.5
+(`JoyalStreet.lemma_4_5`). The Lean statements were written in the form used there.
+
 ## Proof methods differing from the paper (statements unchanged)
 
 1. **Lemma 4.3.** "`Γ` and `Υ` have the same live nodes" is proved as: the live nodes of
@@ -139,9 +147,9 @@ Lemma 4.4 "determined, up to isomorphisms, by its skeleton and the shapes of the
 ## Items from earlier stages
 
 - Stage 3, open item 1 ((1.3) by induction on inner nodes): not added; Stage 4 did not need
-  it. Stage 3's proof by generation stands (accepted by the coordinator).
+  it. Stage 3's proof by generation stands (accepted).
 - Stage 3, open item 2 (the diagram of `δ_a` as one glued diagram): not needed by Stage 4,
-  not proved; stays open as decided.
+  not proved here. (Closed in the Stage 7 follow-up: `Combinatorial.copy_diagram`.)
 
 ## Paper feedback
 

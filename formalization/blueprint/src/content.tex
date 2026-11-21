@@ -1,5 +1,5 @@
 % Blueprint of the formalization of "A graphical construction of free Markov
-% categories" (source: Free Markov - revised.tex).  One node per numbered
+% categories" (source: paper/free-markov.tex).  One node per numbered
 % statement of the paper, plus the definitions of the Introduction and the
 % syntactic category of design decision D4.  Statement numbers are those of the
 % revised text.  \lean{...} names the Lean declarations, \leanok marks what is
@@ -959,6 +959,15 @@ of Stage~1, unchanged.
 Theorem~2.3, Theorem~4.1, Lemma~4.4 (in $\mathcal F_s(G)/\mathbf S_M$), Lemma~4.5,
 Proposition~6.6 and Theorem~6.7 (both forms), with no cited hypothesis; C2 remains a
 hypothesis in Section~5.
+\end{theorem}
+
+\begin{theorem}[Sections 3--5 without C1]
+\label{s7:uncond35}
+\lean{FreeMarkov.Combinatorial.cor_3_5, FreeMarkov.Combinatorial.remark_4_2, FreeMarkov.Combinatorial.remark_4_2_surjective, FreeMarkov.Combinatorial.remark_5_2, FreeMarkov.Combinatorial.remark_5_3, FreeMarkov.Combinatorial.effect, FreeMarkov.Combinatorial.lemma_5_5, FreeMarkov.Combinatorial.prop_5_6}
+\leanok
+\uses{s7:C1, cor:3.5, rem:4.2, rem:5.2, rem:5.3, def:5.4, lem:5.5, prop:5.6}
+Corollary~3.5, Remark~4.2, Remarks~5.2 and~5.3, the effect of Definition~5.4, Lemma~5.5 and
+Proposition~5.6, with no cited hypothesis (final audit).
 \end{theorem}
 
 \begin{theorem}[The single diagrams of $\delta_a$ and $\varepsilon_a$]

@@ -160,7 +160,7 @@ namespace CopyDiagram
 
 variable {S : Type w} (G : FreeDDGraphMonoid.{w, v} S) {n : ℕ} (a : Fin n → S)
 
-/-- The relabelling of the free `DD`-graph monoid on the Diagram.letters `Fin n` (only duplicates and
+/-- The relabelling of the free `DD`-graph monoid on the letters `Fin n` (only duplicates and
 discards) into `G`, sending the letter `i` to `a i`. -/
 def relab : (ProdSig.free (Fin n)).G.toFreeGraphMonoid.Relabel G.toFreeGraphMonoid where
   onS := a

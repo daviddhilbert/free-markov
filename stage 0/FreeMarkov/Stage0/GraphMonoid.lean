@@ -156,8 +156,8 @@ theorem GraphMonoid.IsFreeOn.exists_iso {G : GraphMonoid.{w₁, w₂}} {S : Type
 such that, for each `a ∈ S`, there are distinguished arrows `a → aa`, called the
 **duplicate** on `a`, and `a → 0`, called the **discard** on `a`."
 
-(`0` is the empty word, the unit of `W(S)`.) The distinguished arrows need not be
-distinct from each other or from the other arrows. -/
+(`0` is the empty word, the unit of `W(S)`.) The distinguished arrows are pairwise
+distinct, since their sources and targets differ. -/
 structure FreeDDGraphMonoid (S : Type u) extends FreeGraphMonoid.{u, v} S where
   /-- The duplicate on `a`. -/
   dup : S → A

@@ -1,7 +1,7 @@
 # Stage 2 status
 
 Updated 2026-11-20. Plan: `formalization/PLAN.md`, Stage 2 (Sections 4, 6, 7, ground
-rules 1–9). Source: Section 3 of `Free Markov - revised.tex` (surgeries on diagrams).
+rules 1–9). Source: Section 3 of `paper/free-markov.tex` (surgeries on diagrams).
 
 **State: complete.** The "Done when" line of PLAN.md holds: Corollary 3.5 is proved
 (`FreeMarkov.cor_3_5`) and the quotient category `F_s(G)/S_T` is constructed

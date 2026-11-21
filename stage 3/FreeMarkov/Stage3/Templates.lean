@@ -6,7 +6,10 @@ Each Markov template is built from two anchored diagrams drawn with the operatio
 Stage 1 (one-node diagrams, disjoint union, gluing, node-free diagrams), with `α`, `β`
 matching the domain and codomain edges position by position (`Template.ofDiagrams`):
 
-* (4.1) `Ω_a` = `δ_a` glued to `δ_a ⊗ 1_a`, `Λ_a` = `δ_a` glued to `1_a ⊗ δ_a`;
+* (4.1) `coassT a` has `Ω` = `δ_a` glued to `δ_a ⊗ 1_a` and `Λ` = `δ_a` glued to `1_a ⊗ δ_a`.
+  In the picture (4.1) of the paper the labels are the other way round (`Λ_a` is the diagram
+  with `δ_a ⊗ 1_a`), so the template drawn there is `(coassT a).symm`; both are Markov
+  templates, and `S_M` does not depend on this choice;
 * (4.2) `Ω_a` = `δ_a` glued to `1_a ⊗ ε_a` (and `ε_a ⊗ 1_a` for right counitality),
   `Λ_a` = the single edge `1_a`;
 * (4.3) `Ω_a` = `δ_a` glued to the symmetry `σ_{aa}`, i.e. the duplicate with its prongs
@@ -183,12 +186,12 @@ noncomputable def discList : (l : List S) → DHom G.toFreeGraphMonoid (FreeMono
 noncomputable def discWord (a : FreeMonoid S) : DHom G.toFreeGraphMonoid a 1 :=
   G.discList (FreeMonoid.toList a)
 
-/-- (4.1): `(δ_a ⊗ 1_a) ∘ δ_a`. -/
+/-- (4.1): `(δ_a ⊗ 1_a) ∘ δ_a` (the `Ω` of `coassT`; `Λ_a` in the paper's picture). -/
 noncomputable def coassΩ (a : S) : DHom G.toFreeGraphMonoid (FreeMonoid.of a)
     (FreeMonoid.of a * FreeMonoid.of a * FreeMonoid.of a) :=
   (G.dupH a).comp ((G.dupH a).tensor (DHom.id _ (FreeMonoid.of a)))
 
-/-- (4.1): `(1_a ⊗ δ_a) ∘ δ_a`. -/
+/-- (4.1): `(1_a ⊗ δ_a) ∘ δ_a` (the `Λ` of `coassT`; `Ω_a` in the paper's picture). -/
 noncomputable def coassΛ (a : S) : DHom G.toFreeGraphMonoid (FreeMonoid.of a)
     (FreeMonoid.of a * (FreeMonoid.of a * FreeMonoid.of a)) :=
   (G.dupH a).comp ((DHom.id _ (FreeMonoid.of a)).tensor (G.dupH a))
@@ -283,13 +286,15 @@ theorem mk_discListD (l : List S) : DClass.mk (G.discListD l) = (G.discList l).1
     rw [← DClass.mk_tensor, ih]
     rfl
 
-/-- (4.1), `Ω_a`: the duplicate on `a` whose first output enters a second duplicate on `a`
-(the outputs ordered `H, C, A` from left to right). -/
+/-- (4.1), the `Ω` of `coassT a`: the duplicate on `a` whose first output enters a second
+duplicate on `a` (the outputs ordered `H, C, A` from left to right). In the paper's picture this
+diagram is labelled `Λ_a`. -/
 noncomputable def coassΩD (a : S) :=
   (G.dupD a).glue ((G.dupD a).tensor (idD _ (FreeMonoid.of a)))
     (by rw [tensor_domWord, G.dupD_codWord, G.dupD_domWord, idD_domWord])
 
-/-- (4.1), `Λ_a`: the duplicate on `a` whose second output enters a second duplicate. -/
+/-- (4.1), the `Λ` of `coassT a`: the duplicate on `a` whose second output enters a second
+duplicate. In the paper's picture this diagram is labelled `Ω_a`. -/
 noncomputable def coassΛD (a : S) :=
   (G.dupD a).glue ((idD _ (FreeMonoid.of a)).tensor (G.dupD a))
     (by rw [tensor_domWord, G.dupD_codWord, G.dupD_domWord, idD_domWord])
@@ -349,7 +354,8 @@ theorem mk_natΛD (f : G.A) : DClass.mk (G.natΛD f) = (G.natΛ f).1 :=
 
 /-! #### The templates -/
 
-/-- The template (4.1) for the letter `a` (coassociativity). -/
+/-- The template (4.1) for the letter `a` (coassociativity), with `Ω` and `Λ` in the order
+opposite to the paper's picture: the drawn template is `(coassT a).symm`. -/
 noncomputable abbrev coassT (a : S) : Template.{0} G.toFreeGraphMonoid :=
   Template.ofDiagrams (G.coassΩD a) (G.coassΛD a) (by simp [coassΩD, coassΛD])
     (by simp [coassΩD, coassΛD, G.t_dup, mul_assoc])
