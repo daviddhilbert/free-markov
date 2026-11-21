@@ -665,6 +665,32 @@ Stage 7, within this plan:
   `IsFreeSymmetric.unique_iso`, `Combinatorial.fsC_unique_iso`.
 - No paper feedback. Stage 8 not started.
 
+### Stage 8 — the universal property for arbitrary Markov categories (beyond the paper)
+
+
+**Record (2026-11-21): done.** `python3 scripts/verify.py` passes (build exit code 0, no warnings;
+Stage 8: 250 declarations, 168 theorems, no `sorry`, only `propext`, `Classical.choice`,
+`Quot.sound`). Library `FreeMarkovStage8` (`srcDir = "stage 8"`). The unconditional forms in
+`FreeMarkov.Combinatorial` have only C2 in their types (`exists_realize`, `restrict_isEquivalence`,
+`prop_5_6_markov`) or no cited hypothesis (`extension_existsUnique`, `iso_existsUnique`). Status in
+`stage 8/STATUS.md` (statements in mathematical language, use in the application, relation to
+Fritz–Liang 6.6 and to the paper's remark on strictness), hand-over in `stage 8/HANDOFF.md`;
+blueprint section "Stage 8". Decided in Stage 8, within this plan:
+
+- `MarkovFun C D`: Stage 6's `MarkovFunctor` for unbundled categories in arbitrary universes
+  (`MarkovFunctor.equivMarkovFun` for equal universes); morphisms are monoidal natural
+  transformations (Mathlib's `NatTrans.IsMonoidal`).
+- Interpretations (`Interp G M`) are typed by the left-bracketed products `lp` in `M` (independent
+  of `T`); the comparison with `eval` in (b) is the isomorphism built from `μ` of `eval`, since C2
+  does not make `μ_{v,a}` an identity. Duplicates and discards are matched as arrows. Morphisms of
+  interpretations commute with every arrow, duplicates and discards included.
+- (c) is uniqueness of the lift of a given morphism of interpretations (consistent with the
+  Introduction's remark that strictness cannot be replaced by uniqueness up to a unique monoidal
+  natural isomorphism); (e) is proved in general, for every Markov functor, from (b) and (c).
+- C2 clauses used: `words`, `eval`, `braided`, `map_copy`, `map_discard`, `full`, `faithful`,
+  `eval_of`; not `eval_one`, `eval_snoc`, `EvalStrict`. No clause beyond C2 was needed.
+- No Stage 0–7 source changed; no paper feedback; nothing installed.
+
 ## 5. Order and dependencies
 
 Stages run in the order 0 to 6; each uses all earlier ones. Inside the paper:

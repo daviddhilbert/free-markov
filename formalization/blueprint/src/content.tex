@@ -996,3 +996,102 @@ $F$ and the functor $F'$ in the other direction exist by the two universal prope
 $F' \circ F$ and $1$ both factor $i$ through $i$, so they are equal by uniqueness, and likewise
 $F \circ F'$.
 \end{proof}
+
+\section{The universal property for arbitrary Markov categories (Stage 8)}
+
+\begin{definition}[Markov functors and monoidal natural transformations]
+\label{s8:markovfun}
+\lean{FreeMarkov.MarkovFun, FreeMarkov.MarkovFun.Hom, FreeMarkov.MarkovFun.category, FreeMarkov.MarkovFun.comp, FreeMarkov.MarkovFunctor.equivMarkovFun, FreeMarkov.StrictMarkovFunctor.toMarkovFun}
+\leanok
+\uses{def:6.marcat}
+A Markov functor between Markov categories in arbitrary universes (the fields of
+\texttt{MarkovFunctor}); a monoidal natural transformation is a natural transformation compatible
+with $\varepsilon$ and $\mu$ (Mathlib's \texttt{NatTrans.IsMonoidal}). Markov functors $\mathcal C
+\to \mathcal D$ and monoidal natural transformations form a category.
+\end{definition}
+
+\begin{definition}[Left-bracketed products and comparison isomorphisms]
+\label{s8:products}
+\lean{FreeMarkov.lp, FreeMarkov.lpMap, FreeMarkov.cmpR, FreeMarkov.cmpR_naturality, FreeMarkov.tensor_of_snoc, FreeMarkov.JoyalStreet.cmpW}
+\leanok
+\uses{cite:C2}
+$\mathrm{lp}(a_1 \cdots a_n) = (\cdots(a_1 \otimes a_2) \otimes \cdots) \otimes a_n$, the object
+$\mathrm{eval}(a_1 \cdots a_n)$ fixed by C2. For a strong monoidal functor $F$ out of a strict
+monoidal category, $\varphi_w : \mathrm{lp}(F a_1, \ldots, F a_n) \cong F(a_1 \cdots a_n)$ built from
+$\varepsilon$, $\mu$; monoidal natural transformations commute with it; a family compatible with
+$\varepsilon$ and with $\mu_{X, a}$ for letters $a$ is monoidal.
+\end{definition}
+
+\begin{definition}[Interpretations, item (a)]
+\label{s8:interp}
+\lean{FreeMarkov.Interp, FreeMarkov.Interp.Hom, FreeMarkov.Interp.category, FreeMarkov.JoyalStreet.restrictObj, FreeMarkov.JoyalStreet.restrict}
+\leanok
+\uses{intro:dd-graph-monoid, s8:markovfun, s8:products, thm:4.1}
+An interpretation of $G$ in $\mathcal M$: objects $\mathrm{ob}(a)$ and morphisms
+$\mathrm{lp}(\mathrm{ob}\, s(x)) \to \mathrm{lp}(\mathrm{ob}\, t(x))$ with $\delta_a \mapsto
+\delta_{\mathrm{ob}(a)}$, $\varepsilon_a \mapsto \varepsilon_{\mathrm{ob}(a)}$; morphisms of
+interpretations are families $\mathrm{ob}(a) \to \mathrm{ob}'(a)$ commuting with all arrows.
+Restriction sends a Markov functor $F : \mathcal F_s(G)/\mathbf S_M \to \mathcal M$ to
+$(F(a), \varphi_{t(x)}^{-1} F(x) \varphi_{s(x)})$.
+\end{definition}
+
+\begin{theorem}[Uniqueness, item (c)]
+\label{s8:unique}
+\lean{FreeMarkov.JoyalStreet.inductionM, FreeMarkov.JoyalStreet.extend, FreeMarkov.JoyalStreet.restrict_existsUnique, FreeMarkov.JoyalStreet.restrict_full, FreeMarkov.JoyalStreet.restrict_faithful, FreeMarkov.JoyalStreet.iso_existsUnique}
+\leanok
+\uses{s8:interp, syn:generation}
+A morphism of interpretations between the restrictions of two Markov functors extends to exactly
+one monoidal natural transformation; restriction is full and faithful.
+\end{theorem}
+\begin{proof}
+\leanok
+$\theta_w = \varphi'_w \circ (\alpha_{a_1} \otimes \cdots \otimes \alpha_{a_n}) \circ
+\varphi_w^{-1}$; monoidal by the coherence of $\mu$; natural on generators by the hypothesis, on
+symmetries and products by monoidality, hence on all morphisms by the generation principle.
+Uniqueness: a monoidal $\theta$ commutes with $\varphi$.
+\end{proof}
+
+\begin{theorem}[Existence, item (b)]
+\label{s8:exist}
+\lean{FreeMarkov.Interp.toStrHom, FreeMarkov.Interp.toStrHom_matches, FreeMarkov.JoyalStreet.realize, FreeMarkov.JoyalStreet.realize_letter, FreeMarkov.JoyalStreet.realize_ar, FreeMarkov.JoyalStreet.restrict_realize, FreeMarkov.JoyalStreet.exists_realize}
+\leanok
+\uses{s8:interp, thm:4.1, cite:C2}
+Every interpretation $I$ extends: $\mathrm{eval} \circ F_I$, with $F_I$ the strict Markov functor of
+Theorem~4.1 for the homomorphism $G \to \mathrm{str}(\mathcal M)$ given by $I$ through the
+fullness and faithfulness of $\mathrm{eval}$; its restriction is $I$ up to the identities
+$\mathrm{eval}(\mathrm{ob}\, a) = \mathrm{ob}\, a$.
+\end{theorem}
+
+\begin{theorem}[The equivalence, item (d); Fritz--Liang, Theorem~6.6]
+\label{s8:equiv}
+\lean{FreeMarkov.JoyalStreet.restrict_essSurj, FreeMarkov.JoyalStreet.restrict_isEquivalence, FreeMarkov.JoyalStreet.restrictEquiv}
+\leanok
+\uses{s8:unique, s8:exist}
+Restriction to the generators is an equivalence between Markov functors
+$\mathcal F_s(G)/\mathbf S_M \to \mathcal M$ with monoidal natural transformations and
+interpretations of $G$ in $\mathcal M$.
+\end{theorem}
+
+\begin{theorem}[Proposition~5.6 for non-strict targets, item (e)]
+\label{s8:prop56}
+\lean{FreeMarkov.EffSig.markovData, FreeMarkov.EffSig.prop_5_6_markov}
+\leanok
+\uses{prop:5.6, cite:C2, s8:unique, s8:exist, def:6.3}
+For a Markov functor $F$ out of the free Markov category of $K$ (e.g.\ $\mathrm{Cau}(G)$),
+$F([w_T \| w_S]) = \varphi_T \psi_T^{-1} \circ [T \| S]^{\mathcal M} \circ \psi_S \varphi_S^{-1}$,
+the effect in $\mathcal M$ formed from the $F(i)$ and the $F(\kappa_i)$ read through $\mu$.
+\end{theorem}
+\begin{proof}
+\leanok
+$F \cong \mathrm{eval} \circ F_I$ by (b), (c), with identity components on letters; for the strict
+$F_I$ this is Proposition~5.6 through the uniqueness in Theorem~4.1.
+\end{proof}
+
+\begin{theorem}[Stage 8 without C1]
+\label{s8:uncond}
+\lean{FreeMarkov.Combinatorial.restrict, FreeMarkov.Combinatorial.extension_existsUnique, FreeMarkov.Combinatorial.iso_existsUnique, FreeMarkov.Combinatorial.exists_realize, FreeMarkov.Combinatorial.restrict_isEquivalence, FreeMarkov.Combinatorial.restrictEquiv, FreeMarkov.Combinatorial.prop_5_6_markov}
+\leanok
+\uses{s7:C1, s8:unique, s8:exist, s8:equiv, s8:prop56}
+Items (b)--(e) for $\mathcal F_m(G)$ and $\mathrm{Cau}(G)$ built from the combinatorial diagrams:
+(c) with no hypothesis, (b), (d), (e) with C2 only.
+\end{theorem}

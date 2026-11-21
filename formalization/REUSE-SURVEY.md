@@ -129,3 +129,24 @@ combinatorial model from the Stage 0–6 library and Mathlib's lists only.
 
 Coverage limits: GitHub code search sees indexed default branches only; registries (Reservoir,
 Lean Pool) were not searched again; Isabelle and Coq developments were not reconsidered.
+
+## Focused search before Stage 8: monoidal natural transformations, strictification (2026-11-21)
+
+Searched, as the Stage 8 task asks, for what Stage 8 could reuse: monoidal natural transformations
+and their category, strictification of monoidal categories, Markov functors, and any Lean proof of
+the universal property of a free Markov (or free symmetric monoidal) category for non-strict
+targets. Evidence level: local source of Mathlib at the pin `56a00585` (grep and reading).
+
+**Result.** Mathlib's `NatTrans.IsMonoidal` is used as it is; nothing else was found; nothing
+imported, nothing ported, nothing installed.
+
+| Candidate | What it has | Decision |
+|---|---|---|
+| `Mathlib/CategoryTheory/Monoidal/NaturalTransformation.lean` | `NatTrans.IsMonoidal` (compatibility with `ε` and `μ`), instances for identities, composites, whiskering; the category `LaxMonoidalFunctor C D` with `homMk`, `isoMk` | `NatTrans.IsMonoidal` is the monoidality condition of Stage 8's `MarkovFun.Hom`; the bundled `LaxMonoidalFunctor` category is not used because Markov functors carry the extra duplicate/discard conditions (`MarkovFun` mirrors Stage 6's `MarkovFunctor`) |
+| `Mathlib/CategoryTheory/Monoidal/Functor.lean`, `Braided/Basic.lean` | `Functor.LaxMonoidal.associativity`, `left_unitality`, `right_unitality`, `associativity_inv`, `Functor.Monoidal.map_tensor`, `μ_δ`, `δ_μ`, `ε_η`, `Functor.map_braiding` | Used throughout the comparison isomorphisms and the naturality proof |
+| Strictification (`grep -i strictif` over `Mathlib/CategoryTheory`) | Nothing; `Monoidal/Free/Coherence` proves Mac Lane coherence for the free monoidal category on objects, not a strictification functor | C2 stays a hypothesis (author's decision); nothing to reuse |
+| Markov functors (`grep MarkovFunctor`, `CopyDiscardCategory/*`, `MarkovCategory/*`) | `MarkovCategory`, `CopyDiscardCategory`, deterministic morphisms; no functors between Markov categories | Stage 6's `MarkovFunctor` generalised to arbitrary universes in Stage 8 (`MarkovFun`) |
+
+Coverage limits: GitHub, Tau Ceti and the registries were not searched again for this stage (the
+Stage 7 search, above, found no free symmetric monoidal or free Markov category with a universal
+property for non-strict targets).
