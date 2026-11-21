@@ -31,7 +31,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 ALLOWED_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
 # Structures that hold cited results (PLAN.md, Section 2).  Added by later stages.
-CITED = ["FreeMarkov.JoyalStreet", "FreeMarkov.Strictification"]
+# `FreeMarkov.FinODAG.JS G` is the abbreviation `JoyalStreet G.W.toFreeGraphMonoid` (C1 for W(G),
+# Stage 6); it is listed so that theorems stated with it are reported as using C1.
+CITED = ["FreeMarkov.JoyalStreet", "FreeMarkov.Strictification", "FreeMarkov.FinODAG.JS"]
 STAGES = {
     0: ("FreeMarkovStage0", "FreeMarkov.Stage0", "stage 0"),
     1: ("FreeMarkovStage1", "FreeMarkov.Stage1", "stage 1"),
@@ -39,6 +41,7 @@ STAGES = {
     3: ("FreeMarkovStage3", "FreeMarkov.Stage3", "stage 3"),
     4: ("FreeMarkovStage4", "FreeMarkov.Stage4", "stage 4"),
     5: ("FreeMarkovStage5", "FreeMarkov.Stage5", "stage 5"),
+    6: ("FreeMarkovStage6", "FreeMarkov.Stage6", "stage 6"),
 }
 
 

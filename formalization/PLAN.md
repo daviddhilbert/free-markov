@@ -541,6 +541,35 @@ categories `EffSig.freeEffect`. Status in `stage 5/STATUS.md` (including the sta
 
 Done when: Theorem 6.7 is proved in the form fixed by D7.
 
+**Record (2026-11-20): done.** `python3 scripts/verify.py` passes: build exit code 0
+with no warnings, no `sorry`, 272 Stage 6 declarations using only `propext`,
+`Classical.choice`, `Quot.sound`; C1 occurs in 62 theorems (through `JoyalStreet` or the
+abbreviation `FinODAG.JS G := JoyalStreet G.W.toFreeGraphMonoid`, now listed in `CITED` of
+`verify.py`), C2 in none. Theorem 6.7 is `FinODAG.refinementStrict J : FinODAGᵒᵖ ⥤
+StrictMarkovCat` followed by `StrictMarkovCat.toMarCat` (`FinODAG.refinement J`,
+`theorem_6_7`, `theorem_6_7_strict`), for a family `J : ∀ G, G.JS` of instances of C1;
+Proposition 6.6 is `FinODAG.prop_6_6` (general singular variables) with `prop_6_6_sets`;
+Definition 6.4 `FinODAG.refine`; Example 6.5 `equation_6_2`. Status in `stage 6/STATUS.md`
+(including the statement of Theorem 6.7 in mathematical language for the author), hand-over and
+a summary of the whole development in `stage 6/HANDOFF.md`. Decided in Stage 6, within this plan:
+
+- `FinODAG` as the default: vertices `Fin n`, arrows a finite type with `s a ≤ t a` and identity
+  loops (parallel arrows allowed), morphisms weakly monotone graph homomorphisms.
+- Singular variables and twists as in Stage 5 (orderings as lists, `τ_*` node-free diagrams);
+  "`τ_*`, `ρ_*` are the multipliers of Remark 5.3" proved directly in `Cau(G)`
+  (`twist_isMultiplier`, `multiplier_unique`).
+- Proposition 6.6: the substitution of the blocks `B_y` is the strict functor
+  `F_s(W(G)) → F_s(W(H))` given by Theorem 2.3 (`FinODAG.subst`, node counts `card_subst`,
+  `refine_projM`); label coherence is extended to compare live producers only
+  (`ProdSig.sameSkeleton_of_live`), as the paper compares live nodes; the path arguments are
+  `liveSet_iff`, `R_image`.
+- `MarCat`: Mathlib's `MarkovCategory`, Markov functors as `Functor.Braided` plus matching of
+  duplicates and discards (the form of Stage 5's `Strictification`); `StrictMarkovCat`,
+  `MarCat` and the inclusion defined here (Mathlib has no bundled category of monoidal
+  categories).
+- The enlarged-signature endofunctor of Example 6.5 is not formalized (optional).
+- No paper feedback; no Stage 0–5 source changed. Stage 3's open item 2 stays open.
+
 ### Stage 7 — optional, after the paper is covered
 
 Author's decisions, 2026-11-20: `Strictification M` (C2) stays assumed and is

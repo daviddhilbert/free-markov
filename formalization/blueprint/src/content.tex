@@ -765,46 +765,118 @@ $\mathcal M$.
 
 \section{Refinement (Stage 6)}
 
+\begin{definition}[$\mathbf{FinODAG}$]
+\label{def:6.finodag}
+\lean{FreeMarkov.FinODAG, FreeMarkov.FinODAG.Hom, FreeMarkov.FinODAG.instCategory, FreeMarkov.FinODAG.toFinDAG, FreeMarkov.FinODAG.forget, FreeMarkov.FinODAG.fiber, FreeMarkov.FinODAG.fiber_interval, FreeMarkov.FinODAG.lt_of_fiber_lt, FreeMarkov.FinODAG.pa, FreeMarkov.FinODAG.K, FreeMarkov.FinODAG.Hom.map_pa}
+\leanok
+\uses{def:5.findag}
+Ordered finite directed acyclic graphs with identity loops (vertices $0, \dots, n-1$ in
+their order, arrows going weakly up) and weakly order-preserving graph homomorphisms;
+fibers are intervals ordered as their images; the parents $S_i$ and the family $K_G$.
+\end{definition}
+
 \begin{definition}[Terminology 6.1]
 \label{ter:6.1}
-\uses{intro:free-graph-monoid}
-Variables, atomic and singular variables; $\mathbf{FinODAG}$.
+\lean{FreeMarkov.Singular, FreeMarkov.SubVar, FreeMarkov.singular_finWord}
+\leanok
+\uses{intro:free-graph-monoid, def:6.finodag}
+Variables, atomic and singular variables, sub-variables $v_{S'} \subseteq v_S$.
 \end{definition}
 
 \begin{definition}[Definition 6.2: $W(G)$, $\mathrm{Cau}(G)$]
 \label{def:6.2}
-\uses{ter:6.1, intro:dd-graph-monoid, thm:4.1}
-The free $\mathrm{DD}$-graph monoid $W(G)$ with causal mechanisms, and
-$\mathrm{Cau}(G)$.
+\lean{FreeMarkov.FinODAG.W, FreeMarkov.FinODAG.JS, FreeMarkov.FinODAG.src_mech}
+\leanok
+\uses{ter:6.1, intro:dd-graph-monoid, thm:4.1, def:5.4}
+The free $\mathrm{DD}$-graph monoid $W(G)$ with the causal mechanisms
+$\kappa_v : \mathrm{pa}(v) \to v$, and $\mathrm{Cau}(G)$, the free Markov category over it
+(C1 for $W(G)$).
 \end{definition}
 
 \begin{definition}[Definition 6.3: causal effects]
 \label{def:6.3}
-\uses{def:6.2, def:5.4}
-Causal effects of singular variables and twists.
+\lean{FreeMarkov.FinODAG.causalEffectSets, FreeMarkov.FinODAG.causalEffect, FreeMarkov.FinODAG.prior, FreeMarkov.FinODAG.singular_unique, FreeMarkov.FinODAG.causalEffect_finWord, FreeMarkov.FinODAG.twist_isMultiplier, FreeMarkov.FinODAG.multiplier_unique}
+\leanok
+\uses{def:6.2, def:5.4, def:5.twists, rem:5.3}
+$[v_T \| v_S]$, and for singular $v$, $w$ the twist
+$[w \| v] = \tau_* \circ [v_T \| v_S] \circ \rho_*^{-1}$; the prior $[w]$; uniqueness of
+$S, T, \rho, \tau$; $\tau_*$, $\rho_*$ are the unique multipliers.
 \end{definition}
 
-\begin{definition}[Definition 6.4: refinement]
+\begin{definition}[Variables $\phi^{-1}(v)$]
+\label{def:6.preim}
+\lean{FreeMarkov.FinODAG.preimW, FreeMarkov.FinODAG.singular_preimW, FreeMarkov.FinODAG.preimW_finWord, FreeMarkov.FinODAG.preimW_id, FreeMarkov.FinODAG.preimW_comp, FreeMarkov.FinODAG.R_preimage_parents, FreeMarkov.FinODAG.inD_preimage_parents}
+\leanok
+\uses{def:6.finodag, ter:6.1}
+$\phi^{-1}(v)$; singular if $v$ is; $\phi^{-1}(v_S) = u_{\phi^{-1}(S)}$; functoriality; the note
+on $H_{\phi^{-1}(\mathrm{pa}(v)) \to \phi^{-1}(v)}$.
+\end{definition}
+
+\begin{definition}[Definition 6.4: refinement; (6.1)]
 \label{def:6.4}
-\uses{def:6.2, thm:4.1}
-The $\phi$-refinement $\phi^* : \mathrm{Cau}(G) \to \mathrm{Cau}(H)$.
+\lean{FreeMarkov.FinODAG.fPhi, FreeMarkov.FinODAG.fPhi_matches, FreeMarkov.FinODAG.fPhi_V, FreeMarkov.FinODAG.fPhi_dup, FreeMarkov.FinODAG.fPhi_disc, FreeMarkov.FinODAG.fPhi_mech, FreeMarkov.FinODAG.fPhi_mech_empty, FreeMarkov.FinODAG.refine, FreeMarkov.FinODAG.refine_spec, FreeMarkov.FinODAG.eq_refine, FreeMarkov.FinODAG.refine_obj, FreeMarkov.FinODAG.refine_mechK}
+\leanok
+\uses{def:6.2, def:6.3, def:6.preim, thm:4.1}
+$f_\phi : W(G) \to \mathrm{Cau}(H)$ of (6.1) matches duplicates and discards; the
+$\phi$-refinement $\phi^* : \mathrm{Cau}(G) \to \mathrm{Cau}(H)$ is the unique strict Markov
+functor agreeing with it.
 \end{definition}
 
 \begin{remark}[Example 6.5]
 \label{ex:6.5}
-\uses{def:6.4}
-Interventions $i_v^*$ and equation (6.2).
+\lean{FreeMarkov.FinODAG.cut, FreeMarkov.FinODAG.incl, FreeMarkov.FinODAG.pa_cut_of_mem, FreeMarkov.FinODAG.intervention, FreeMarkov.FinODAG.equation_6_2, FreeMarkov.FinODAG.intervention_mech_of_not_mem, FreeMarkov.FinODAG.intervention_copy, FreeMarkov.FinODAG.intervention_discard}
+\leanok
+\uses{def:6.4, def:5.4}
+$G_{\bar v}$, the intervention $i_v^*$ and equation (6.2). The enlarged-signature endofunctor
+is not formalized (optional).
 \end{remark}
+
+\begin{lemma}[Substitution of blocks (proof of Proposition 6.6)]
+\label{lem:6.subst}
+\lean{FreeMarkov.FinODAG.subst, FreeMarkov.FinODAG.card_subst, FreeMarkov.FinODAG.refine_projM, FreeMarkov.ProdSig.projM_copyW, FreeMarkov.ProdSig.sameSkeleton_of_live, FreeMarkov.ProdSig.projM_eq_of_live}
+\leanok
+\uses{def:6.4, thm:2.3, lem:5.labels, lem:4.4}
+The diagram $\Gamma_{\phi^* G}$ as the strict symmetric monoidal functor
+$F_s(W(G)) \to F_s(W(H))$ given by C1 (blocks $B_y$ for the nodes $\kappa_y$); its node counts;
+it represents $\phi^*$ of the class; label coherence comparing live nodes.
+\end{lemma}
 
 \begin{proposition}[Proposition 6.6]
 \label{prop:6.6}
-\uses{def:6.4, def:6.3, lem:4.4, def:5.4, def:2.value}
-$\phi^*([w \| v]) = [\phi^*(w) \| \phi^*(v)]$.
+\lean{FreeMarkov.FinODAG.prop_6_6, FreeMarkov.FinODAG.prop_6_6_sets, FreeMarkov.FinODAG.liveSet_iff, FreeMarkov.FinODAG.R_image, FreeMarkov.FinODAG.refine_perm}
+\leanok
+\uses{def:6.4, def:6.3, lem:6.subst, lem:4.4, def:5.4}
+$\phi^*([w \| v]) = [\phi^*(w) \| \phi^*(v)]$ for singular $v$, $w$.
 \end{proposition}
+\begin{proof}
+\leanok
+As in the paper: $\Gamma_{\phi^* G}$ has one node $\kappa_x$ for each
+$x \in \phi^{-1}(D \setminus S)$, its live nodes are those with $x \in D' \setminus S'$ (the
+paths and "erasing the repetitions"), as for $\Gamma_H$; label coherence gives the same
+skeleton, Lemma 4.4 the same morphism; twists go to twists.
+\end{proof}
+
+\begin{definition}[$\mathbf{StrictMarkovCat}$, $\mathbf{MarCat}$ (D7)]
+\label{def:6.marcat}
+\lean{FreeMarkov.StrictMarkovCat, FreeMarkov.StrictMarkovCat.category, FreeMarkov.MarCat, FreeMarkov.MarkovFunctor, FreeMarkov.MarCat.category, FreeMarkov.StrictMarkovFunctor.toMarkovFunctor, FreeMarkov.StrictMarkovCat.toMarCat}
+\leanok
+\uses{intro:strict-markov, intro:bridge}
+Strict Markov categories and strict Markov functors; Markov categories (Mathlib) and Markov
+functors (strong symmetric monoidal, matching duplicates and discards); the inclusion.
+\end{definition}
 
 \begin{theorem}[Theorem 6.7]
 \label{thm:6.7}
-\uses{prop:6.6, thm:4.1}
-Refinement is a contravariant functor $\mathbf{FinODAG} \to \mathbf{MarCat}$
-(target fixed by D7). Advertised result.
+\lean{FreeMarkov.FinODAG.refinementStrict, FreeMarkov.FinODAG.refinement, FreeMarkov.FinODAG.theorem_6_7, FreeMarkov.FinODAG.theorem_6_7_strict, FreeMarkov.FinODAG.refine_id, FreeMarkov.FinODAG.refine_comp}
+\leanok
+\uses{prop:6.6, def:6.4, def:6.marcat, thm:4.1}
+Refinement is a contravariant functor $\mathbf{FinODAG} \to \mathbf{MarCat}$: a functor
+$\mathbf{FinODAG}^{\mathrm{op}} \to \mathbf{StrictMarkovCat}$, $G \mapsto \mathrm{Cau}(G)$,
+$\phi \mapsto \phi^*$, followed by the inclusion (D7). Advertised result.
 \end{theorem}
+\begin{proof}
+\leanok
+Identities: $f_{1}(\kappa_v) = [v \| \mathrm{pa}(v)] = \kappa_v$ and uniqueness. Composition:
+$\psi^{-1}\phi^{-1} = (\phi\psi)^{-1}$, matching of duplicates and discards, Proposition 6.6
+for $\psi$, and uniqueness.
+\end{proof}
