@@ -139,3 +139,4 @@ None. No step of Section 4 up to Remark 4.2 needed a change;
    Recommendation: leave as recorded; it does not enter any theorem.
 3. The author's review of the statement of `JoyalStreet` (Stage 1, PLAN risk 5) is still
    open.
+  (Closed 2026-11-20: reviewed and accepted; see `stage 1/STATUS.md`.)

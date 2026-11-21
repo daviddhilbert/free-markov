@@ -351,8 +351,8 @@ Stage 1, within this plan:
 - Remark 2.4 holds for every choice of orderings of the cuts, in both
   bracketings, as an equation of classes, without C1 (`Diagram.remark_2_4`,
   `remark_2_4'`).
-- The author's review of the statement of `JoyalStreet` (risk 5) is recorded as
-  an open item in `stage 1/STATUS.md`; Stage 1 went ahead under ground rule 9.
+- The author's review of the statement of `JoyalStreet` (risk 5) was done on
+  2026-11-20 and the statement accepted; the record is in `stage 1/STATUS.md`.
 
 ### Stage 2 — Section 3: surgeries (L, the heaviest combinatorics)
 
@@ -539,7 +539,8 @@ Each is a proof obligation and a possible source of feedback to the paper.
 5. **Strength of C1.** The hypothesis must state the diagram operations
    precisely enough to give the layer decomposition and substitution, without
    assuming more than Joyal–Street prove. Its statement is reviewed by the
-   author before Stage 1 proofs begin.
+   author before Stage 1 proofs begin. (Reviewed and accepted 2026-11-20, after
+   Stage 3; see `stage 1/STATUS.md`.)
 6. **Universes (D3).** The comparison form of C1 removes the universe question
    from the hypothesis; it remains for classes of diagrams.
 

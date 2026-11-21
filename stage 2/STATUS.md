@@ -139,3 +139,4 @@ created.
 
 - The author's review of the statement of `JoyalStreet` (Stage 1, PLAN risk 5) is still
   open; in Stage 2 only the congruence, the quotient and Corollary 3.5 depend on it.
+  (Closed 2026-11-20: reviewed and accepted; see `stage 1/STATUS.md`.)

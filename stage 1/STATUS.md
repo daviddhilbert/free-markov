@@ -122,7 +122,19 @@ None. No step of Section 2 needed a change.
 - No Stage 0 source and no manuscript file was changed. Nothing was installed;
   `lake update` was not run. Nothing committed.
 
-## Open item for the author (recorded, not blocking)
+## Item for the author: review of the statement of `JoyalStreet` (closed)
+
+Closed 2026-11-20. The coordinating session compared the statement with
+Joyal–Street, Chapter 2 (§2, Theorem 2.3; Chapter 1, Definition 1.5 and the proof of
+Theorem 1.2), and compared the Lean definitions of diagrams, isomorphisms, classes,
+gluing, disjoint union, the node-free diagrams and the one-node diagrams line by line
+with Section 2 of the paper; no mismatch. The author read the statement in
+mathematical form and accepted it. Two points are part of what is assumed: the
+strict unique factorization comes from Joyal–Street's proof (their Definition 2.1 of
+freeness is an equivalence of categories), and their graphs are topological while
+ours are combinatorial.
+
+Original record:
 
 PLAN.md risk 5 and the Stage 0 hand-over ask that the author review the statement of
 `JoyalStreet` before proofs build on it. Following ground rule 9 the stage went
