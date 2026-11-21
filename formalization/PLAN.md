@@ -500,6 +500,33 @@ Lemma 4.5 `JoyalStreet.lemma_4_5` (items 1, 2 also as `Diagram.lemma_4_5_path`,
 
 Done when: Lemma 5.5 and Proposition 5.6 are proved in the generality fixed by D6.
 
+**Record (2026-11-20): done.** `python3 scripts/verify.py` passes: build exit code 0
+with no warnings, no `sorry`, 456 Stage 5 declarations using only `propext`,
+`Classical.choice`, `Quot.sound`; `FreeMarkov.JoyalStreet` occurs in 78 theorems (all about
+free Markov categories and their functors), `FreeMarkov.Strictification` in 19 (all in
+`Strictification.lean`). Lemma 5.5 is `EffData.lemma_5_5`, Proposition 5.6
+`EffData.prop_5_6`, both in every strict Markov category (D6); Remark 5.2 `remark_5_2`,
+Remark 5.3 `remark_5_3`, `remark_5_3_none`; the effect `EffData.effect`, in `Cau`-like free
+categories `EffSig.freeEffect`. Status in `stage 5/STATUS.md` (including the statement of
+`Strictification` in mathematical language, clause by clause, for the author), hand-over in
+`stage 5/HANDOFF.md`. Decided in Stage 5, within this plan:
+
+- One lemma, label coherence (`ProdSig.sameSkeleton_of_labels`: in a free `DD`-graph monoid
+  where each letter has at most one producer, origins and live nodes are determined by
+  letters), gives with Lemma 4.4 the uniqueness in Remarks 5.2, 5.3, Definition 5.4 and
+  Lemma 5.5; it is also the core of the proof of Proposition 6.6.
+- Definition 5.4: the fused diagram is recognised by the description used in the paper's
+  proofs (`IsEffectDiagram`: domain `w_S`, codomain `w_T`, one node `κ_i` for each
+  `i ∈ V(G_{S → T}) ∖ S`, no other producer node); the effect in `C` is the image under
+  `F_{(W,K)}` (Theorem 4.1) of its class, and `EffData.effect_eq_value` shows it is the value
+  in `C` of the image of the diagram. Put to the coordinator as a reading (STATUS, point 1).
+- `G_{S → T}` through `R S T` (vertices outside `S` reaching `T` through vertices outside `S`).
+- C2 is `structure Strictification M Str` (str(M), eval strong symmetric monoidal matching
+  duplicates and discards, full, faithful, values on words) plus `Strictification.EvalStrict`
+  for "strict when `M` is strict"; effects in an arbitrary `M` are `MData.effect`, and
+  `MData.effect_strict` is the agreement for strict `M`.
+- No paper feedback; no Stage 0–4 source changed. Stage 3's open item 2 stays open.
+
 ### Stage 6 — Section 6: refinement (M–L)
 
 - `FinODAG` (default: vertices `Fin n`, arrows increasing), morphisms, fibers

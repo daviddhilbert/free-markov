@@ -1,7 +1,7 @@
 name = "free_markov"
 version = "0.1.0"
 description = "Formalization of Yimu Yin's A graphical construction of free Markov categories"
-defaultTargets = ["FreeMarkovStage0", "FreeMarkovStage1", "FreeMarkovStage2", "FreeMarkovStage3", "FreeMarkovStage4"]
+defaultTargets = ["FreeMarkovStage0", "FreeMarkovStage1", "FreeMarkovStage2", "FreeMarkovStage3", "FreeMarkovStage4", "FreeMarkovStage5"]
 
 [leanOptions]
 autoImplicit = false
@@ -45,3 +45,9 @@ name = "FreeMarkovStage4"
 srcDir = "stage 4"
 roots = ["FreeMarkov.Stage4"]
 globs = ["FreeMarkov.Stage4", "FreeMarkov.Stage4.+"]
+
+[[lean_lib]]
+name = "FreeMarkovStage5"
+srcDir = "stage 5"
+roots = ["FreeMarkov.Stage5"]
+globs = ["FreeMarkov.Stage5", "FreeMarkov.Stage5.+"]

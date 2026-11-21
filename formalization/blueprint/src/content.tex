@@ -623,58 +623,144 @@ skeleton of $\Upsilon$.
 
 \section{Effects (Stage 5)}
 
-\begin{definition}[Definition 5.1: multipliers]
+\begin{definition}[Straight categories]
+\label{def:5.straight}
+\lean{FreeMarkov.Straight, FreeMarkov.straight_iff}
+\leanok
+\uses{intro:strict-markov}
+A strict Markov category whose monoid of objects has no idempotents and no elements of
+finite order other than $1$; equivalently $w^n \neq w^m$ for $w \neq 1$, $n \neq m$.
+\end{definition}
+
+\begin{definition}[Definition 5.1: multipliers; the $m$-fold copy]
 \label{def:5.1}
+\lean{FreeMarkov.IsMult, FreeMarkov.IsMultiplier, FreeMarkov.copyN, FreeMarkov.isMult_copyN, FreeMarkov.StrictMarkovFunctor.map_copyN, FreeMarkov.IsMult.exists_preimage}
+\leanok
 \uses{intro:strict-markov}
 Morphisms generated from duplicates, discards, symmetries and identities on the
-$w_i$.
+$w_i$; the $m$-fold copy $\varepsilon_w$, $1_w$, $(\iota_{w \to w^m} \otimes 1_w) \circ \delta_w$.
+Strict Markov functors preserve $m$-fold copies; multipliers in the image of a functor that
+is injective on the products of the $w_i$ come from multipliers.
 \end{definition}
+
+\begin{lemma}[Label coherence]
+\label{lem:5.labels}
+\lean{FreeMarkov.ProdSig.sameSkeleton_of_labels, FreeMarkov.ProdSig.originAt_dom_iff, FreeMarkov.ProdSig.originAt_out_iff, FreeMarkov.ProdSig.live_iff_liveLab, FreeMarkov.ProdSig.projM_eq_of_card, FreeMarkov.ProdSig.free_hom_eq}
+\leanok
+\uses{def:4.skeleton, lem:4.4}
+In a free $\mathsf{DD}$-graph monoid in which each letter has at most one producer, two
+diagrams with the same domain (no repeated letter) and codomain, in which each producer
+occurs at most once and never with its letter in the domain, and in which the same
+producers occur, have the same skeleton. This is the argument of Remarks 5.2, 5.3 and of
+the proof of Proposition 6.6. Not a numbered statement of the paper.
+\end{lemma}
+\begin{proof}
+\leanok
+The origin of an edge is the edge of the domain with its letter or the output of the
+node of its producer; a node of a producer is live iff its letter is connected to the
+codomain letters through producers that occur.
+\end{proof}
 
 \begin{remark}[Remark 5.2]
 \label{rem:5.2}
-\uses{def:5.1, thm:4.1, lem:4.4}
-Uniqueness of the multiplier on $(w, w^m)$ in a straight category; the
-$m$-fold copy. Cited by the application.
+\lean{FreeMarkov.remark_5_2, FreeMarkov.remark_5_7_unique, FreeMarkov.copyFunctor}
+\leanok
+\uses{def:5.1, def:5.straight, thm:4.1, lem:5.labels}
+In a straight category the $m$-fold copy is the only multiplier on $(w, w^m)$. Cited by
+the application. Uses C1 (the free Markov category on one letter).
 \end{remark}
+\begin{proof}
+\leanok
+As in the paper: a multiplier is the image of a morphism $a \to a^m$ of the free Markov
+category on $a$ (straightness), and there is only one such morphism.
+\end{proof}
 
 \begin{remark}[Remark 5.3]
 \label{rem:5.3}
-\uses{def:5.1, thm:4.1, lem:4.4}
-Uniqueness of multipliers on distinct letters when the objects form a free
-monoid. Cited by the application.
+\lean{FreeMarkov.remark_5_3, FreeMarkov.remark_5_3_none, FreeMarkov.exists_multiplier, FreeMarkov.underlyingDD}
+\leanok
+\uses{def:5.1, thm:4.1, lem:5.labels}
+If the objects form a free monoid and the $w_i$ are distinct letters, exactly one multiplier
+on $(W, v)$ for a word $v$ in them, none if another letter occurs. Cited by
+the application.
 \end{remark}
+
+\begin{definition}[$\mathbf{FinDAG}$ and $G_{S \to T}$]
+\label{def:5.findag}
+\lean{FreeMarkov.FinDAG, FreeMarkov.FinDAG.isTerminal, FreeMarkov.EffSig, FreeMarkov.EffSig.toFinDAG, FreeMarkov.EffSig.R, FreeMarkov.EffSig.InD, FreeMarkov.EffSig.DArr}
+\leanok
+\uses{intro:graph-monoid}
+Finite directed acyclic graphs with identity loops; the one-vertex graph is terminal. The
+graph of a family $K$ and its subgraphs $G_{S \to T}$.
+\end{definition}
 
 \begin{definition}[Definition 5.4: effects]
 \label{def:5.4}
-\uses{def:5.1, rem:5.2}
-The effect $[w_T \| w_S]_{(W,K)}$ and its independence of the assignment.
+\lean{FreeMarkov.EffSig.IsEffectDiagram, FreeMarkov.EffSig.exists_effect, FreeMarkov.EffSig.freeEffect, FreeMarkov.EffSig.projM_eq_freeEffect, FreeMarkov.EffSig.effectDiagram_sameSkeleton, FreeMarkov.EffSig.effectDiagram_live, FreeMarkov.EffSig.effectDiagram_congruent, FreeMarkov.EffData, FreeMarkov.EffData.effect, FreeMarkov.EffData.effect_eq_value, FreeMarkov.EffData.effect_freeData}
+\leanok
+\uses{def:5.1, def:5.findag, lem:5.labels, lem:4.4, thm:4.1, def:2.value}
+The effect $[w_T \| w_S]_{(W,K)}$: the image under $F_{(W,K)}$ of the class of an effect
+diagram of $W(K)$; every effect diagram represents it (independence of the assignment and
+of the depiction of the multipliers), its producer nodes are live, two Markov minimal ones
+are Markov congruent, and its image in $\mathcal M$ has the effect as value.
 \end{definition}
 
 \begin{lemma}[Lemma 5.5]
 \label{lem:5.5}
-\uses{def:5.4, rem:2.4}
-Splitting an effect at $T_i$.
+\lean{FreeMarkov.EffData.lemma_5_5, FreeMarkov.EffSig.lemma_5_5_free, FreeMarkov.EffSig.isEffect_comp, FreeMarkov.EffSig.mem_Ti_self, FreeMarkov.EffSig.not_inD_Ti_of_child, FreeMarkov.EffSig.R_Ti_iff, FreeMarkov.EffSig.R_Ti_T_iff, FreeMarkov.EffSig.R_iff_R_Ti_or}
+\leanok
+\uses{def:5.4, lem:5.labels}
+Splitting an effect at $T_i$: $[T \| S] = [T \| T_i] \circ [T_i \| S]$, in every strict
+Markov category (D6).
 \end{lemma}
+\begin{proof}
+\leanok
+The graph part as in the paper ($V(G_{S \to T_i}) = S \cup A$, $V(G_{T_i \to T}) = T_i \cup B$);
+an effect diagram for $(S, T_i)$ glued to one for $(T_i, T)$ is an effect diagram for
+$(S, T)$, so the free equation holds by label coherence, and $F_{(W,K)}$ carries it to
+$\mathcal M$.
+\end{proof}
 
 \begin{proposition}[Proposition 5.6]
 \label{prop:5.6}
-\uses{def:5.4, lem:5.5}
-Strict Markov functors preserve effects.
+\lean{FreeMarkov.EffData.prop_5_6, FreeMarkov.EffData.functor_map, FreeMarkov.EffData.map}
+\leanok
+\uses{def:5.4, thm:4.1}
+Strict Markov functors preserve effects, for strict (not only straight) categories (D6).
 \end{proposition}
+\begin{proof}
+\leanok
+$F \circ F_{(W,K)} = F_{(F(W), F(K))}$ by the uniqueness in Theorem 4.1.
+\end{proof}
+
+\begin{definition}[Twists]
+\label{def:5.twists}
+\lean{FreeMarkov.EffData.permStar, FreeMarkov.EffData.permStar_comp, FreeMarkov.EffData.twist, FreeMarkov.permFs}
+\leanok
+\uses{def:5.4}
+$[\tau(T) \| \sigma(S)] = \tau_* \circ [T \| S] \circ \sigma_*^{-1}$, with $\tau_*$ given by the
+node-free diagram connecting equal indices.
+\end{definition}
 
 \begin{definition}[Strictification; cited result C2]
 \label{cite:C2}
+\lean{FreeMarkov.Strictification, FreeMarkov.Strictification.EvalStrict, FreeMarkov.Strictification.straight_str}
+\leanok
 \uses{intro:strict-markov, intro:bridge}
 For a Markov category $\mathcal M$, the strict Markov category
-$\mathrm{str}(\mathcal M)$ and $\mathrm{eval} : \mathrm{str}(\mathcal M) \to \mathcal M$.
-Assumed.
+$\mathrm{str}(\mathcal M)$ on the words over the objects of $\mathcal M$ and the Markov functor
+$\mathrm{eval} : \mathrm{str}(\mathcal M) \to \mathcal M$, full, faithful, the identity on
+one-letter words, strict when $\mathcal M$ is strict. Assumed (structure, never an axiom).
 \end{definition}
 
-\begin{remark}[Remark 5.7]
+\begin{remark}[Remark 5.7; effects in an arbitrary Markov category]
 \label{rem:5.7}
+\lean{FreeMarkov.remark_5_7_copy, FreeMarkov.copyN_comp_map, FreeMarkov.value_copy_diagram, FreeMarkov.Strictification.MData, FreeMarkov.Strictification.MData.effect, FreeMarkov.Strictification.MData.effect_strict}
+\leanok
 \uses{def:5.4, lem:5.5, prop:5.6, cite:C2}
-The construction without straightness, and in arbitrary Markov categories.
-Primary form of Section 5 (D6).
+The construction without straightness ($m$-fold copies, the primary form, D6), and in
+arbitrary Markov categories through $\mathrm{str}(\mathcal M)$; agreement for strict
+$\mathcal M$.
 \end{remark}
 
 \section{Refinement (Stage 6)}
