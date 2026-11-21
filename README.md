@@ -124,6 +124,5 @@ end with `RESULT: PASS`.
 
 ## Licence
 
-The Lean development, the scripts and the accompanying notes are under the Apache License 2.0;
-see `LICENSE`. The paper in `paper/` is © its author, all rights reserved, and is not covered
-by that licence.
+Everything in this repository, including the paper in `paper/`, is under the Apache License 2.0;
+see `LICENSE`.
