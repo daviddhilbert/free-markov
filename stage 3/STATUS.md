@@ -137,6 +137,10 @@ None. No step of Section 4 up to Remark 4.2 needed a change;
    the (1.2)-composite `prongCopy`; proving that the gluing along the paper's bijection
    has the same class needs a small calculus of node-free (permutation) diagrams.
    Recommendation: leave as recorded; it does not enter any theorem.
+  (Closed 2026-11-20 in the Stage 7 follow-up: the diagram `Γ` is defined literally as
+   `Diagram.copyD` / `copyWordD`, and `JoyalStreet.projM_copyD` / `projM_copyWordD` prove that
+   its class is `copyM a` for every prong order (`projM_discardD` / `projM_discardWordD` for
+   `ε_a`); see `stage 7/STATUS.md`, follow-up section.)
 3. The author's review of the statement of `JoyalStreet` (Stage 1, PLAN risk 5) is still
    open.
   (Closed 2026-11-20: reviewed and accepted; see `stage 1/STATUS.md`.)

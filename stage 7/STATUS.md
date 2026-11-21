@@ -134,3 +134,75 @@ combinatorial model without hypotheses.
   an earlier stage's definitions: every law holds for the operations of Stage 1 as defined.
 - No paper feedback (`PAPER-FEEDBACK.md` unchanged): the paper cites Joyal–Street, and nothing in
   its use of Theorem 2.3 is contradicted.
+
+# Follow-up (2026-11-20): the diagram of `δ_a`, and uniqueness of the free Markov category
+
+Task: the two items recorded in the Stage 7 entry of `formalization/PLAN.md` (coordinator's
+decision on Stage 3's open item 2; author's decision on the comparison of free Markov categories).
+
+**Done.** `python3 scripts/verify.py` ends with `RESULT: PASS` (all eight libraries; build exit
+code 0, no warnings). Stage 7 now has 383 declarations (303 theorems), no `sorry`, no `axiom`,
+only `propext`, `Classical.choice`, `Quot.sound`. The cited-hypothesis report lists, besides
+`joyalStreet` (C1 as a conclusion), the four theorems `JoyalStreet.projM_copyD`,
+`projM_copyWordD`, `projM_discardD`, `projM_discardWordD`: they are stated for an arbitrary
+`J : JoyalStreet G`, as the earlier stages do; their unconditional forms are
+`Combinatorial.copy_diagram` and `Combinatorial.discard_diagram`. Blueprint: 79 nodes, 77
+formalized (new nodes `s7:copy-diagram`, `s7:unique`).
+
+New files (imported by the aggregator `stage 7/FreeMarkov/Stage7.lean`): `CopyDiagram.lean`,
+`Uniqueness.lean`. No other source was changed (no Stage 0–6 file, no existing Stage 7 module).
+
+## Item A: the single diagram of `δ_a` (Stage 3's open item 2) — closed
+
+| Paper (Section 4, before the proof of Theorem 4.1) | Lean |
+|---|---|
+| `Γ`: joins `⊗_i δ_{a_i}` and `(⊗_i 1_{a_i}) ⊗ (⊗_i 1_{a_i})`, the two outputs of `δ_{a_i}` to the `i`th and `(n+i)`th edges, in either order | `Diagram.copyD G a c` (letters `a : Fin n → S`, prong order `c : Fin n → Bool`); `Diagram.copyWordD G w c` for a word `w` |
+| "all such `Γ` represent the same morphism ... denoted by `δ_a`" | `JoyalStreet.projM_copyD` (any `c`: the class is `copyM a`, as arrows), `projM_copyWordD` (paper's form: `w → w w`, equality in `F_s(G)/S_M`) |
+| "`ε_a = ⊗_i ε_{a_i}`" | `Diagram.discardD`, `discardWordD`; `projM_discardD`, `projM_discardWordD` |
+| unconditional | `Combinatorial.copy_diagram`, `Combinatorial.discard_diagram` |
+
+The diagram is literal: nodes `Fin n` (the duplicate on `a_i`), edges `Fin n ⊕ (Fin n ⊕ Fin n)`
+(the inputs; the outputs going to the `i`th codomain edge; those going to the `(n+i)`th), domain
+the inputs in order, codomain the first-kind outputs then the second-kind ones, so the codomain
+word is `a a`; `c i` says which prong of the `i`th duplicate goes to the `i`th edge. `copyM a` is
+Stage 3's duplicate on words (the instance `strictMarkovM` used in Theorem 4.1), so the statement
+is exactly "for every choice of prong order, `[Γ] = δ_a`". The paper's diagram represents
+`copyM a` for every prong order; no stop condition arose.
+
+Stage 5's `value_copy_diagram` and `remark_5_7_copy` do not give this directly: they are about the
+one-letter monoid `G_a`, where a word `a^m` has only one letter, whereas a word of `G` may repeat
+letters at different positions and the diagram must connect positions, not letters (the paper's
+parenthesis "it is not enough to match the values in `S`"). They do give the method.
+
+Proof (differs from the paper's "in light of (4.3)", same statement): over the free `DD`-graph
+monoid with the distinct letters `0, …, n-1` and only duplicates and discards
+(`ProdSig.free (Fin n)`), there is at most one morphism from `0 ⋯ (n-1)` to any word in
+`F_s/S_M` (Stage 5's `ProdSig.free_hom_eq`, from label coherence and Lemma 4.4), so the class of
+`copyD _ id c` there is the duplicate. Relabelling `i ↦ a_i` (`CopyDiagram.relab`) carries that
+diagram to `copyD G a c` (`relabelCopyIso`, the identity on nodes and edges) and, by the
+naturality of C1 under relabelling (Stage 1's `val_synMap`) and the uniqueness in the universal
+property of `Syn_s`, is the strict Markov functor of Theorem 4.1 on classes; it preserves
+duplicates. For the auxiliary monoid C1 is Stage 7's theorem (`ofCombinatorial`), so the form for
+`J : JoyalStreet G` assumes nothing beyond `J`. For `ε_a`: the unit of a strict Markov category is
+terminal (`eq_discard`).
+
+## Item B: uniqueness of the free Markov category — closed
+
+| Statement | Lean |
+|---|---|
+| `C`, `C'` free over `G` via `i`, `i'` ⇒ exactly one strict Markov functor `F : C → C'` with `i' = F ∘ i`, and every such `F` has a strict Markov inverse `F'` (`i = F' ∘ i'`, `F' ∘ F = 1`, `F ∘ F' = 1`) | `IsFreeMarkov.unique_iso`; same-universe form `IsFreeMarkov.unique_iso'` |
+| the same for free symmetric strict monoidal categories (Theorem 2.3's notion) | `IsFreeSymmetric.unique_iso`, `unique_iso'` |
+| any strict Markov category with the universal property of Theorem 4.1 is isomorphic to `F_s(G)/S_M` by a unique compatible strict Markov functor | `Combinatorial.fsM_unique_iso` (docstring: with Fritz–Liang, Corollary 6.7, cited, not formalized, this compares the two constructions) |
+| the same for `F_s(G)` and Theorem 2.3 | `Combinatorial.fsC_unique_iso` |
+
+Universes: `IsFreeMarkov C G i` quantifies over targets in one pair of universes (its last two
+universe parameters). The proof uses the property of `C` with targets `C'` and `C`, and that of
+`C'` with targets `C` and `C'`; so `unique_iso` takes these four instances, and `unique_iso'` (both
+categories in the same universes) two. In the corollaries Theorem 4.1 (resp. 2.3) supplies the two
+instances for `F_s(G)/S_M` (resp. `F_s(G)`), at every universe; the other category's property is
+needed at the universes of `F_s(G)/S_M` (`Type w`, morphisms in `max w w₂`) and at its own.
+
+Form of the conclusion: `(∃! F, i' = F ∘ i) ∧ ∀ F, i' = F ∘ i → ∃ F', i = F' ∘ i' ∧ F' ∘ F = 1 ∧
+F ∘ F' = 1`, which says that the compatible functor is unique and that it is an isomorphism (in
+the category of strict Markov categories and strict Markov functors), with equalities of functors
+(no natural isomorphisms are needed in the strict setting).

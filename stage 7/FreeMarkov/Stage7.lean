@@ -14,6 +14,10 @@ combinatorial diagrams of Stage 1, and the unconditional forms of the main theor
 * `JoyalStreet`: `JoyalStreet.ofCombinatorial G : JoyalStreet G`, `joyalStreet G`, and the
   namespace `Combinatorial` with Theorems 2.3, 4.1, Lemmas 4.4, 4.5, Proposition 6.6 and
   Theorem 6.7 without C1.
+* `CopyDiagram` (follow-up): the single diagrams of `δ_a` and `ε_a` on words of Section 4 represent
+  `copyM a` and `discardM a`, for every order of the prongs (Stage 3's open item 2).
+* `Uniqueness` (follow-up): free strict Markov (and free symmetric strict monoidal) categories over
+  `G` are isomorphic by a unique compatible strict functor; comparison with `F_s(G)/S_M`, `F_s(G)`.
 -/
 module
 
@@ -31,3 +35,5 @@ public import FreeMarkov.Stage7.Value
 public import FreeMarkov.Stage7.ValueOps
 public import FreeMarkov.Stage7.Generation
 public import FreeMarkov.Stage7.JoyalStreet
+public import FreeMarkov.Stage7.CopyDiagram
+public import FreeMarkov.Stage7.Uniqueness

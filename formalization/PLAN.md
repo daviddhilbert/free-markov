@@ -640,6 +640,31 @@ Stage 7, within this plan:
 - The reuse recheck found nothing to import or port (REUSE-SURVEY.md, Stage 7 section).
 - No Stage 0–6 source changed; no defect found; no paper feedback.
 
+**Record (2026-11-20): follow-up done — both items closed.** `python3 scripts/verify.py` passes
+(build exit code 0, no warnings; Stage 7: 383 declarations, no `sorry`, only `propext`,
+`Classical.choice`, `Quot.sound`). New modules `stage 7/FreeMarkov/Stage7/CopyDiagram.lean` and
+`Uniqueness.lean`; no other source changed. Status and hand-over: follow-up sections of
+`stage 7/STATUS.md` and `stage 7/HANDOFF.md`; blueprint nodes `s7:copy-diagram`, `s7:unique`.
+
+- **Stage 3's open item 2: closed.** The paper's diagram `Γ` of `δ_a` is defined literally
+  (`Diagram.copyD`, `copyWordD`; prong order a parameter), likewise one discard per letter
+  (`discardD`, `discardWordD`). For every prong order its class in `F_s(G)/S_M` is `copyM a`
+  (`JoyalStreet.projM_copyD`, `projM_copyWordD`), and the discards give `discardM a`
+  (`projM_discardD`, `projM_discardWordD`); unconditional: `Combinatorial.copy_diagram`,
+  `discard_diagram`. Stage 5's `value_copy_diagram`/`remark_5_7_copy` concern one letter and do
+  not cover repeated letters; the proof uses label coherence over the distinct letters
+  `0, …, n-1` (`ProdSig.free_hom_eq`) and relabelling along the functor of Theorem 4.1
+  (`val_synMap`), not the paper's appeal to (4.3). Same statement as the paper.
+- **Uniqueness of the free Markov category: closed.** `IsFreeMarkov.unique_iso`: two free strict
+  Markov categories over `G` are related by exactly one strict Markov functor compatible with the
+  homomorphisms from `G`, and it is an isomorphism; the four universe instances of the universal
+  properties are hypotheses (`unique_iso'` for equal universes). `Combinatorial.fsM_unique_iso`:
+  any strict Markov category with the universal property of Theorem 4.1 is isomorphic to
+  `F_s(G)/S_M` by a unique such functor (docstring: with Fritz–Liang, Corollary 6.7, cited, not
+  formalized, this compares the two constructions). Also for Theorem 2.3:
+  `IsFreeSymmetric.unique_iso`, `Combinatorial.fsC_unique_iso`.
+- No paper feedback. Stage 8 not started.
+
 ## 5. Order and dependencies
 
 Stages run in the order 0 to 6; each uses all earlier ones. Inside the paper:

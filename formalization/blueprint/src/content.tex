@@ -960,3 +960,39 @@ Theorem~2.3, Theorem~4.1, Lemma~4.4 (in $\mathcal F_s(G)/\mathbf S_M$), Lemma~4.
 Proposition~6.6 and Theorem~6.7 (both forms), with no cited hypothesis; C2 remains a
 hypothesis in Section~5.
 \end{theorem}
+
+\begin{theorem}[The single diagrams of $\delta_a$ and $\varepsilon_a$]
+\label{s7:copy-diagram}
+\lean{FreeMarkov.Diagram.copyD, FreeMarkov.Diagram.copyWordD, FreeMarkov.Diagram.discardD, FreeMarkov.Diagram.discardWordD, FreeMarkov.JoyalStreet.projM_copyD, FreeMarkov.JoyalStreet.projM_copyWordD, FreeMarkov.JoyalStreet.projM_discardD, FreeMarkov.JoyalStreet.projM_discardWordD, FreeMarkov.Combinatorial.copy_diagram, FreeMarkov.Combinatorial.discard_diagram}
+\leanok
+\uses{def:4.words, thm:4.1, thm:2.value, lem:5.labels, s7:C1}
+For a word $a = a_1 \cdots a_n$, the diagram $\Gamma$ of Section~4 (one duplicate on $a_i$ for
+each $i$, its two outputs the $i$th and the $(n+i)$th codomain edges in either order) represents
+$\delta_a$ in $\mathcal F_s(G)/\mathbf S_M$ for every choice of the prong orders; the diagram with
+one discard per letter represents $\varepsilon_a$. Closes Stage~3's open item~2.
+\end{theorem}
+\begin{proof}
+\leanok
+Over the free $DD$-graph monoid on the distinct letters $0, \ldots, n-1$ there is only one
+morphism from $0 \cdots (n-1)$ to any word (label coherence), so the diagram there represents the
+duplicate; relabelling $i \mapsto a_i$ is the strict Markov functor of Theorem~4.1 (naturality of
+C1 under relabelling), which preserves duplicates. For $\varepsilon_a$: the unit is terminal.
+\end{proof}
+
+\begin{theorem}[Uniqueness of the free Markov category]
+\label{s7:unique}
+\lean{FreeMarkov.IsFreeMarkov.unique_iso, FreeMarkov.IsFreeMarkov.unique_iso', FreeMarkov.IsFreeSymmetric.unique_iso, FreeMarkov.IsFreeSymmetric.unique_iso', FreeMarkov.Combinatorial.fsM_unique_iso, FreeMarkov.Combinatorial.fsC_unique_iso}
+\leanok
+\uses{intro:free-markov, thm:4.1, thm:2.3, s7:uncond}
+Two free strict Markov categories over $G$ (via $i$, $i'$) are isomorphic by exactly one strict
+Markov functor $F$ with $i' = F \circ i$; in particular any strict Markov category with the
+universal property of Theorem~4.1 is isomorphic to $\mathcal F_s(G)/\mathbf S_M$ by a unique such
+functor (with Fritz--Liang, Corollary~6.7, cited and not formalized, this compares the two
+constructions). The same for free symmetric strict monoidal categories and $\mathcal F_s(G)$.
+\end{theorem}
+\begin{proof}
+\leanok
+$F$ and the functor $F'$ in the other direction exist by the two universal properties;
+$F' \circ F$ and $1$ both factor $i$ through $i$, so they are equal by uniqueness, and likewise
+$F \circ F'$.
+\end{proof}
