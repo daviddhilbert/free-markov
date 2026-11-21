@@ -369,6 +369,29 @@ Stage 1, within this plan:
 
 Done when: Corollary 3.5 is proved and the quotient category is constructed.
 
+**Record (2026-11-20): done.** `python3 scripts/verify.py` passes: build exit code 0
+with no warnings, no `sorry`, 634 Stage 2 declarations using only `propext`,
+`Classical.choice`, `Quot.sound`; `FreeMarkov.JoyalStreet` occurs in 23 theorems, all
+about `S_T` as a congruence, the quotient and Corollary 3.5 (Lemma 3.3 needs no cited
+result). Status in `stage 2/STATUS.md`, hand-over in `stage 2/HANDOFF.md`. Decided in
+Stage 2, within this plan:
+
+- Subgraphs are pairs of node and edge predicates; Definition 3.1 is stated with
+  directed paths, and its conditions are proved equivalent to statements about the
+  order of nodes (`Reach`).
+- The surgery is built, as in the "more precisely" paragraph, by the three-piece gluing
+  of `Γ[∅, L]`, `Λ ⊎ R`, `Γ[M, Γ̇]`, for every layer as in Lemma 3.2 (`surgeryAt`); the
+  paper's surgery uses `Γ'^♯`. Independence of the layer, reversibility and the
+  recognition of surgeries come from one canonical description of the result
+  (`CanonProj`) and a comparison principle for isomorphisms.
+- Templates have their diagrams not anchored (`PDiagram`) and finite types in a universe
+  `u`; `T`-equivalence uses chains of diagrams on `Fin` types (D3), harmless by the
+  iso-invariance of a `T`-surgery step; `S_T` is the relation on classes.
+- Lemma 3.3 is stated with classes and the bracketing `h ∘ (X ∘ g)`, without C1;
+  `S_T` being a congruence, the quotient `F_s(G)/S_T` (a `StrictSMC`, quotient of the
+  hom-sets as for `Syn_s(G)`) and Corollary 3.5 use C1 (associativity and interchange).
+- No paper feedback; no Stage 0 or Stage 1 source changed.
+
 ### Stage 3 — Section 4, first part: Theorem 4.1 (M–L)
 
 - The Markov templates (4.1)–(4.4): coassociativity, left and right

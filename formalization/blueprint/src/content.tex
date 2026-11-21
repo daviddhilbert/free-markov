@@ -330,41 +330,136 @@ $\Gamma \cong \Gamma[\emptyset, \dot\Gamma]$.
 
 \begin{definition}[Definition 3.1: normal subgraphs]
 \label{def:3.1}
+\lean{FreeMarkov.Subgraph, FreeMarkov.PGraph.IsNormal, FreeMarkov.PGraph.LooseIn, FreeMarkov.PGraph.flat, FreeMarkov.PGraph.EdgeAt, FreeMarkov.PGraph.Reach}
+\leanok
 \uses{def:2.layers}
-Normal subgraphs and $\Gamma'^\flat$.
+A subgraph is a set of nodes and a set of edges.  It is normal if no directed path
+contains two distinct edges of it one of which is loose in it, all the edges at its
+nodes belong to it, and every directed path between two of its nodes belongs to it.
+$\Gamma'^\flat$ deletes the loose edges of $\Gamma'$.
 \end{definition}
 
-\begin{lemma}[Lemma 3.2]
-\label{lem:3.2}
+\begin{lemma}[Observations after Definition 3.1]
+\label{lem:3.1obs}
+\lean{FreeMarkov.PGraph.flat_eq_of_edgeAt, FreeMarkov.PGraph.IsNormal.isInitial, FreeMarkov.PGraph.IsNormal.isTerminal, FreeMarkov.PGraph.reach_of_mem_path, FreeMarkov.PGraph.exists_path_of_reach, FreeMarkov.PGraph.IsNormal.not_reach, FreeMarkov.PGraph.IsNormal.convex}
+\leanok
 \uses{def:3.1}
-A subgraph is normal iff it lies in a layer $\Gamma[L,M]$ with
-$\Gamma[L,M]^\flat = \Gamma'^\flat$.
+Subgraphs with the same nodes satisfying the second condition have the same
+$\flat$; a node of a normal subgraph that is initial (terminal) in it is initial
+(terminal) in $\Gamma$.  The first and third conditions in terms of the order of
+nodes.
 \end{lemma}
+\begin{proof}
+\leanok
+Direct; two distinct edges lie on a common directed path, in this order, iff
+$e(1) \le e'(0)$.
+\end{proof}
 
-\begin{definition}[Templates and surgery]
+\begin{lemma}[Lemma 3.2 and $\Gamma'^\sharp$]
+\label{lem:3.2}
+\lean{FreeMarkov.PGraph.isNormal_iff, FreeMarkov.PGraph.isNormal_of_layer, FreeMarkov.PGraph.sharpL, FreeMarkov.PGraph.sharpM, FreeMarkov.PGraph.sharp, FreeMarkov.PGraph.IsNormal.sharpLayer, FreeMarkov.PGraph.ValidLayer, FreeMarkov.PGraph.isNormal_iff_nonempty_validLayer}
+\leanok
+\uses{lem:3.1obs}
+A subgraph is normal iff it lies in a layer $\Gamma[L,M]$ with
+$\Gamma[L,M]^\flat = \Gamma'^\flat$; $\Gamma'^\sharp$ is the layer built in the proof.
+\end{lemma}
+\begin{proof}
+\leanok
+As in the paper; for ``if'', every subgraph with the nodes of $\Gamma[L,M]$ lying
+between $\Gamma[L,M]^\flat$ and $\Gamma[L,M]$ is normal.
+\end{proof}
+
+\begin{definition}[The surgery $\Gamma^\Omega_\Lambda(\phi, \alpha, \beta)$]
 \label{def:3.surgery}
-\uses{lem:3.2, thm:2.3}
-The surgery $\Gamma^\Omega_\Lambda(\phi, \alpha, \beta)$ by three-piece gluing.
+\lean{FreeMarkov.PGraph.three, FreeMarkov.PGraph.addLoose, FreeMarkov.PGraph.ValidLayer.R, FreeMarkov.PGraph.ValidLayer.domMatch, FreeMarkov.PGraph.ValidLayer.codMatch, FreeMarkov.AGraph.surgeryAt, FreeMarkov.AGraph.surgery, FreeMarkov.AGraph.alphaSharp, FreeMarkov.AGraph.betaSharp, FreeMarkov.AGraph.surgeryAt_dom, FreeMarkov.AGraph.surgeryAt_cod, FreeMarkov.PDiagram, FreeMarkov.Diagram.subD, FreeMarkov.Diagram.surgeryAt, FreeMarkov.Diagram.surgery, FreeMarkov.Diagram.surgeryAt_v₀_dom, FreeMarkov.Diagram.surgeryAt_v₀_cod, FreeMarkov.Diagram.surgeryAt_domWord, FreeMarkov.Diagram.surgeryAt_codWord}
+\leanok
+\uses{lem:3.2, def:2.ops}
+$\Gamma[\emptyset, L]$, $\Lambda^\sharp = \Lambda \uplus R$ and $\Gamma[M, \dot\Gamma]$
+glued along the bijections given by $\phi \circ \alpha$, $\phi \circ \beta$ and the
+identity on $R$, for any layer as in Lemma 3.2 ($\Gamma'^\sharp$ for the surgery of the
+paper); anchored through $\alpha^\sharp$, $\beta^\sharp$; the fused valuation $v_w$;
+equal domain and codomain.
 \end{definition}
+
+\begin{lemma}[Structure of a surgery]
+\label{lem:3.indep}
+\lean{FreeMarkov.Diagram.isoDecomp, FreeMarkov.Diagram.isoMid, FreeMarkov.Diagram.CanonProj, FreeMarkov.Diagram.canonProj, FreeMarkov.Diagram.surgeryAt_iso, FreeMarkov.Diagram.surgery_iso_surgeryAt, FreeMarkov.Diagram.surgeryAt_iso_self, FreeMarkov.AGraph.surgeryAt_iso_self, FreeMarkov.AGraph.surgery_iso_self, FreeMarkov.Diagram.surgery_empty_iso, FreeMarkov.AGraph.surgery_empty_iso, FreeMarkov.Diagram.recognition, FreeMarkov.Diagram.surgeryAt_reverse, FreeMarkov.Diagram.surgeryAt_of_iso}
+\leanok
+\uses{def:3.surgery}
+$\Gamma$ is the gluing of $\Gamma[\emptyset,L]$, $\Omega \uplus R$, $\Gamma[M,\dot\Gamma]$.
+The nodes, edges and incidences of $\Gamma^\Omega_\Lambda$ are determined by
+$\Gamma$, $\Gamma'$, $\Lambda$, $\phi\circ\alpha$, $\phi\circ\beta$; hence the result does
+not depend on the layer.  An isomorphism $\Lambda \to \Omega$ inducing $\alpha$,
+$\beta$ gives back $\Gamma$ (for graphs and for diagrams); the empty template; a
+surgery can be reversed; surgeries on isomorphic diagrams.
+\end{lemma}
+\begin{proof}
+\leanok
+A comparison principle: two diagrams mapping injectively onto the same sets with
+the same incidences are isomorphic.
+\end{proof}
 
 \begin{lemma}[Lemma 3.3]
 \label{lem:3.3}
-\uses{def:3.surgery, rem:2.4}
-Characterization of the results of a surgery by a decomposition of $[\Gamma]$.
+\lean{FreeMarkov.Diagram.lemma_3_3, FreeMarkov.Diagram.threeIsoGlue, FreeMarkov.Diagram.mk_three, FreeMarkov.Diagram.mk_eq_decomp, FreeMarkov.Diagram.mk_surgeryAt_eq_decomp, FreeMarkov.Diagram.classRecognition, FreeMarkov.Diagram.layerIso, FreeMarkov.Diagram.mk_layerD_eq}
+\leanok
+\uses{lem:3.indep, rem:2.4}
+$(\Xi, t)$ is isomorphic to the result of a surgery with a given template iff
+$[\Gamma] = h \circ [\Gamma'^\sharp] \circ g$ and $[\Xi] = h \circ [\Lambda^\sharp] \circ g$
+for orderings making the bijections order-preserving; no cited result is used.
 \end{lemma}
+\begin{proof}
+\leanok
+The three-piece gluing along matchings of orderings is the composite of the classes;
+the ``if'' half is the recognition of surgeries.
+\end{proof}
 
-\begin{definition}[Definition 3.4: $T$-surgery, $T$-equivalence]
+\begin{definition}[Definition 3.4: templates, $T$-surgery, $T$-equivalence]
 \label{def:3.4}
-\uses{def:3.surgery}
-For a symmetric set of templates $T$: $T$-surgeries, $T$-equivalence, the
-congruences $\mathbf S_T$ and $\mathbf E_T$.
+\lean{FreeMarkov.Template, FreeMarkov.Template.symm, FreeMarkov.Template.empty, FreeMarkov.Template.IsSymmetric, FreeMarkov.Diagram.TStep, FreeMarkov.TEquiv, FreeMarkov.SRel, FreeMarkov.SRel.mk_iff, FreeMarkov.SRel.equivalence, FreeMarkov.Diagram.TStep.iso_left, FreeMarkov.Diagram.TStep.symm}
+\leanok
+\uses{def:3.surgery, lem:3.indep}
+For a symmetric set of templates $T$ containing the empty one: $T$-surgeries,
+$T$-equivalence, and $\mathbf S_T$ on classes, an equivalence relation.
+\end{definition}
+
+\begin{theorem}[$\mathbf S_T$ is a monoidal congruence; $\mathcal F_s(G)/\mathbf S_T$]
+\label{thm:3.quot}
+\lean{FreeMarkov.SRel.tensor, FreeMarkov.SRel.comp, FreeMarkov.TDecomp, FreeMarkov.JoyalStreet.Quot, FreeMarkov.JoyalStreet.quotCategory, FreeMarkov.JoyalStreet.quotStrictSMC, FreeMarkov.JoyalStreet.quotProj, FreeMarkov.JoyalStreet.quotProjStrict, FreeMarkov.JoyalStreet.quotProj_map_eq_iff}
+\leanok
+\uses{def:3.4, lem:3.3, thm:2.3}
+$\mathbf S_T$ respects $\otimes$ and $\circ$; the quotient is a symmetric strict
+monoidal category and the projection is strict symmetric monoidal (under C1).
+\end{theorem}
+\begin{proof}
+\leanok
+A $T$-surgery is $h \circ [\Omega \uplus R] \circ g \mapsto h \circ [\Lambda \uplus R] \circ g$;
+composition changes $g$ or $h$, tensoring with $[\Upsilon]$ replaces $\Omega \uplus R$ by
+$\Omega \uplus (R \uplus \mathrm{cod}\,\Upsilon)$ (interchange law).
+\end{proof}
+
+\begin{definition}[$\mathbf E_T$]
+\label{def:3.ET}
+\lean{FreeMarkov.ERel, FreeMarkov.ERel.dom_eq_cod_eq}
+\leanok
+\uses{def:3.4}
+The monoidal congruence generated by the pairs $([\Omega,u],[\Lambda,w])$ with
+orderings compatible with $\alpha$, $\beta$.
 \end{definition}
 
 \begin{corollary}[Corollary 3.5]
 \label{cor:3.5}
-\uses{def:3.4, lem:3.3, thm:2.3}
+\lean{FreeMarkov.cor_3_5, FreeMarkov.TStep.toERel, FreeMarkov.SRel.of_gen}
+\leanok
+\uses{thm:3.quot, def:3.ET, lem:3.3}
 $\mathbf S_T = \mathbf E_T$.
 \end{corollary}
+\begin{proof}
+\leanok
+$\subseteq$: Lemma 3.3 with $R$ ordered after $\Omega$, so that
+$[\Omega^\sharp] = [\Omega] \otimes [R]$.  $\supseteq$: induction on $\mathbf E_T$; a
+generating pair is a surgery on the whole diagram.
+\end{proof}
 
 \section{Free Markov categories (Stages 3 and 4)}
 

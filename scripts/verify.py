@@ -35,6 +35,7 @@ CITED = ["FreeMarkov.JoyalStreet", "FreeMarkov.Strictification"]
 STAGES = {
     0: ("FreeMarkovStage0", "FreeMarkov.Stage0", "stage 0"),
     1: ("FreeMarkovStage1", "FreeMarkov.Stage1", "stage 1"),
+    2: ("FreeMarkovStage2", "FreeMarkov.Stage2", "stage 2"),
 }
 
 
