@@ -11,7 +11,9 @@
 The plan is \texttt{formalization/PLAN.md}. Cited results are not proved: they
 enter as explicit hypotheses (C1, Joyal--Street's Theorem~2.3, and C2,
 strictification), never as axioms. Nodes without \texttt{\textbackslash lean}
-belong to later stages.
+belong to later stages. Stage 7 proves C1 for the combinatorial diagrams
+(\ref{s7:C1}) and states the main theorems without it (\ref{s7:uncond}); C2 stays a
+hypothesis.
 
 \section{Introduction (Stage 0)}
 
@@ -880,3 +882,81 @@ Identities: $f_{1}(\kappa_v) = [v \| \mathrm{pa}(v)] = \kappa_v$ and uniqueness.
 $\psi^{-1}\phi^{-1} = (\phi\psi)^{-1}$, matching of duplicates and discards, Proposition 6.6
 for $\psi$, and uniqueness.
 \end{proof}
+
+\section{C1 for the combinatorial diagrams (Stage 7)}
+
+\begin{theorem}[Laws of $\mathcal F_s(G)$ on classes, without C1]
+\label{s7:laws}
+\lean{FreeMarkov.Diagram.PEmb.mk_eq, FreeMarkov.DClass.comp_assoc, FreeMarkov.DClass.idD_comp, FreeMarkov.DClass.comp_idD, FreeMarkov.DClass.tensor_assoc, FreeMarkov.DClass.idD_one_tensor, FreeMarkov.DClass.tensor_idD_one, FreeMarkov.DClass.idD_tensor_idD, FreeMarkov.DClass.interchange, FreeMarkov.DClass.braid_natural, FreeMarkov.DClass.braid_braid, FreeMarkov.DClass.hexagon, FreeMarkov.FsC, FreeMarkov.FsC.category, FreeMarkov.FsC.strictSMC, FreeMarkov.FsC.ι, FreeMarkov.FsC.fromSyn, FreeMarkov.FsC.toDHom}
+\leanok
+\uses{def:2.ops, syn:universal}
+Gluing is associative and unital with the node-free identities, disjoint union is
+associative and unital, the interchange law holds, the node-free symmetries are natural,
+involutive and satisfy the hexagon: the classes of diagrams form a symmetric strict
+monoidal category $\mathcal F_s(G)$, and $\mathrm{Syn}_s(G) \to \mathcal F_s(G)$ is the strict
+functor given by the universal property of $\mathrm{Syn}_s(G)$.
+\end{theorem}
+\begin{proof}
+\leanok
+Each law is an embedding of one diagram into the other, an isomorphism by counting nodes
+and edges.
+\end{proof}
+
+\begin{theorem}[Coherence for symmetries]
+\label{s7:perm}
+\lean{FreeMarkov.Wires.perm, FreeMarkov.Wires.perm_self, FreeMarkov.Wires.perm_comp, FreeMarkov.Wires.perm_append, FreeMarkov.Wires.perm_swap, FreeMarkov.Wires.perm_map, FreeMarkov.AArr.dm_obj}
+\leanok
+In a symmetric strict monoidal category, the composite of symmetries that reorders a list
+of labelled wires is functorial in the reordering, monoidal, sends a block swap to the
+symmetry, and is invariant under renaming the wires (the node-free case of Theorem~2.3).
+\end{theorem}
+\begin{proof}
+\leanok
+Bring the first wire of the target to the front and recurse; composition reduces to one
+identity between two ways of bringing two wires to the front (hexagons and naturality).
+\end{proof}
+
+\begin{theorem}[Value of a diagram; Joyal--Street, Proposition 2.1 and Theorem 2.2]
+\label{s7:value}
+\lean{FreeMarkov.Wires.VData, FreeMarkov.Wires.VData.val, FreeMarkov.Wires.VData.val_perm, FreeMarkov.Wires.VData.val_swap, FreeMarkov.Wires.VData.val_indep, FreeMarkov.Wires.VData.IsMap.val, FreeMarkov.Diagram.exists_order, FreeMarkov.Diagram.value, FreeMarkov.Diagram.value_eq, FreeMarkov.Diagram.value_eq_of_iso, FreeMarkov.DClass.value, FreeMarkov.Diagram.value_oneNode, FreeMarkov.Diagram.value_idD, FreeMarkov.Diagram.value_braidD, FreeMarkov.Diagram.value_tensor, FreeMarkov.Diagram.value_glue}
+\leanok
+\uses{s7:perm, def:2.ops, def:2.layers}
+The value in $\mathrm{Syn}_s(G)$ of a diagram, computed node by node along a chain of levels,
+does not depend on the chain, is invariant under isomorphism, and sends one-node diagrams,
+identities, symmetries, disjoint unions and gluings to generators, identities, symmetries,
+monoidal products and composites.
+\end{theorem}
+\begin{proof}
+\leanok
+Two independent nodes can be processed in either order; any two processing orders are
+connected by such swaps; renaming and untouched wires on either side.
+\end{proof}
+
+\begin{theorem}[The comparison map is bijective]
+\label{s7:bij}
+\lean{FreeMarkov.FsC.value_toDHom, FreeMarkov.FsC.toDHom_injective, FreeMarkov.DClass.inIm_nodeFree, FreeMarkov.DClass.inIm_of_card, FreeMarkov.FsC.toDHom_surjective}
+\leanok
+\uses{s7:laws, s7:value, syn:generation, rem:2.4}
+$\mathrm{Syn}_s(G)(a, b) \to \{[\Gamma, v] : \mathrm{dom} = a, \mathrm{cod} = b\}$ is injective
+(the value is a left inverse) and surjective (generation: node-free diagrams are composites of
+symmetries; a diagram is $[P] \circ ([x] \otimes 1) \circ [\Gamma']$ for a minimal node $x$).
+\end{theorem}
+
+\begin{theorem}[C1 holds for the combinatorial diagrams]
+\label{s7:C1}
+\lean{FreeMarkov.JoyalStreet.ofCombinatorial, FreeMarkov.joyalStreet}
+\leanok
+\uses{cited:C1, s7:bij}
+For every free graph monoid $G$ there is an inhabitant of the structure \texttt{JoyalStreet G}
+of Stage~1, unchanged.
+\end{theorem}
+
+\begin{theorem}[The main theorems without C1]
+\label{s7:uncond}
+\lean{FreeMarkov.Combinatorial.theorem_2_3, FreeMarkov.Combinatorial.induction, FreeMarkov.Combinatorial.FsM, FreeMarkov.Combinatorial.theorem_4_1, FreeMarkov.Combinatorial.lemma_4_4, FreeMarkov.Combinatorial.lemma_4_5, FreeMarkov.Combinatorial.js, FreeMarkov.Combinatorial.prop_6_6, FreeMarkov.Combinatorial.prop_6_6_sets, FreeMarkov.Combinatorial.refinementStrict, FreeMarkov.Combinatorial.refinement, FreeMarkov.Combinatorial.theorem_6_7, FreeMarkov.Combinatorial.theorem_6_7_strict}
+\leanok
+\uses{s7:C1, thm:2.3, thm:4.1, lem:4.4, lem:4.5, prop:6.6, thm:6.7}
+Theorem~2.3, Theorem~4.1, Lemma~4.4 (in $\mathcal F_s(G)/\mathbf S_M$), Lemma~4.5,
+Proposition~6.6 and Theorem~6.7 (both forms), with no cited hypothesis; C2 remains a
+hypothesis in Section~5.
+\end{theorem}

@@ -42,6 +42,7 @@ STAGES = {
     4: ("FreeMarkovStage4", "FreeMarkov.Stage4", "stage 4"),
     5: ("FreeMarkovStage5", "FreeMarkov.Stage5", "stage 5"),
     6: ("FreeMarkovStage6", "FreeMarkov.Stage6", "stage 6"),
+    7: ("FreeMarkovStage7", "FreeMarkov.Stage7", "stage 7"),
 }
 
 

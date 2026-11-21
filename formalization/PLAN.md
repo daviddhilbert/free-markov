@@ -97,8 +97,24 @@ in Lean).
 
 Author's decision, 2026-11-20: the passage between topological graphs and
 incidence data (same isomorphism classes for finite graphs without circles) is
-not to be formalized, also not in Stage 7; a reference is enough. The reference
-is still to be chosen and recorded here.
+not to be formalized, also not in Stage 7; a reference is enough.
+
+The reference is for the record of the formalization only; the paper keeps
+citing Joyal–Street and is not to be changed on this account.
+
+Reference chosen by the author, 2026-11-20: Bonchi, Gadducci, Kissinger,
+Sobociński, Zanasi, *String Diagram Rewrite Theory II: Rewriting with Symmetric
+Monoidal Structure* (arXiv:2104.14686v2), Section 3: the theorem before
+Corollary 3.20 (a cospan of hypergraphs is in the image of the interpretation
+of the free PROP `S_Σ` iff it is monogamous acyclic) and Corollary 3.20
+(`S_Σ ≅ MACsp_D(Hyp_Σ)`); Section 3.1 gives the coloured (many-sorted) case.
+Faithfulness of the interpretation is Corollary 3.11 of Part I
+(arXiv:2012.01847). This is the comparison form of D4: the syntactic free
+symmetric strict monoidal category is isomorphic to a category of finite
+combinatorial diagrams. Their encoding has wires as nodes and boxes as
+hyperedges, the dual of ours; the dictionary between the two is not
+formalized. Checked on the arXiv HTML of v2; the theorem numbers of the
+journal version are not checked.
 
 Sketch, not compiled:
 
@@ -575,6 +591,22 @@ a summary of the whole development in `stage 6/HANDOFF.md`. Decided in Stage 6, 
 Author's decisions, 2026-11-20: `Strictification M` (C2) stays assumed and is
 not to be discharged. Whether to construct an inhabitant of `JoyalStreet G`
 (C1) is decided after Stage 6; if it is done, the combinatorial model only.
+(Decided 2026-11-20: Stage 7 constructs it.)
+
+Coordinator's decision, 2026-11-20 (left to the coordinator by the author):
+Stage 3's open item 2 is to be closed after Stage 7 reports. To prove: for a
+word `a`, the class of the paper's single diagram for `δ_a` (one duplicate per
+letter, codomain ordered as `a a`), for any order of the prongs, is the
+morphism `copyM a` used in Theorem 4.1; likewise `ε_a`. Stage 4's
+`glueNodeFreeIso` and Lemma 4.4, or Stage 5's label coherence, are the tools.
+
+Author's decision, 2026-11-20, on the remaining optional items: in the same
+follow-up session, prove that a strict Markov category satisfying the universal
+property of Theorem 4.1 is isomorphic to `F_s(G)/S_M` by exactly one strict
+Markov isomorphism compatible with the homomorphisms from `G` (with
+Fritz–Liang, Corollary 6.7, cited and not formalized, this compares the two
+constructions). Not to be done: a formalization of Fritz–Liang's construction.
+
 
 - Construct an inhabitant of `JoyalStreet G` for the combinatorial model, and of
   `Strictification M`, removing the cited hypotheses. No formalization of
@@ -583,6 +615,30 @@ not to be discharged. Whether to construct an inhabitant of `JoyalStreet G`
   2026-11-09. Recheck it first.
 - The universal property for non-strict targets, by comparison with Tau Ceti's
   presented braided categories; comparison with Fritz–Liang.
+
+**Record (2026-11-20): first item done (C1 for the combinatorial model).** `python3
+scripts/verify.py` passes: build exit code 0 with no warnings, no `sorry`, 352 Stage 7 declarations
+using only `propext`, `Classical.choice`, `Quot.sound`; the only Stage 7 theorem with C1 in its
+type is `joyalStreet G : Nonempty (JoyalStreet G)` (C1 as a conclusion). `JoyalStreet.ofCombinatorial
+G : JoyalStreet G` inhabits Stage 1's structure, unchanged, for every free graph monoid; the
+unconditional forms are in the namespace `Combinatorial`: `theorem_2_3` (`F_s(G)` = `FsC G` is free),
+`theorem_4_1`, `lemma_4_4` (in `F_s(G)/S_M`), `lemma_4_5`, `prop_6_6`, `prop_6_6_sets`,
+`theorem_6_7`, `theorem_6_7_strict`. C2 stays a hypothesis. Status in `stage 7/STATUS.md`
+(including the relation to Joyal–Street, Chapter 2), hand-over in `stage 7/HANDOFF.md`. Decided in
+Stage 7, within this plan:
+
+- Route (b) of the task: the strict functor `Syn_s(G) → F_s(G)` from Stage 0's universal property is
+  bijective on hom-sets. The laws of `F_s(G)` on classes are proved first, without C1, each by one
+  embedding (Stage 4's `PEmb`) and a count of nodes and edges, giving the `StrictSMC` `FsC G`.
+- Injectivity by route (a) for the single target `Syn_s(G)`: the value of a diagram computed node by
+  node along a processing order (a chain of levels with one node per step) is independent of the
+  order (Joyal–Street, Proposition 2.1), invariant under isomorphism and compatible with the
+  operations (Theorem 2.2), and is a left inverse of the comparison map. The needed coherence for
+  symmetries (`Wires.perm_comp` and companions) is proved from the axioms, not cited.
+- Surjectivity by generation: node-free diagrams are composites of symmetries; a diagram is
+  `[P] ∘ ([x] ⊗ 1) ∘ [Γ[{x}, Γ̇]]` for a minimal node `x`; induction on the number of nodes.
+- The reuse recheck found nothing to import or port (REUSE-SURVEY.md, Stage 7 section).
+- No Stage 0–6 source changed; no defect found; no paper feedback.
 
 ## 5. Order and dependencies
 

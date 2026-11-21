@@ -107,3 +107,25 @@ pull-request searches, 6 web searches. Coverage limits: GitHub code search sees
 indexed default branches only, at most 40 results per query were read; the
 Reservoir search URL ignored the query, so the registry was not searched this time;
 Zulip seen only through search summaries.
+
+## Focused search before Stage 7: freeness of a combinatorial diagram category (2026-11-20)
+
+Repeated as PLAN.md (ground rule 8, Stage 7 entry) requires, for any Lean development proving
+that a category of combinatorial string diagrams is free (Joyal–Street, Chapter 2, Theorem 2.3,
+symmetric case), coherence for symmetric monoidal categories in a form usable for the value of a
+diagram, or Coxeter presentations of symmetric groups. Evidence level: source and status files
+read through the GitHub API; local source for Mathlib at the pin.
+
+**Result.** Nothing reusable; nothing imported, nothing ported. Stage 7 proves C1 for the
+combinatorial model from the Stage 0–6 library and Mathlib's lists only.
+
+| Candidate | What it has | Decision |
+|---|---|---|
+| Tau Ceti roadmap `DiagrammaticCoherence` (`STATUS.md` at `b2350004`, 2026-11-19; latest report commit `76b902bc`) | Layer 0 partial (monoidal tensor-signature syntax, §0.3 Drinfeld/pivotal functor comparisons, rigid winding words); Layers 1–3 and 5–8 untouched; "nothing geometric exists, and no coherence theorem from Layers 2–8 has begun"; no diagram category; symmetric row still out of scope | Nothing for C1 |
+| Mathlib at the pin `56a00585` | `Monoidal/Free/{Basic,Coherence}` (free monoidal category on objects, Mac Lane coherence), `Tactic/Widget/StringDiagram` (display only), `GroupTheory/Coxeter/*` (Coxeter systems; no theorem identifying `Equiv.Perm (Fin n)` with type `A`) | Not used: the permutation calculus of Stage 7 (`Wires.perm`) is proved directly from the axioms of `StrictSMC` |
+| `robin-carlier/SymmMonCoherence` (`0cb94d5b`, last commit 2026-03-16, Lean 4.29.0-rc6) | Coherence for (non-strict, object-generated) symmetric monoidal categories | Not imported (old toolchain, would need the author's decision); the strict, labelled-wire statement Stage 7 needs (`perm_comp`) is short to prove directly |
+| `apellis/string-diagrams-lean` (updated 2026-11-06) | Planar layer-list diagrams | No symmetric diagrams; not used |
+| GitHub (`gh search repos`, language Lean, sorted by update: "joyal street", "string diagram symmetric", "free symmetric monoidal", "progressive graph", "PROP lean4", "symmetric monoidal coherence", "string diagrams", "monoidal category", "markov category"; `gh search code`: `FreeSymmetricMonoidal`, `JoyalStreet`, "symmetric strict monoidal") | Only the repositories above and an unrelated `DeepCausalityFormal` file | Nothing new |
+
+Coverage limits: GitHub code search sees indexed default branches only; registries (Reservoir,
+Lean Pool) were not searched again; Isabelle and Coq developments were not reconsidered.
