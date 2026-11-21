@@ -465,24 +465,90 @@ generating pair is a surgery on the whole diagram.
 
 \begin{definition}[Markov templates (4.1)--(4.4)]
 \label{def:4.templates}
-\uses{def:3.4}
-Coassociativity, counitality, cocommutativity and naturality of discard as
-templates; the congruence $\mathbf S_M$.
+\lean{FreeMarkov.Template.ofDiagrams, FreeMarkov.Template.ofDiagrams_pair, FreeMarkov.FreeDDGraphMonoid.coassT, FreeMarkov.FreeDDGraphMonoid.counitT, FreeMarkov.FreeDDGraphMonoid.counitT', FreeMarkov.FreeDDGraphMonoid.cocommT, FreeMarkov.FreeDDGraphMonoid.natT, FreeMarkov.FreeDDGraphMonoid.MarkovPair, FreeMarkov.FreeDDGraphMonoid.baseMarkovTemplates, FreeMarkov.FreeDDGraphMonoid.markovTemplates, FreeMarkov.FreeDDGraphMonoid.markovTemplates_isSymmetric, FreeMarkov.JoyalStreet.FsM}
+\leanok
+\uses{def:3.4, def:2.ops}
+Coassociativity, left and right counitality, cocommutativity (one template each per
+letter) and naturality of discard (one template per arrow $f$, including empty source
+or target), drawn as glued one-node diagrams with $\alpha$, $\beta$ matching positions;
+with the reversed and the empty template, the symmetric set $T_M$; $\mathbf S_M$ and
+$\mathcal F_s(G)/\mathbf S_M$.
 \end{definition}
+
+\begin{lemma}[$\mathbf S_M$ from one ordering per template]
+\label{lem:4.criterion}
+\lean{FreeMarkov.SRelClosed, FreeMarkov.SRelClosed.of_tStep, FreeMarkov.SRelClosed.of_sRel, FreeMarkov.FreeDDGraphMonoid.sRelClosed_markov, FreeMarkov.FreeDDGraphMonoid.MarkovPair.sRel}
+\leanok
+\uses{cor:3.5, def:4.templates}
+A reflexive, transitive relation on classes compatible with $\otimes$ and $\circ$ that
+relates the two diagrams of each Markov template contains $\mathbf S_M$; no cited result.
+\end{lemma}
+\begin{proof}
+\leanok
+The proof of $\mathbf S_T \subseteq \mathbf E_T$ uses one ordering of $\Omega$, chosen
+freely.
+\end{proof}
+
+\begin{definition}[$\delta_a$, $\varepsilon_a$ on words; (1.2), (1.1)]
+\label{def:4.words}
+\lean{FreeMarkov.JoyalStreet.letterComon, FreeMarkov.JoyalStreet.letterComm, FreeMarkov.JoyalStreet.wordComon, FreeMarkov.JoyalStreet.wordComon_append, FreeMarkov.JoyalStreet.copyM, FreeMarkov.JoyalStreet.discardM, FreeMarkov.JoyalStreet.copyW_tensor, FreeMarkov.JoyalStreet.discardW_tensor, FreeMarkov.JoyalStreet.copyW_assoc, FreeMarkov.JoyalStreet.discardW_copyW, FreeMarkov.JoyalStreet.copyW_discardW, FreeMarkov.JoyalStreet.copyW_comm, FreeMarkov.JoyalStreet.prongCopy, FreeMarkov.JoyalStreet.prongCopy_eq}
+\leanok
+\uses{def:4.templates, lem:4.criterion, thm:3.quot, intro:bridge}
+On a letter, the templates (4.1)--(4.3) give a cocommutative comonoid; on a word, the
+monoidal product of those on its letters, which satisfies (1.1) and (1.2); the order of
+the prongs is irrelevant by (4.3).
+\end{definition}
+
+\begin{lemma}[(1.3) in $\mathcal F_s(G)/\mathbf S_M$]
+\label{lem:4.natural}
+\lean{FreeMarkov.JoyalStreet.discardM_natural, FreeMarkov.JoyalStreet.projM_discWord, FreeMarkov.StrictSMC.braid_one_one}
+\leanok
+\uses{def:4.words, thm:2.3}
+$\varepsilon_c \circ f = \varepsilon_b$ for every morphism $f : b \to c$.
+\end{lemma}
+\begin{proof}
+\leanok
+By generation: (4.4) on generators; identities, symmetries, $\circ$ and $\otimes$ by (1.2).
+\end{proof}
+
+\begin{theorem}[$\mathcal F_s(G)/\mathbf S_M$ is a strict Markov category]
+\label{thm:4.markov}
+\lean{FreeMarkov.JoyalStreet.strictMarkovM, FreeMarkov.JoyalStreet.markovCategoryM}
+\leanok
+\uses{def:4.words, lem:4.natural, intro:bridge}
+The quotient is a strict Markov category, and a Mathlib \texttt{MarkovCategory}.
+\end{theorem}
 
 \begin{theorem}[Theorem 4.1]
 \label{thm:4.1}
-\uses{cor:3.5, lem:3.2, def:4.templates, intro:free-markov, intro:bridge, thm:2.3}
-$\mathcal F_s(G)/\mathbf S_M$ is the free Markov category over $G$.
+\lean{FreeMarkov.JoyalStreet.theorem_4_1, FreeMarkov.JoyalStreet.iS, FreeMarkov.JoyalStreet.iM, FreeMarkov.JoyalStreet.iM_matches, FreeMarkov.JoyalStreet.liftS_kernel, FreeMarkov.JoyalStreet.liftM, FreeMarkov.JoyalStreet.liftM_comp_proj, FreeMarkov.JoyalStreet.liftM_map_copy, FreeMarkov.JoyalStreet.liftMarkov}
+\leanok
+\uses{thm:4.markov, lem:4.criterion, intro:free-markov, thm:2.3}
+$\mathcal F_s(G)/\mathbf S_M$ is the free Markov category over $G$, under C1 only.
 Advertised result.
 \end{theorem}
+\begin{proof}
+\leanok
+$F_s$ from Theorem 2.3 takes the same value on the two diagrams of each template, hence
+on $\mathbf S_M$-classes; it induces $F_m$, a strict Markov functor by (1.2); uniqueness
+since $- / \mathbf S_M$ is surjective and $F_s$ is unique.
+\end{proof}
 
 \begin{remark}[Remark 4.2]
 \label{rem:4.2}
-\uses{thm:4.1, syn:universal}
-An equation of terms follows from the Markov axioms iff the diagrams are related
-by Markov surgeries. To be proved (Stage 3).
+\lean{FreeMarkov.FreeDDGraphMonoid.copyS, FreeMarkov.FreeDDGraphMonoid.discardS, FreeMarkov.FreeDDGraphMonoid.MarkovCong, FreeMarkov.FreeDDGraphMonoid.MarkovCong.map_eq, FreeMarkov.JoyalStreet.synToM, FreeMarkov.JoyalStreet.remark_4_2, FreeMarkov.JoyalStreet.remark_4_2_surjective, FreeMarkov.JoyalStreet.remark_4_2_semantic}
+\leanok
+\uses{thm:4.1, syn:universal, lem:4.criterion}
+Two terms of $\mathrm{Syn}_s(G)$ are congruent modulo the axioms of Markov categories iff
+their diagrams are related by Markov surgeries, iff they agree under every interpretation
+in a strict Markov category matching duplicates and discards; so
+$\mathrm{Syn}_s(G)/{\equiv_M} \cong \mathcal F_s(G)/\mathbf S_M$.
 \end{remark}
+\begin{proof}
+\leanok
+Soundness: a matching strict functor identifies congruent terms.  Completeness: the
+congruence read on classes satisfies the criterion of Lemma~\ref{lem:4.criterion}.
+\end{proof}
 
 \begin{definition}[Skeletons]
 \label{def:4.skeleton}
