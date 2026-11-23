@@ -92,11 +92,12 @@ open Lean Elab Command
 #eval show CommandElabM Unit from do
   let env ← getEnv
   let cited : List Name := [{cited}]
+  let providers : List Name := [{providers}]
   let mut out : Array String := #[]
   for (n, ci) in env.constants.toList do
     let some idx := env.getModuleIdxFor? n | continue
     let mod := env.header.moduleNames[idx.toNat]!
-    unless (`{prefix}).isPrefixOf mod do continue
+    unless (`{prefix}).isPrefixOf mod || providers.contains mod do continue
     if n.isInternalDetail then continue
     let axs ← liftCoreM <| Lean.collectAxioms n
     let kind := match ci with
@@ -110,12 +111,22 @@ open Lean Elab Command
 """
 
 
+def shared_providers(prefix: str) -> list[str]:
+    """hilbert-mathlib modules that implement this stage's compatibility imports."""
+    record = ROOT / "SHARED-FOUNDATION.json"
+    if not record.exists():
+        return []
+    mods = json.loads(record.read_text())["modules"]
+    return [m["target_module"] for m in mods if m["module"].startswith(prefix + ".")]
+
+
 def axiom_report(lake: str, root_module: str, prefix: str) -> list[dict]:
     scratch = ROOT / ".scratch" / "verify"
     scratch.mkdir(parents=True, exist_ok=True)
     f = scratch / f"Axioms_{prefix.replace('.', '_')}.lean"
     cited = ", ".join(f"`{c}" for c in CITED)
-    f.write_text(AXIOM_SCRIPT.format(root=root_module, prefix=prefix, cited=cited))
+    providers = ", ".join(f"`{m}" for m in shared_providers(prefix))
+    f.write_text(AXIOM_SCRIPT.format(root=root_module, prefix=prefix, cited=cited, providers=providers))
     r = run([lake, "env", "lean", str(f)])
     if r.returncode != 0:
         print(r.stdout, r.stderr)

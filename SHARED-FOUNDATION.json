@@ -1,0 +1,97 @@
+{
+  "provider": "daviddhilbert/hilbert-mathlib",
+  "public_names": "unchanged",
+  "modules": [
+    {
+      "path": "stage 0/FreeMarkov/Stage0/Arrow.lean",
+      "module": "FreeMarkov.Stage0.Arrow",
+      "target_module": "HilbertMathlib.Foundation.CategoryTheory.Arrow",
+      "target_path": "HilbertMathlib/Foundation/CategoryTheory/Arrow.lean",
+      "extracted_sha256": "2bc11fc8c1daf7da91bebaac423225628552b21a46f3fe850db17a42cd810230",
+      "source_url": "https://github.com/daviddhilbert/free-markov/blob/11566924b317e244a822fe5e60e3cbef71d454ae/stage%200/FreeMarkov/Stage0/Arrow.lean",
+      "compatibility_sha256": "5ae8e5d6e4d78228f3efb8ad3ea1bf929f14196eeccafa7a3f2f66f611601b29"
+    },
+    {
+      "path": "stage 0/FreeMarkov/Stage0/GraphMonoid.lean",
+      "module": "FreeMarkov.Stage0.GraphMonoid",
+      "target_module": "HilbertMathlib.Foundation.CategoryTheory.GraphMonoid",
+      "target_path": "HilbertMathlib/Foundation/CategoryTheory/GraphMonoid.lean",
+      "extracted_sha256": "0d7a093f431d2c6bf6a4c96e94c1f21f6eb9f464289c7a6085d45286c58aed81",
+      "source_url": "https://github.com/daviddhilbert/free-markov/blob/11566924b317e244a822fe5e60e3cbef71d454ae/stage%200/FreeMarkov/Stage0/GraphMonoid.lean",
+      "compatibility_sha256": "eee3e3ab14dbaf1e4f6a30baaa6eaa87e33643f12f03352f9c7350aa47b4040a"
+    },
+    {
+      "path": "stage 0/FreeMarkov/Stage0/Strict/Basic.lean",
+      "module": "FreeMarkov.Stage0.Strict.Basic",
+      "target_module": "HilbertMathlib.Foundation.CategoryTheory.Strict.Basic",
+      "target_path": "HilbertMathlib/Foundation/CategoryTheory/Strict/Basic.lean",
+      "extracted_sha256": "f96e14f70a43fe499afe0eb21257dcb0f7fbf7294b68a64da71b15551850a834",
+      "source_url": "https://github.com/daviddhilbert/free-markov/blob/11566924b317e244a822fe5e60e3cbef71d454ae/stage%200/FreeMarkov/Stage0/Strict/Basic.lean",
+      "compatibility_sha256": "80a424b7a3828aa98e164168916d8752b72155d9f005255d6b49c093220fd051"
+    },
+    {
+      "path": "stage 0/FreeMarkov/Stage0/Strict/Lemmas.lean",
+      "module": "FreeMarkov.Stage0.Strict.Lemmas",
+      "target_module": "HilbertMathlib.Foundation.CategoryTheory.Strict.Lemmas",
+      "target_path": "HilbertMathlib/Foundation/CategoryTheory/Strict/Lemmas.lean",
+      "extracted_sha256": "fea4651abc90f1746b53c41b7cf9d11ae84cda67901c8007534e097736a93058",
+      "source_url": "https://github.com/daviddhilbert/free-markov/blob/11566924b317e244a822fe5e60e3cbef71d454ae/stage%200/FreeMarkov/Stage0/Strict/Lemmas.lean",
+      "compatibility_sha256": "96e3ab6802ef82edf74c5925469eb86270fbeffb2d48266ad238a8721cea27c9"
+    },
+    {
+      "path": "stage 0/FreeMarkov/Stage0/Strict/Bridge.lean",
+      "module": "FreeMarkov.Stage0.Strict.Bridge",
+      "target_module": "HilbertMathlib.Foundation.CategoryTheory.Strict.Bridge",
+      "target_path": "HilbertMathlib/Foundation/CategoryTheory/Strict/Bridge.lean",
+      "extracted_sha256": "ce51079fe6beedb829f0a293e44161de51ff30a6ecb41b9781eeccdb9dedc583",
+      "source_url": "https://github.com/daviddhilbert/free-markov/blob/11566924b317e244a822fe5e60e3cbef71d454ae/stage%200/FreeMarkov/Stage0/Strict/Bridge.lean",
+      "compatibility_sha256": "e2bf58275bbcc8cbd7df5edb250aa4ff51dccd83d631fb7f1a21b6f32d4643d3"
+    },
+    {
+      "path": "stage 0/FreeMarkov/Stage0/Strict/Markov.lean",
+      "module": "FreeMarkov.Stage0.Strict.Markov",
+      "target_module": "HilbertMathlib.Foundation.CategoryTheory.Strict.Markov",
+      "target_path": "HilbertMathlib/Foundation/CategoryTheory/Strict/Markov.lean",
+      "extracted_sha256": "cf9de0e2c3159a833af49f8aa979ae91535ac36c40f99b640511f187469a6c51",
+      "source_url": "https://github.com/daviddhilbert/free-markov/blob/11566924b317e244a822fe5e60e3cbef71d454ae/stage%200/FreeMarkov/Stage0/Strict/Markov.lean",
+      "compatibility_sha256": "1c18edb1de4f115fea16042862e3f7620f1f25ba1e26fa99eeca8b8211af971a"
+    },
+    {
+      "path": "stage 0/FreeMarkov/Stage0/Strict/Functor.lean",
+      "module": "FreeMarkov.Stage0.Strict.Functor",
+      "target_module": "HilbertMathlib.Foundation.CategoryTheory.Strict.Functor",
+      "target_path": "HilbertMathlib/Foundation/CategoryTheory/Strict/Functor.lean",
+      "extracted_sha256": "653d7ea7cbf66e1a197f2c95faa43bc5d1ec1b54a9c7bdec47b8ebc2dda1d253",
+      "source_url": "https://github.com/daviddhilbert/free-markov/blob/11566924b317e244a822fe5e60e3cbef71d454ae/stage%200/FreeMarkov/Stage0/Strict/Functor.lean",
+      "compatibility_sha256": "652dc924f361d9332e601996004999e00a8742d034d7f273079a0b488479c6e6"
+    },
+    {
+      "path": "stage 0/FreeMarkov/Stage0/Strict/Free.lean",
+      "module": "FreeMarkov.Stage0.Strict.Free",
+      "target_module": "HilbertMathlib.Foundation.CategoryTheory.Strict.Free",
+      "target_path": "HilbertMathlib/Foundation/CategoryTheory/Strict/Free.lean",
+      "extracted_sha256": "c54ff735e526ee49a9b14dc5b46ab2a02d0914843845ce46f62ea43bc733c1a6",
+      "source_url": "https://github.com/daviddhilbert/free-markov/blob/11566924b317e244a822fe5e60e3cbef71d454ae/stage%200/FreeMarkov/Stage0/Strict/Free.lean",
+      "compatibility_sha256": "435a50d8f0de9fa9421309b97041f202c811e3081f4a228b6b46a0a77d55c7a0"
+    },
+    {
+      "path": "stage 0/FreeMarkov/Stage0/Syntactic/Basic.lean",
+      "module": "FreeMarkov.Stage0.Syntactic.Basic",
+      "target_module": "HilbertMathlib.Foundation.CategoryTheory.Syntactic.Basic",
+      "target_path": "HilbertMathlib/Foundation/CategoryTheory/Syntactic/Basic.lean",
+      "extracted_sha256": "d0f33177b6f93e7b8f4a3987580807292ef3be6827e8a792932c56f0027dfc1f",
+      "source_url": "https://github.com/daviddhilbert/free-markov/blob/11566924b317e244a822fe5e60e3cbef71d454ae/stage%200/FreeMarkov/Stage0/Syntactic/Basic.lean",
+      "compatibility_sha256": "2381aae0f6cb02ffc45397ae6e520ab9ec011205e93e9b23011507f71ca49669"
+    },
+    {
+      "path": "stage 0/FreeMarkov/Stage0/Syntactic/Universal.lean",
+      "module": "FreeMarkov.Stage0.Syntactic.Universal",
+      "target_module": "HilbertMathlib.Foundation.CategoryTheory.Syntactic.Universal",
+      "target_path": "HilbertMathlib/Foundation/CategoryTheory/Syntactic/Universal.lean",
+      "extracted_sha256": "227f2cc8ddc35ebcc1cf477b481070f8fdc5f4bdc5a981e7842d86f0173c882c",
+      "source_url": "https://github.com/daviddhilbert/free-markov/blob/11566924b317e244a822fe5e60e3cbef71d454ae/stage%200/FreeMarkov/Stage0/Syntactic/Universal.lean",
+      "compatibility_sha256": "779a3fd19a2f912fb6308b04edcbe6a2771b47c0b1c8defa0eae108262b3f79a"
+    }
+  ],
+  "revision": "3f3efa86f6dd85c00db1cb9a7ad242b1e0a49ecf"
+}

@@ -8,6 +8,7 @@
 !/lakefile.toml
 !/lean-toolchain
 !/lake-manifest.json
+!/SHARED-FOUNDATION.json
 !/scripts/
 !/README.md
 !/LICENSE
